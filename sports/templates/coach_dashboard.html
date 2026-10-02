@@ -1,0 +1,460 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Coach & Trainer Portal Dashboard | Tamil Nadu Sports Development Platform{% endblock %}
+{% block nav_coaches %}active{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50/80 py-8 px-4 sm:px-6 lg:px-8 font-sans text-slate-800">
+    <div class="max-w-7xl mx-auto space-y-8">
+
+        <!-- Top Hero Banner Card -->
+        <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 rounded-3xl p-6 sm:p-8 text-white shadow-2xl relative overflow-hidden border border-emerald-500/30">
+            <div class="absolute -right-12 -bottom-12 opacity-10 text-white text-9xl pointer-events-none">
+                <i class="fa-solid fa-stopwatch"></i>
+            </div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+                    <div class="relative shrink-0">
+                        {% if coach.photo_url %}
+                            <img src="{{ coach.photo_url }}" alt="{{ coach.name }}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-4 border-amber-400/80 shadow-xl">
+                        {% else %}
+                            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-tr from-amber-500 to-emerald-600 flex items-center justify-center text-4xl text-white font-black border-4 border-amber-400/80 shadow-xl">
+                                {{ coach.name|slice:":1" }}
+                            </div>
+                        {% endif %}
+                        <span class="absolute -bottom-2 -right-2 px-2 py-0.5 bg-emerald-500 text-slate-950 text-[10px] font-black rounded-full uppercase tracking-wider shadow-md">
+                            Active
+                        </span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-extrabold rounded-full flex items-center gap-1.5">
+                                <i class="fa-solid fa-award text-amber-400"></i> NIS Certified Coach
+                            </span>
+                            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold rounded-full">
+                                <i class="fa-solid fa-location-dot text-emerald-400"></i> {{ coach.district.name }} District
+                            </span>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                            Coach {{ coach.name }}
+                        </h1>
+                        <p class="text-slate-300 text-xs sm:text-sm font-medium max-w-xl">
+                            Specialization: <strong class="text-amber-300">{{ coach.specialization }}</strong> • Discipline: <strong class="text-emerald-300">{{ coach.sport.name }}</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0">
+                    <button onclick="document.getElementById('addTraineeModal').classList.remove('hidden')" class="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-extrabold rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-user-plus"></i> Enroll Trainee Athlete
+                    </button>
+                    <button onclick="document.getElementById('scheduleCampModal').classList.remove('hidden')" class="px-5 py-3 bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-calendar-plus"></i> Schedule Trial Camp
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 Key Performance Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl font-bold shrink-0">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Assigned Trainees</span>
+                    <span class="text-2xl font-black text-slate-900 mt-0.5 block">{{ total_trainees }} Athletes</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl font-bold shrink-0">
+                    <i class="fa-solid fa-certificate"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Coaching Experience</span>
+                    <span class="text-2xl font-black text-slate-900 mt-0.5 block">{{ coach.experience_years }} Years</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-xl font-bold shrink-0">
+                    <i class="fa-solid fa-campground"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Active Training Camps</span>
+                    <span class="text-2xl font-black text-slate-900 mt-0.5 block">{{ active_camps_count }} Scheduled</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-xl font-bold shrink-0">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">State/National Medals</span>
+                    <span class="text-2xl font-black text-slate-900 mt-0.5 block">14 Medals</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content 12-Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+            <!-- Left Main Column (8 cols): Squad Roster & Trial Camps -->
+            <div class="lg:col-span-8 space-y-8">
+                
+                <!-- Trainee Roster Table Card -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                    <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-900 text-white">
+                        <div>
+                            <h3 class="text-base font-extrabold flex items-center gap-2">
+                                <i class="fa-solid fa-user-gear text-amber-400"></i> Trainee Athletes Roster
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-0.5">High-Performance Trainees under direct supervision for state championship selection.</p>
+                        </div>
+                        <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-bold rounded-lg">
+                            {{ total_trainees }} Enrolled
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-100/80 text-slate-700 font-extrabold uppercase tracking-wider border-b border-slate-200">
+                                <tr>
+                                    <th class="p-4">Athlete Name & EMIS</th>
+                                    <th class="p-4">Discipline / Sub-Event</th>
+                                    <th class="p-4">Category</th>
+                                    <th class="p-4">Personal Best</th>
+                                    <th class="p-4">Attendance</th>
+                                    <th class="p-4 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                {% for t in trainees %}
+                                <tr class="hover:bg-slate-50/80 transition font-medium text-slate-800">
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-900 text-sm">{{ t.name }}</div>
+                                        <div class="text-[10px] text-slate-400 font-mono"><i class="fa-solid fa-id-card mr-1"></i>EMIS: {{ t.emis_id }}</div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-md font-bold text-[11px] border border-emerald-200">
+                                            {{ t.sport }}
+                                        </span>
+                                    </td>
+                                    <td class="p-4 font-semibold text-slate-600">{{ t.category }}</td>
+                                    <td class="p-4 font-extrabold text-indigo-700">{{ t.personal_best }}</td>
+                                    <td class="p-4 font-bold text-emerald-600">{{ t.attendance }}</td>
+                                    <td class="p-4 text-right whitespace-nowrap">
+                                        <button type="button" onclick="openLogScoreModal('{{ t.name|escapejs }}', '{{ t.emis_id|escapejs }}', '{{ t.sport|escapejs }}', '{{ t.personal_best|escapejs }}')" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-lg text-xs font-bold transition flex items-center gap-1 ml-auto">
+                                            <i class="fa-solid fa-stopwatch"></i> Log Score
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Upcoming Training Camps & State Trials Card -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-check text-emerald-600"></i> Upcoming Training Camps & State Selection Trials
+                        </h3>
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                            {{ active_camps_count }} Scheduled
+                        </span>
+                    </div>
+
+                    <div class="space-y-3">
+                        {% for camp in training_camps %}
+                        <div class="p-4 bg-slate-50/80 rounded-xl border border-slate-200/80 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-amber-400 transition">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 text-[10px] font-extrabold rounded uppercase">
+                                        {{ camp.status }}
+                                    </span>
+                                    <span class="text-xs font-bold text-slate-500"><i class="fa-regular fa-clock mr-1"></i>{{ camp.date }}</span>
+                                </div>
+                                <h4 class="text-sm font-extrabold text-slate-900">{{ camp.title }}</h4>
+                                <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot text-amber-500 mr-1"></i>{{ camp.venue }} • Squad Size: <strong>{{ camp.squad_size }}</strong></p>
+                            </div>
+                            <button type="button" onclick="openCampDetailsModal('{{ camp.title|escapejs }}', '{{ camp.venue|escapejs }}', '{{ camp.date|escapejs }}', '{{ camp.squad_size|escapejs }}', '{{ camp.status|escapejs }}')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-sm transition shrink-0">
+                                View Camp Details
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar Column (4 cols): Coach Credentials & Quick Tools -->
+            <div class="lg:col-span-4 space-y-6">
+                
+                <!-- Coach Credentials Card -->
+                <div class="bg-gradient-to-b from-slate-900 to-slate-950 rounded-2xl p-6 text-white border border-slate-800 shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="text-sm font-extrabold uppercase text-amber-400 tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-address-card"></i> Coach Credentials
+                        </h3>
+                        <span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold rounded">VERIFIED</span>
+                    </div>
+
+                    <div class="space-y-3 text-xs">
+                        <div class="flex justify-between border-b border-slate-800/80 pb-2">
+                            <span class="text-slate-400">Official Email:</span>
+                            <span class="font-mono text-slate-200 font-semibold">{{ coach.email|default:"coach@tnsports.gov.in" }}</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800/80 pb-2">
+                            <span class="text-slate-400">Phone Contact:</span>
+                            <span class="font-mono text-slate-200 font-semibold">{{ coach.phone|default:"+91 98401 99999" }}</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800/80 pb-2">
+                            <span class="text-slate-400">Assigned District:</span>
+                            <span class="font-bold text-amber-300">{{ coach.district.name }}</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800/80 pb-2">
+                            <span class="text-slate-400">Primary Discipline:</span>
+                            <span class="font-bold text-emerald-300">{{ coach.sport.name }}</span>
+                        </div>
+                        <div class="flex justify-between pb-1">
+                            <span class="text-slate-400">NIS Certification ID:</span>
+                            <span class="font-mono text-slate-200 font-bold">NIS-TN-2024-882</span>
+                        </div>
+                    </div>
+
+                    <button onclick="alert('Facility slot booking request submitted to District Sports Officer!')" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs rounded-xl shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-building-flag"></i> Request Stadium Facility Slot
+                    </button>
+                </div>
+
+                <!-- Quick Coaching Utilities -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm space-y-3">
+                    <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-500 border-b border-slate-100 pb-2">
+                        Coaching Action Hub
+                    </h3>
+                    <div class="space-y-2">
+                        <button onclick="document.getElementById('addTraineeModal').classList.remove('hidden')" class="w-full text-left p-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-900 font-bold text-xs border border-slate-200/80 transition flex items-center justify-between">
+                            <span><i class="fa-solid fa-plus text-emerald-600 mr-2"></i> Enroll New Trainee</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                        </button>
+                        <button onclick="document.getElementById('scheduleCampModal').classList.remove('hidden')" class="w-full text-left p-3 rounded-xl bg-slate-50 hover:bg-indigo-50 text-slate-800 hover:text-indigo-900 font-bold text-xs border border-slate-200/80 transition flex items-center justify-between">
+                            <span><i class="fa-regular fa-calendar-plus text-indigo-600 mr-2"></i> Schedule Trial Camp</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                        </button>
+                        <a href="{% url 'coaches' %}" class="w-full text-left p-3 rounded-xl bg-slate-50 hover:bg-amber-50 text-slate-800 hover:text-amber-900 font-bold text-xs border border-slate-200/80 transition flex items-center justify-between block">
+                            <span><i class="fa-solid fa-users text-amber-600 mr-2"></i> View Statewide Coaches Directory</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal 1: Enroll New Trainee -->
+<div id="addTraineeModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                <i class="fa-solid fa-user-plus text-amber-400"></i> Enroll Trainee Athlete
+            </h3>
+            <button onclick="document.getElementById('addTraineeModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <form action="{% url 'coach_dashboard' %}" method="POST" class="space-y-3 text-xs">
+            {% csrf_token %}
+            <input type="hidden" name="action_type" value="add_trainee">
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">Athlete Full Name *</label>
+                <input type="text" name="trainee_name" required placeholder="e.g. S. Madesh Kumar" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400 font-semibold">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">Discipline / Event *</label>
+                <input type="text" name="trainee_sport" required placeholder="e.g. 100m Sprint / Long Jump" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400 font-semibold">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">16-Digit Student EMIS ID</label>
+                <input type="text" name="trainee_emis" placeholder="330201005010..." class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
+            </div>
+
+            <div class="pt-3 flex justify-end gap-2">
+                <button type="button" onclick="document.getElementById('addTraineeModal').classList.add('hidden')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl font-bold">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl shadow">Enroll Trainee</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal 2: Schedule Trial Camp -->
+<div id="scheduleCampModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                <i class="fa-regular fa-calendar-plus text-emerald-400"></i> Schedule Training Camp
+            </h3>
+            <button onclick="document.getElementById('scheduleCampModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <form action="{% url 'coach_dashboard' %}" method="POST" class="space-y-3 text-xs">
+            {% csrf_token %}
+            <input type="hidden" name="action_type" value="schedule_camp">
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">Camp Title *</label>
+                <input type="text" name="camp_title" required placeholder="e.g. District High Performance Athletics Camp" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-400 font-semibold">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">Venue / SDAT Stadium *</label>
+                <input type="text" name="camp_venue" required placeholder="e.g. VOC Stadium Ground, Coimbatore" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-400 font-semibold">
+            </div>
+
+            <div class="pt-3 flex justify-end gap-2">
+                <button type="button" onclick="document.getElementById('scheduleCampModal').classList.add('hidden')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl font-bold">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold rounded-xl shadow">Schedule Camp</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal 3: Log Athlete Trial Score -->
+<div id="logScoreModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                <i class="fa-solid fa-stopwatch text-amber-400"></i> Log Athlete Trial Score & Performance
+            </h3>
+            <button type="button" onclick="document.getElementById('logScoreModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <form action="{% url 'coach_dashboard' %}" method="POST" class="space-y-3 text-xs">
+            {% csrf_token %}
+            <input type="hidden" name="action_type" value="log_score">
+            
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">Athlete Full Name *</label>
+                <input type="text" id="logScoreAthleteName" name="athlete_name" readonly class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-amber-300 font-extrabold cursor-not-allowed">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">EMIS Student ID</label>
+                    <input type="text" id="logScoreEmisId" name="athlete_emis" readonly class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-400 font-mono">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">Current Record</label>
+                    <input type="text" id="logScoreCurrentBest" readonly class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-emerald-400 font-bold">
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">New Recorded Score / Timing / Distance *</label>
+                <input type="text" name="trial_score" required placeholder="e.g. 10.74s or 6.15m" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-amber-400 font-extrabold">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">Trial Status / Classification *</label>
+                <select name="trial_status" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-emerald-300 font-bold focus:outline-none focus:border-amber-400">
+                    <option value="Personal Best Record">Personal Best Record (PB)</option>
+                    <option value="State Benchmark Cleared">State Benchmark Cleared</option>
+                    <option value="District Trial Rank 1">District Trial Rank 1</option>
+                    <option value="Trial Passed">Trial Passed</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-300 mb-1">Coach Technical Remarks (Optional)</label>
+                <textarea name="remarks" rows="2" placeholder="e.g. Explosive sprint start, excellent stride length in last 30m..." class="w-full px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
+            </div>
+
+            <div class="pt-3 flex justify-end gap-2">
+                <button type="button" onclick="document.getElementById('logScoreModal').classList.add('hidden')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl font-bold">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold rounded-xl shadow">Log & Save Score</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal 4: View Camp Details -->
+<div id="campDetailsModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 max-w-lg w-full shadow-2xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+            <div>
+                <span id="campModalStatus" class="px-2.5 py-0.5 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-extrabold rounded uppercase">UPCOMING</span>
+                <h3 id="campModalTitle" class="text-lg font-extrabold text-white mt-1">High Performance Camp</h3>
+            </div>
+            <button type="button" onclick="document.getElementById('campDetailsModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+            <div class="p-3.5 bg-slate-950 rounded-xl border border-slate-800/80 space-y-2">
+                <div class="flex items-center gap-2 text-slate-300">
+                    <i class="fa-solid fa-location-dot text-amber-400"></i>
+                    <span><strong>Venue:</strong> <span id="campModalVenue" class="text-white font-bold">SDAT Stadium</span></span>
+                </div>
+                <div class="flex items-center gap-2 text-slate-300">
+                    <i class="fa-regular fa-calendar-check text-emerald-400"></i>
+                    <span><strong>Dates:</strong> <span id="campModalDate" class="text-white font-bold">12 Oct - 18 Oct 2026</span></span>
+                </div>
+                <div class="flex items-center gap-2 text-slate-300">
+                    <i class="fa-solid fa-users text-blue-400"></i>
+                    <span><strong>Squad Size:</strong> <span id="campModalSquad" class="text-white font-bold">24 Athletes</span></span>
+                </div>
+            </div>
+
+            <div class="space-y-2 pt-1">
+                <h4 class="font-extrabold text-amber-300 uppercase tracking-wider text-[11px]">Nodal Camp Infrastructure & Services</h4>
+                <ul class="space-y-1.5 text-slate-300 pl-1">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400 text-[11px]"></i> High-Performance Biomechanical Video Analysis</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400 text-[11px]"></i> Hydrotherapy & Athletic Recovery Suite</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400 text-[11px]"></i> NIS Senior Conditioning Instructors & Sports Nutritionist</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800 flex justify-end gap-2">
+            <button type="button" onclick="alert('Downloading Official Camp Roster PDF...')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl flex items-center gap-1.5">
+                <i class="fa-solid fa-file-pdf text-rose-400"></i> Roster PDF
+            </button>
+            <button type="button" onclick="document.getElementById('campDetailsModal').classList.add('hidden')" class="px-5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold rounded-xl shadow">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function openLogScoreModal(name, emis, sport, pb) {
+    document.getElementById('logScoreAthleteName').value = name;
+    document.getElementById('logScoreEmisId').value = emis || 'N/A';
+    document.getElementById('logScoreCurrentBest').value = pb || '10.84s';
+    document.getElementById('logScoreModal').classList.remove('hidden');
+}
+
+function openCampDetailsModal(title, venue, date, squad, status) {
+    document.getElementById('campModalTitle').textContent = title;
+    document.getElementById('campModalVenue').textContent = venue;
+    document.getElementById('campModalDate').textContent = date;
+    document.getElementById('campModalSquad').textContent = squad;
+    document.getElementById('campModalStatus').textContent = status;
+    document.getElementById('campDetailsModal').classList.remove('hidden');
+}
+</script>
+{% endblock %}

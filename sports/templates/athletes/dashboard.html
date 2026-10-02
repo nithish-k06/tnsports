@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Athlete Dashboard | Tamil Nadu Sports Development Platform{% endblock %}
+{% block nav_players %}active{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+
+        <!-- Welcome Banner Card -->
+        <div class="bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-white text-9xl pointer-events-none">
+                <i class="fa-solid fa-running"></i>
+            </div>
+            <div class="relative z-10 flex flex-col sm:flex-row items-center gap-6">
+                {% if athlete and athlete.profile_photo %}
+                    <img src="{{ athlete.profile_photo.url }}" alt="{{ user.first_name }}" class="w-24 h-24 rounded-2xl object-cover border-4 border-white/20 shadow-md">
+                {% else %}
+                    <div class="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-4xl border-4 border-white/20 shadow-md text-emerald-100">
+                        <i class="fa-solid fa-user-ninja"></i>
+                    </div>
+                {% endif %}
+
+                <div class="text-center sm:text-left space-y-2">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-500/30 text-emerald-100 text-xs font-semibold uppercase tracking-wider border border-white/10">
+                        <i class="fa-solid fa-circle-check text-emerald-300"></i> Verified Athlete Profile
+                    </span>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                        Welcome, {{ user.first_name }} {{ user.last_name }}!
+                    </h1>
+                    <p class="text-emerald-100 text-sm max-w-xl">
+                        Your registration with the Tamil Nadu Sports Development Platform is complete. Explore upcoming trials, connect with district coaches, and track your sports career.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Athlete Details & Status Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Profile Summary Card -->
+            <div class="md:col-span-2 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm space-y-6">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+                    <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-id-card text-emerald-600"></i> Profile Overview
+                    </h2>
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        ID: TN-ATH-{{ user.id|stringformat:"04d" }}
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div class="p-3.5 bg-gray-50 rounded-xl">
+                        <span class="block text-xs font-medium text-gray-500 uppercase">Primary Sport</span>
+                        <span class="font-bold text-gray-900 text-base mt-0.5 block">
+                            {{ athlete.primary_sport.name|default:"Not Specified" }}
+                        </span>
+                    </div>
+
+                    <div class="p-3.5 bg-gray-50 rounded-xl">
+                        <span class="block text-xs font-medium text-gray-500 uppercase">District</span>
+                        <span class="font-bold text-gray-900 text-base mt-0.5 block">
+                            {{ athlete.district.name|default:"Tamil Nadu" }}
+                        </span>
+                    </div>
+
+                    <div class="p-3.5 bg-gray-50 rounded-xl">
+                        <span class="block text-xs font-medium text-gray-500 uppercase">Skill Level</span>
+                        <span class="font-bold text-emerald-700 text-base mt-0.5 block">
+                            {{ athlete.get_skill_level_display|default:"Beginner" }}
+                        </span>
+                    </div>
+
+                    <div class="p-3.5 bg-gray-50 rounded-xl">
+                        <span class="block text-xs font-medium text-gray-500 uppercase">Player Category</span>
+                        <span class="font-bold text-emerald-700 text-base mt-0.5 block">
+                            {{ athlete.get_category_display|default:"School Player" }}
+                        </span>
+                    </div>
+
+                    <div class="p-3.5 bg-gray-50 rounded-xl">
+                        <span class="block text-xs font-medium text-gray-500 uppercase">School / College / Club</span>
+                        <span class="font-bold text-gray-900 text-base mt-0.5 block">
+                            {{ athlete.club_or_school|default:"Independent Athlete" }}
+                        </span>
+                    </div>
+
+                    <div class="p-3.5 bg-gray-50 rounded-xl">
+                        <span class="block text-xs font-medium text-gray-500 uppercase">Email Contact</span>
+                        <span class="font-semibold text-gray-800 text-sm mt-0.5 block truncate">
+                            {{ user.email }}
+                        </span>
+                    </div>
+
+                    <div class="p-3.5 bg-gray-50 rounded-xl">
+                        <span class="block text-xs font-medium text-gray-500 uppercase">Phone Number</span>
+                        <span class="font-semibold text-gray-800 text-sm mt-0.5 block">
+                            {{ athlete.phone|default:"N/A" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Card -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm space-y-4">
+                <h3 class="text-base font-bold text-gray-900 border-b border-gray-100 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-amber-500"></i> Quick Actions
+                </h3>
+
+                <a href="{% url 'tournaments' %}" class="block p-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs transition-colors flex items-center justify-between">
+                    <span><i class="fa-solid fa-trophy mr-2 text-emerald-600"></i> Browse Tournaments</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-emerald-500"></i>
+                </a>
+
+                <a href="{% url 'coaches' %}" class="block p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-gray-800 font-semibold text-xs transition-colors flex items-center justify-between">
+                    <span><i class="fa-solid fa-user-tie mr-2 text-slate-600"></i> Find Certified Coaches</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </a>
+
+                <a href="{% url 'districts' %}" class="block p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-gray-800 font-semibold text-xs transition-colors flex items-center justify-between">
+                    <span><i class="fa-solid fa-map-location-dot mr-2 text-slate-600"></i> District Sports Offices</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </a>
+
+                <a href="{% url 'logout' %}" class="block p-3 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 font-semibold text-xs transition-colors flex items-center justify-between">
+                    <span><i class="fa-solid fa-right-from-bracket mr-2"></i> Log Out</span>
+                    <i class="fa-solid fa-chevron-right text-xs text-red-400"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

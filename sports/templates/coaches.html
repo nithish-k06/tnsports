@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Coaches Directory - Tamil Nadu Sports Development Platform{% endblock %}
+{% block nav_coaches %}active{% endblock %}
+
+{% block content %}
+<div class="coaches-page-container">
+
+    <!-- Page Header Title & Subtitle + CTA -->
+    <div class="coaches-header-area flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+        <div>
+            <h1 class="coaches-page-title text-3xl font-extrabold text-slate-900 tracking-tight">Coaches & Trainers</h1>
+            <p class="coaches-page-subtitle text-slate-600 text-sm mt-1">Discover certified sports trainers, mentors, and athletic coaches across Tamil Nadu.</p>
+        </div>
+        <div class="flex items-center gap-3 flex-wrap">
+            <a href="{% url 'coach_dashboard' %}" class="inline-flex items-center gap-2 px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-stopwatch"></i>
+                <span>Coach Dashboard</span>
+            </a>
+            <a href="{% url 'coach_register' %}" class="inline-flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-emerald-500/20 transition-all transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Register as Coach</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Filter Strip (Single-Row Grid / Flexbox) -->
+    <div class="coaches-filter-card">
+        <form method="GET" action="{% url 'coaches' %}" class="coaches-filter-form" id="coachesFilterForm">
+            
+            <!-- Left: Search Field -->
+            <div class="filter-search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" 
+                       name="q" 
+                       value="{{ query }}" 
+                       class="filter-input-search" 
+                       placeholder="Search coaches..." 
+                       autocomplete="off">
+            </div>
+
+            <!-- Center: Sport Dropdown Menu -->
+            <div class="filter-select-box">
+                <i class="fa-solid fa-volleyball select-icon"></i>
+                <select name="sport" class="filter-select-control" onchange="document.getElementById('coachesFilterForm').submit()">
+                    <option value="">All Sports</option>
+                    {% for sport in sports_list %}
+                        <option value="{{ sport.name }}" {% if selected_sport == sport.name %}selected{% endif %}>
+                            {{ sport.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <i class="fa-solid fa-chevron-down select-caret"></i>
+            </div>
+
+            <!-- Right: District Dropdown Menu -->
+            <div class="filter-select-box">
+                <i class="fa-solid fa-location-dot select-icon"></i>
+                <select name="district" class="filter-select-control" onchange="document.getElementById('coachesFilterForm').submit()">
+                    <option value="">All Districts</option>
+                    {% for dist in districts_list %}
+                        <option value="{{ dist.name }}" {% if selected_district == dist.name %}selected{% endif %}>
+                            {{ dist.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <i class="fa-solid fa-chevron-down select-caret"></i>
+            </div>
+
+            <!-- Filter Submit & Reset Actions -->
+            <div class="filter-actions-group">
+                <button type="submit" class="btn-filter-apply">
+                    <i class="fa-solid fa-filter"></i> Filter
+                </button>
+                {% if query or selected_sport or selected_district %}
+                    <a href="{% url 'coaches' %}" class="btn-filter-reset" title="Reset Filters">
+                        <i class="fa-solid fa-xmark"></i>
+                    </a>
+                {% endif %}
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Coaches List Stack Container (White Background Card with Soft Shadow) -->
+    <div class="coaches-table-card">
+
+        <!-- Table Header (Visible on Desktop) -->
+        <div class="coaches-table-header">
+            <div class="col-profile">Coach & Discipline</div>
+            <div class="col-district">District</div>
+            <div class="col-experience">Experience</div>
+            <div class="col-specialization">Specialization</div>
+            <div class="col-action">Action</div>
+        </div>
+
+        <!-- Coach Row Stack -->
+        <div class="coaches-row-stack">
+            {% for coach in coaches %}
+            <div class="coach-item-row">
+                
+                <!-- Profile Column: Avatar + Name + Sport -->
+                <div class="col-profile profile-flex">
+                    <div class="coach-avatar-wrapper">
+                        {% if coach.photo_url %}
+                            <img src="{{ coach.photo_url }}" alt="{{ coach.name }}" class="coach-avatar-img">
+                        {% elif coach.photo %}
+                            <img src="{{ coach.photo.url }}" alt="{{ coach.name }}" class="coach-avatar-img">
+                        {% else %}
+                            <div class="coach-avatar-placeholder">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="coach-profile-info">
+                        <h3 class="coach-name">{{ coach.name }}</h3>
+                        <span class="coach-sport-tag">
+                            <i class="fa-solid fa-tag"></i> {{ coach.sport.name }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- District Column -->
+                <div class="col-district">
+                    <span class="coach-district-text">
+                        <i class="fa-solid fa-location-dot text-gray-400"></i> {{ coach.district.name }}
+                    </span>
+                </div>
+
+                <!-- Experience Column -->
+                <div class="col-experience">
+                    <span class="coach-meta-label">Experience:</span>
+                    <span class="coach-meta-val font-semibold">{{ coach.experience_years }} Years</span>
+                </div>
+
+                <!-- Specialization Column -->
+                <div class="col-specialization">
+                    <span class="coach-meta-label">Specialization:</span>
+                    <span class="coach-spec-badge">{{ coach.specialization }}</span>
+                </div>
+
+                <!-- Action Column: Outlined Green Contact Button -->
+                <div class="col-action">
+                    <button type="button" 
+                            class="btn-contact-outline" 
+                            onclick="openContactModal({{ coach.id }}, '{{ coach.name|escapejs }}', '{{ coach.sport.name|escapejs }}', '{{ coach.district.name|escapejs }}', '{{ coach.experience_years }} Years', '{{ coach.specialization|escapejs }}', '{{ coach.email|default:"contact@tnsports.gov.in"|escapejs }}', '{{ coach.phone|default:"+91 98400 00000"|escapejs }}')">
+                        Contact
+                    </button>
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="coaches-empty-state">
+                <i class="fa-solid fa-user-slash empty-icon"></i>
+                <h3>No Verified Coaches Found</h3>
+                <p>No coach profiles matched your current search filters. Try resetting the filters above.</p>
+                <a href="{% url 'coaches' %}" class="btn-reset-empty">Reset All Filters</a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- Django Pagination Controls -->
+    {% if page_obj.has_other_pages %}
+    <div class="coaches-pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_sport %}&sport={{ selected_sport }}{% endif %}{% if selected_district %}&district={{ selected_district }}{% endif %}" class="page-btn">
+                &laquo; Prev
+            </a>
+        {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+                <span class="page-btn active">{{ i }}</span>
+            {% else %}
+                <a href="?page={{ i }}{% if query %}&q={{ query }}{% endif %}{% if selected_sport %}&sport={{ selected_sport }}{% endif %}{% if selected_district %}&district={{ selected_district }}{% endif %}" class="page-btn">
+                    {{ i }}
+                </a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_sport %}&sport={{ selected_sport }}{% endif %}{% if selected_district %}&district={{ selected_district }}{% endif %}" class="page-btn">
+                Next &raquo;
+            </a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- Interactive Coach Contact Modal Popup -->
+<div class="contact-modal-overlay" id="coachContactModal">
+    <div class="contact-modal-card">
+        <button class="modal-close-btn" onclick="closeContactModal()">&times;</button>
+        <div class="modal-header">
+            <div class="modal-avatar-emblem">
+                <i class="fa-solid fa-address-card"></i>
+            </div>
+            <div>
+                <h3 class="modal-coach-name" id="modalCoachName">Coach Name</h3>
+                <span class="modal-coach-sport" id="modalCoachSport">Sport &bull; Location</span>
+            </div>
+        </div>
+
+        <div class="modal-details-grid">
+            <div class="detail-box">
+                <span class="detail-label">Experience</span>
+                <strong class="detail-value" id="modalCoachExp">15 Years</strong>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Specialization</span>
+                <strong class="detail-value" id="modalCoachSpec">Batting</strong>
+            </div>
+        </div>
+
+        <div class="modal-contact-info">
+            <div class="contact-row">
+                <i class="fa-solid fa-envelope"></i>
+                <div>
+                    <span class="contact-label">Official Email</span>
+                    <a href="#" id="modalCoachEmailLink" class="contact-link"><strong id="modalCoachEmail">email@tnsports.gov.in</strong></a>
+                </div>
+            </div>
+            <div class="contact-row">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                    <span class="contact-label">Phone Hotline</span>
+                    <a href="#" id="modalCoachPhoneLink" class="contact-link"><strong id="modalCoachPhone">+91 98401 12345</strong></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn-send-message" onclick="sendDirectMessage()">
+                <i class="fa-solid fa-paper-plane"></i> Send Inquiry Message
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function openContactModal(id, name, sport, district, experience, specialization, email, phone) {
+        document.getElementById('modalCoachName').innerText = name;
+        document.getElementById('modalCoachSport').innerText = `${sport} • ${district}`;
+        document.getElementById('modalCoachExp').innerText = experience;
+        document.getElementById('modalCoachSpec').innerText = specialization;
+        document.getElementById('modalCoachEmail').innerText = email;
+        document.getElementById('modalCoachEmailLink').href = `mailto:${email}`;
+        document.getElementById('modalCoachPhone').innerText = phone;
+        document.getElementById('modalCoachPhoneLink').href = `tel:${phone.replace(/\s+/g, '')}`;
+
+        const modal = document.getElementById('coachContactModal');
+        if (modal) modal.classList.add('show');
+    }
+
+    function closeContactModal() {
+        const modal = document.getElementById('coachContactModal');
+        if (modal) modal.classList.remove('show');
+    }
+
+    function sendDirectMessage() {
+        const name = document.getElementById('modalCoachName').innerText;
+        closeContactModal();
+        triggerGlobalNotification(`Inquiry message dispatch portal opened for ${name}.`);
+    }
+
+    // Close modal when clicking backdrop
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('coachContactModal');
+        if (event.target === modal) {
+            closeContactModal();
+        }
+    });
+</script>
+{% endblock %}

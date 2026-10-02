@@ -1,0 +1,308 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TN Sports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Chart.js for analytics graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 antialiased">
+
+    <div class="flex min-h-screen">
+
+        <!-- Left Dark Sidebar -->
+        <aside class="w-64 bg-[#0f172a] text-gray-300 flex flex-col justify-between shrink-0 hidden md:flex">
+            <div>
+                <!-- Top Logout -->
+                <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+                    <a href="{% url 'logout' %}" class="flex items-center gap-3 text-xs font-semibold text-gray-400 hover:text-white transition">
+                        <i class="bi bi-box-arrow-left text-lg"></i>
+                        <span>Logout</span>
+                    </a>
+                    {% if user.is_superuser %}
+                        <span class="px-2 py-0.5 text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded">SUPERUSER</span>
+                    {% else %}
+                        <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded">STAFF</span>
+                    {% endif %}
+                </div>
+
+                <!-- Nav Menu -->
+                <nav class="p-4 space-y-1.5 text-xs font-medium">
+                    <a href="{% url 'portal_home' %}" class="flex items-center gap-3 px-4 py-3 text-emerald-400 hover:bg-slate-800 hover:text-emerald-300 rounded-xl transition font-semibold mb-2 border border-emerald-500/20 bg-emerald-500/10">
+                        <i class="bi bi-house-door-fill text-base"></i> Main Website
+                    </a>
+                    <a href="{% url 'custom_admin_dashboard' %}" class="flex items-center gap-3 px-4 py-3 bg-blue-600 text-white rounded-xl font-semibold shadow-sm">
+                        <i class="bi bi-grid-fill text-base"></i> Dashboard
+                    </a>
+                    <a href="/admin/sports/athlete/" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition">
+                        <i class="bi bi-people-fill text-base"></i> Athletes
+                    </a>
+                    <a href="/admin/sports/club/" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition">
+                        <i class="bi bi-shield-shaded text-base"></i> Clubs
+                    </a>
+                    <a href="/admin/sports/sport/" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition">
+                        <i class="bi bi-trophy text-base"></i> Sports
+                    </a>
+                    <a href="/admin/sports/tournament/" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition">
+                        <i class="bi bi-award text-base"></i> Tournaments
+                    </a>
+                    <a href="/admin/sports/newsupdate/" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition">
+                        <i class="bi bi-newspaper text-base"></i> News
+                    </a>
+                    
+                    {% if user.is_superuser %}
+                        <a href="/admin/" class="flex items-center justify-between px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition text-amber-300">
+                            <span class="flex items-center gap-3"><i class="bi bi-bar-chart-line text-base"></i> Financial & Reports</span>
+                            <i class="bi bi-shield-lock-fill text-xs text-amber-400"></i>
+                        </a>
+                        <a href="/admin/auth/user/" class="flex items-center justify-between px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition text-amber-300">
+                            <span class="flex items-center gap-3"><i class="bi bi-person-badge text-base"></i> Users Management</span>
+                            <i class="bi bi-shield-lock-fill text-xs text-amber-400"></i>
+                        </a>
+                    {% else %}
+                        <div class="flex items-center justify-between px-4 py-3 text-gray-500 cursor-not-allowed rounded-xl" title="Superuser access required">
+                            <span class="flex items-center gap-3"><i class="bi bi-bar-chart-line text-base opacity-60"></i> Reports</span>
+                            <i class="bi bi-lock-fill text-xs text-gray-600"></i>
+                        </div>
+                        <div class="flex items-center justify-between px-4 py-3 text-gray-500 cursor-not-allowed rounded-xl" title="Superuser access required">
+                            <span class="flex items-center gap-3"><i class="bi bi-person-badge text-base opacity-60"></i> Users</span>
+                            <i class="bi bi-lock-fill text-xs text-gray-600"></i>
+                        </div>
+                    {% endif %}
+
+                    <a href="/admin/" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 hover:text-white rounded-xl transition">
+                        <i class="bi bi-gear text-base"></i> Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Panel -->
+        <main class="flex-1 p-6 md:p-8 overflow-y-auto">
+            
+            <!-- Top Header -->
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Tamil Nadu Sports Development Platform Control Panel</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="{% url 'portal_home' %}" class="inline-flex items-center gap-2 px-3.5 py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl border border-emerald-200 text-xs font-bold transition">
+                        <i class="bi bi-arrow-left"></i> Return to Site
+                    </a>
+                    <div class="flex items-center gap-3 bg-white p-2 rounded-xl border shadow-sm">
+                        <div class="w-9 h-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-sm">
+                            {{ user.username|slice:":1"|upper|default:"A" }}
+                        </div>
+                        <div class="text-left hidden sm:block">
+                            <p class="text-xs font-bold text-gray-900 leading-tight">{{ user.get_full_name|default:user.username|default:"Admin" }}</p>
+                            <p class="text-[10px] text-gray-400">{% if user.is_superuser %}Super Admin{% else %}Staff Member{% endif %}</p>
+                        </div>
+                        <i class="bi bi-chevron-down text-xs text-gray-400 ml-1"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 4 Metrics Row -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+                
+                <!-- Total Athletes -->
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500 text-white flex items-center justify-center text-xl shadow-sm">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Total Athletes</span>
+                        <h3 class="text-xl font-extrabold text-gray-900 mt-0.5">{{ total_athletes }}</h3>
+                    </div>
+                </div>
+
+                <!-- Total Clubs -->
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl shadow-sm">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Total Clubs</span>
+                        <h3 class="text-xl font-extrabold text-gray-900 mt-0.5">{{ total_clubs }}</h3>
+                    </div>
+                </div>
+
+                <!-- Total Sports -->
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xl shadow-sm">
+                        <i class="bi bi-trophy-fill"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Total Sports</span>
+                        <h3 class="text-xl font-extrabold text-gray-900 mt-0.5">{{ total_sports }}</h3>
+                    </div>
+                </div>
+
+                <!-- Total Tournaments -->
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xl shadow-sm">
+                        <i class="bi bi-calendar2-event-fill"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wide">Total Tournaments</span>
+                        <h3 class="text-xl font-extrabold text-gray-900 mt-0.5">{{ total_tournaments }}</h3>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Mid Section: Analytics & Recent Registrations -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+                
+                <!-- Tournament Statistics & Sports Share -->
+                <div class="lg:col-span-8 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-sm font-bold text-gray-900">Tournament Statistics & Sports Distribution</h3>
+                        <span class="text-[10px] text-gray-400 bg-gray-50 px-2 py-1 rounded border border-gray-100">Live Analytics</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <!-- Left: Bar Chart -->
+                        <div class="md:col-span-7 h-56">
+                            <canvas id="tournamentBarChart"></canvas>
+                        </div>
+                        <!-- Right: Doughnut Chart -->
+                        <div class="md:col-span-5 h-56 flex flex-col items-center justify-center">
+                            <canvas id="sportsDoughnutChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Registrations Feed -->
+                <div class="lg:col-span-4 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold text-gray-900">Recent Registrations</h3>
+                        <a href="/admin/sports/athlete/" class="text-[11px] font-semibold text-blue-600 hover:underline">View All</a>
+                    </div>
+                    <div class="space-y-4">
+                        {% for athlete in recent_athletes %}
+                        <div class="flex items-center justify-between text-xs p-2 rounded-xl hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0">
+                                    <i class="bi bi-person-fill text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900">{% if athlete.full_name %}{{ athlete.full_name }}{% else %}{{ athlete.first_name }}{% endif %}</p>
+                                    <p class="text-[10px] text-gray-400">{% if athlete.district_name %}{{ athlete.district_name }}{% else %}{{ athlete.district.name }}{% endif %}</p>
+                                </div>
+                            </div>
+                            <span class="text-[11px] font-semibold text-gray-500 bg-gray-50 px-2 py-1 rounded-md border border-gray-100">
+                                {% if athlete.sport_name %}{{ athlete.sport_name }}{% else %}{{ athlete.primary_sport.name }}{% endif %}
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Quick Actions Row -->
+            <section>
+                <h3 class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-4">Quick Actions</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                    
+                    <a href="/admin/sports/athlete/" class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition flex items-center gap-3 text-xs font-bold text-gray-700 hover:text-blue-600">
+                        <i class="bi bi-person-plus-fill text-blue-500 text-lg"></i>
+                        <span>Manage Athletes</span>
+                    </a>
+
+                    <a href="/admin/sports/club/" class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition flex items-center gap-3 text-xs font-bold text-gray-700 hover:text-emerald-600">
+                        <i class="bi bi-people-fill text-emerald-500 text-lg"></i>
+                        <span>Manage Clubs</span>
+                    </a>
+
+                    <a href="/admin/sports/sport/" class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition flex items-center gap-3 text-xs font-bold text-gray-700 hover:text-teal-600">
+                        <i class="bi bi-diagram-3-fill text-teal-500 text-lg"></i>
+                        <span>Manage Sports</span>
+                    </a>
+
+                    <a href="/admin/sports/tournament/" class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition flex items-center gap-3 text-xs font-bold text-gray-700 hover:text-amber-600">
+                        <i class="bi bi-trophy text-amber-500 text-lg"></i>
+                        <span>Manage Tournaments</span>
+                    </a>
+
+                    <a href="/admin/sports/newsupdate/" class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition flex items-center gap-3 text-xs font-bold text-gray-700 hover:text-orange-600">
+                        <i class="bi bi-file-earmark-text text-orange-500 text-lg"></i>
+                        <span>Manage News</span>
+                    </a>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Chart.js Configuration -->
+    <script>
+        // Bar Chart: Tournament Statistics by District
+        const barCtx = document.getElementById('tournamentBarChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Chennai', 'Madurai', 'Salem', 'Trichy'],
+                datasets: [
+                    {
+                        label: 'Upcoming',
+                        data: [15, 11, 7, 13],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 6,
+                    },
+                    {
+                        label: 'Completed',
+                        data: [25, 18, 14, 20],
+                        backgroundColor: '#93c5fd',
+                        borderRadius: 6,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 } } },
+                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+                }
+            }
+        });
+
+        // Doughnut Chart: Sports Distribution Percentage
+        const doughnutCtx = document.getElementById('sportsDoughnutChart').getContext('2d');
+        new Chart(doughnutCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Cricket (30%)', 'Football (25%)', 'Kabaddi (15%)', 'Athletics (15%)', 'Badminton (10%)'],
+                datasets: [{
+                    data: [30, 25, 15, 15, 10],
+                    backgroundColor: ['#2563eb', '#16a34a', '#f59e0b', '#8b5cf6', '#ea580c'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { boxWidth: 8, font: { size: 9 }, padding: 8 }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+    </script>
+</body>
+</html>

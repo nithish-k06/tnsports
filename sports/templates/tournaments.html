@@ -1,0 +1,390 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tournaments - Multi-Filter Search - TN Sports Platform{% endblock %}
+{% block nav_tournaments %}active{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-4 py-8 space-y-6">
+    
+    <!-- Django Notification Alerts -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="p-3.5 rounded-xl text-xs font-bold flex items-center gap-2 {% if message.tags == 'success' %}bg-emerald-50 text-emerald-800 border border-emerald-200{% else %}bg-amber-50 text-amber-800 border border-amber-200{% endif %}">
+                <i class="bi bi-info-circle-fill text-sm"></i>
+                <span>{{ message }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Hero Header Strip with Sanction CTA -->
+    <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 text-white shadow-xl border border-indigo-500/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-full text-xs font-extrabold mb-2">
+                <i class="bi bi-trophy-fill text-amber-400"></i> Official SDAT State & District Sanctioned Meet
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Tamil Nadu State & District Tournaments</h2>
+            <p class="text-xs text-slate-300 mt-1 max-w-2xl">
+                Browse sanctioned competitions for School Students (EMIS), College & University Athletes, and General Open Category tournaments across all 38 districts.
+            </p>
+        </div>
+
+        <button onclick="toggleModal(true)" class="px-5 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-extrabold text-xs rounded-xl shadow-lg transition flex items-center gap-2 shrink-0 cursor-pointer">
+            <i class="bi bi-file-earmark-plus-fill text-sm"></i> Request DSO Tournament Sanction
+        </button>
+    </div>
+
+    <!-- Category Level Quick Tabs -->
+    <div class="flex flex-wrap items-center gap-2 bg-white p-2 rounded-2xl border border-gray-200 shadow-xs text-xs font-extrabold">
+        <a href="{% url 'tournaments' %}" class="px-4 py-2 rounded-xl transition flex items-center gap-2 {% if not selected_level %}bg-slate-900 text-white shadow-xs{% else %}text-gray-600 hover:bg-gray-100{% endif %}">
+            <i class="bi bi-grid-fill"></i> All Tournaments <span class="px-2 py-0.5 rounded-full text-[10px] {% if not selected_level %}bg-slate-800 text-emerald-400{% else %}bg-gray-100 text-gray-700{% endif %}">{{ total_count }}</span>
+        </a>
+
+        <a href="{% url 'tournaments' %}?level=SCHOOL{% if selected_district %}&district={{ selected_district }}{% endif %}{% if selected_sport %}&sport={{ selected_sport }}{% endif %}" class="px-4 py-2 rounded-xl transition flex items-center gap-2 {% if selected_level == 'SCHOOL' %}bg-emerald-600 text-white shadow-xs{% else %}text-gray-600 hover:bg-gray-100{% endif %}">
+            🏫 School Level <span class="px-2 py-0.5 rounded-full text-[10px] {% if selected_level == 'SCHOOL' %}bg-emerald-700 text-white{% else %}bg-emerald-50 text-emerald-700{% endif %}">{{ school_count }}</span>
+        </a>
+
+        <a href="{% url 'tournaments' %}?level=COLLEGE{% if selected_district %}&district={{ selected_district }}{% endif %}{% if selected_sport %}&sport={{ selected_sport }}{% endif %}" class="px-4 py-2 rounded-xl transition flex items-center gap-2 {% if selected_level == 'COLLEGE' %}bg-blue-600 text-white shadow-xs{% else %}text-gray-600 hover:bg-gray-100{% endif %}">
+            🎓 College / University Level <span class="px-2 py-0.5 rounded-full text-[10px] {% if selected_level == 'COLLEGE' %}bg-blue-700 text-white{% else %}bg-blue-50 text-blue-700{% endif %}">{{ college_count }}</span>
+        </a>
+
+        <a href="{% url 'tournaments' %}?level=GENERAL{% if selected_district %}&district={{ selected_district }}{% endif %}{% if selected_sport %}&sport={{ selected_sport }}{% endif %}" class="px-4 py-2 rounded-xl transition flex items-center gap-2 {% if selected_level == 'GENERAL' %}bg-amber-500 text-slate-950 shadow-xs{% else %}text-gray-600 hover:bg-gray-100{% endif %}">
+            🌐 General / Open Category <span class="px-2 py-0.5 rounded-full text-[10px] {% if selected_level == 'GENERAL' %}bg-amber-600 text-white{% else %}bg-amber-50 text-amber-800{% endif %}">{{ general_count }}</span>
+        </a>
+    </div>
+
+    <!-- Comprehensive Filter Suite Form -->
+    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+            <h3 class="text-xs font-black uppercase tracking-wider text-gray-800 flex items-center gap-2">
+                <i class="bi bi-funnel-fill text-indigo-600"></i> Tournament Advanced Filters & Search
+            </h3>
+            {% if active_filter_count > 0 %}
+            <a href="{% url 'tournaments' %}" class="text-xs font-bold text-red-600 hover:text-red-700 flex items-center gap-1 transition">
+                <i class="bi bi-x-circle-fill"></i> Clear All Filters ({{ active_filter_count }})
+            </a>
+            {% endif %}
+        </div>
+
+        <form method="GET" action="{% url 'tournaments' %}" class="space-y-4">
+            
+            <!-- Live Search Bar -->
+            <div class="relative">
+                <i class="bi bi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                <input type="text" 
+                       name="q" 
+                       value="{{ search_query }}" 
+                       placeholder="Search tournaments by title, venue, organizer name or age keywords..." 
+                       class="w-full pl-9 pr-24 py-2.5 bg-gray-50 border border-gray-300 rounded-xl text-xs font-bold text-gray-900 focus:bg-white focus:border-indigo-500 outline-none shadow-2xs">
+                <button type="submit" class="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold rounded-lg transition shadow-2xs">
+                    Search
+                </button>
+            </div>
+
+            <!-- Filter Dropdowns Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
+                
+                <!-- 1. Tournament Level Category -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Category Level</label>
+                    <select name="level" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All Category Levels</option>
+                        <option value="SCHOOL" {% if selected_level == 'SCHOOL' %}selected{% endif %}>🏫 School Level (U-14/17/19)</option>
+                        <option value="COLLEGE" {% if selected_level == 'COLLEGE' %}selected{% endif %}>🎓 College & University (U-25)</option>
+                        <option value="GENERAL" {% if selected_level == 'GENERAL' %}selected{% endif %}>🌐 General / Open Category</option>
+                    </select>
+                </div>
+
+                <!-- 2. Host District -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Host District</label>
+                    <select name="district" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All 38 Districts</option>
+                        {% for d in districts %}
+                            <option value="{{ d.slug }}" {% if selected_district == d.slug %}selected{% endif %}>{{ d.name }} District</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- 3. Sport Discipline -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Sport Discipline</label>
+                    <select name="sport" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All Sports</option>
+                        {% for s in sports %}
+                            <option value="{{ s.name }}" {% if selected_sport == s.name %}selected{% endif %}>{{ s.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- 4. Age Group Condition -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Age Group Condition</label>
+                    <select name="age" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All Age Groups</option>
+                        <option value="U-14" {% if selected_age == 'U-14' %}selected{% endif %}>Under 14 (U-14)</option>
+                        <option value="U-17" {% if selected_age == 'U-17' %}selected{% endif %}>Under 17 (U-17)</option>
+                        <option value="U-19" {% if selected_age == 'U-19' %}selected{% endif %}>Under 19 (U-19)</option>
+                        <option value="U-23" {% if selected_age == 'U-23' %}selected{% endif %}>Under 23 (U-23)</option>
+                        <option value="U-25" {% if selected_age == 'U-25' %}selected{% endif %}>Under 25 (U-25)</option>
+                        <option value="Open" {% if selected_age == 'Open' %}selected{% endif %}>Open Category (All Ages)</option>
+                        <option value="Masters" {% if selected_age == 'Masters' %}selected{% endif %}>Masters / Veterans (35+)</option>
+                    </select>
+                </div>
+
+                <!-- 5. Registration Window & Deadline -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Registration Status</label>
+                    <select name="deadline" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All Registration Statuses</option>
+                        <option value="OPEN" {% if selected_deadline == 'OPEN' %}selected{% endif %}>⚡ Active Entry Deadline</option>
+                        <option value="UPCOMING" {% if selected_deadline == 'UPCOMING' %}selected{% endif %}>📅 Upcoming Matches</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </form>
+
+        <!-- Active Applied Filter Badges -->
+        {% if active_filter_count > 0 %}
+        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-gray-100 text-[11px] font-bold">
+            <span class="text-gray-500">Active Filters:</span>
+
+            {% if search_query %}
+            <span class="px-2.5 py-1 bg-indigo-50 text-indigo-900 border border-indigo-200 rounded-lg flex items-center gap-1">
+                Query: "{{ search_query }}"
+                <a href="{% url 'tournaments' %}?level={{ selected_level }}&district={{ selected_district }}&sport={{ selected_sport }}&age={{ selected_age }}&deadline={{ selected_deadline }}" class="text-indigo-600 hover:text-indigo-900 ml-0.5">&times;</a>
+            </span>
+            {% endif %}
+
+            {% if selected_level %}
+            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-900 border border-emerald-200 rounded-lg flex items-center gap-1">
+                Level: {{ selected_level }}
+                <a href="{% url 'tournaments' %}?q={{ search_query }}&district={{ selected_district }}&sport={{ selected_sport }}&age={{ selected_age }}&deadline={{ selected_deadline }}" class="text-emerald-600 hover:text-emerald-900 ml-0.5">&times;</a>
+            </span>
+            {% endif %}
+
+            {% if selected_district %}
+            <span class="px-2.5 py-1 bg-blue-50 text-blue-900 border border-blue-200 rounded-lg flex items-center gap-1">
+                District: {{ selected_district|title }}
+                <a href="{% url 'tournaments' %}?q={{ search_query }}&level={{ selected_level }}&sport={{ selected_sport }}&age={{ selected_age }}&deadline={{ selected_deadline }}" class="text-blue-600 hover:text-blue-900 ml-0.5">&times;</a>
+            </span>
+            {% endif %}
+
+            {% if selected_sport %}
+            <span class="px-2.5 py-1 bg-purple-50 text-purple-900 border border-purple-200 rounded-lg flex items-center gap-1">
+                Sport: {{ selected_sport }}
+                <a href="{% url 'tournaments' %}?q={{ search_query }}&level={{ selected_level }}&district={{ selected_district }}&age={{ selected_age }}&deadline={{ selected_deadline }}" class="text-purple-600 hover:text-purple-900 ml-0.5">&times;</a>
+            </span>
+            {% endif %}
+
+            {% if selected_age %}
+            <span class="px-2.5 py-1 bg-amber-50 text-amber-900 border border-amber-200 rounded-lg flex items-center gap-1">
+                Age: {{ selected_age }}
+                <a href="{% url 'tournaments' %}?q={{ search_query }}&level={{ selected_level }}&district={{ selected_district }}&sport={{ selected_sport }}&deadline={{ selected_deadline }}" class="text-amber-600 hover:text-amber-900 ml-0.5">&times;</a>
+            </span>
+            {% endif %}
+
+            {% if selected_deadline %}
+            <span class="px-2.5 py-1 bg-teal-50 text-teal-900 border border-teal-200 rounded-lg flex items-center gap-1">
+                Status: {{ selected_deadline }}
+                <a href="{% url 'tournaments' %}?q={{ search_query }}&level={{ selected_level }}&district={{ selected_district }}&sport={{ selected_sport }}&age={{ selected_age }}" class="text-teal-600 hover:text-teal-900 ml-0.5">&times;</a>
+            </span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Tournaments Display Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for t in tournaments %}
+        <div class="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4 group relative overflow-hidden">
+            
+            <div class="space-y-3">
+                <!-- Level Badge & DSO Approval Pill -->
+                <div class="flex flex-wrap justify-between items-center gap-1.5 border-b border-gray-100 pb-2.5">
+                    {% if t.level_category == 'SCHOOL' %}
+                        <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">
+                            🏫 School Level
+                        </span>
+                    {% elif t.level_category == 'COLLEGE' %}
+                        <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">
+                            🎓 College / University
+                        </span>
+                    {% else %}
+                        <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-900 border border-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">
+                            🌐 General Open Category
+                        </span>
+                    {% endif %}
+
+                    <span class="text-[10px] font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full">
+                        {{ t.sport.name }}
+                    </span>
+                </div>
+
+                <div>
+                    <h3 class="font-extrabold text-sm text-gray-900 group-hover:text-emerald-600 transition leading-snug">
+                        {{ t.title }}
+                    </h3>
+                    <p class="text-xs font-bold text-gray-600 mt-1 flex items-center gap-1">
+                        <i class="bi bi-geo-alt-fill text-emerald-600"></i> {{ t.venue_name }}, <span class="text-gray-900">{{ t.district.name }}</span>
+                    </p>
+                </div>
+
+                <!-- Age Condition & Eligibility Box -->
+                <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1 text-xs">
+                    <div class="flex items-center justify-between text-[11px] font-extrabold">
+                        <span class="text-gray-700 flex items-center gap-1">
+                            <i class="bi bi-person-badge-fill text-indigo-600"></i> Age Eligibility:
+                        </span>
+                        <span class="text-indigo-900 font-bold bg-indigo-100/80 px-2 py-0.5 rounded-md">
+                            {{ t.age_condition }}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between text-[10px] text-gray-500 pt-1">
+                        <span>Expected Teams: <strong class="text-gray-800 font-mono">{{ t.expected_teams }}</strong></span>
+                        <span>DSO Approved <i class="bi bi-check-circle-fill text-emerald-600"></i></span>
+                    </div>
+                </div>
+
+                <div class="space-y-1 text-xs text-gray-600">
+                    <p class="flex items-center justify-between text-[11px]">
+                        <span class="font-medium text-gray-500"><i class="bi bi-calendar-event mr-1 text-emerald-600"></i> Dates:</span>
+                        <strong class="text-gray-900">{{ t.start_date|date:"M d, Y" }} &ndash; {{ t.end_date|date:"M d, Y" }}</strong>
+                    </p>
+                    <p class="flex items-center justify-between text-[11px]">
+                        <span class="font-medium text-gray-500"><i class="bi bi-clock-history mr-1 text-amber-600"></i> Entry Deadline:</span>
+                        <strong class="text-red-600">{{ t.entry_deadline|date:"M d, Y" }}</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="border-t border-gray-100 pt-3 flex items-center justify-between text-xs">
+                <div class="truncate max-w-[170px]">
+                    <span class="text-[10px] text-gray-400 block font-semibold">Organizer</span>
+                    <span class="font-extrabold text-gray-800 text-[11px] truncate block">{{ t.organizer_name }}</span>
+                </div>
+                <a href="mailto:{{ t.organizer_email }}" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-extrabold transition shrink-0 flex items-center gap-1">
+                    Contact <i class="bi bi-arrow-right-short text-base"></i>
+                </a>
+            </div>
+
+        </div>
+        {% empty %}
+        <div class="col-span-full bg-white p-12 rounded-2xl border border-gray-200 text-center space-y-3">
+            <div class="w-12 h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="bi bi-trophy"></i>
+            </div>
+            <h4 class="text-sm font-extrabold text-gray-800">No Tournaments Found matching criteria</h4>
+            <p class="text-xs text-gray-500 max-w-md mx-auto">
+                No sanctioned tournaments found matching your active search query or filter selection. Try clearing filters or submit a new proposal to the DSO.
+            </p>
+            <a href="{% url 'tournaments' %}" class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-extrabold hover:bg-indigo-700 transition">
+                Reset All Filters
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+
+<!-- Request Modal for DSO Approval -->
+<div id="sanction-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-hidden p-6 shadow-2xl my-auto border border-gray-100 flex flex-col">
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+            <div>
+                <h3 class="font-black text-base text-gray-900 flex items-center gap-2">
+                    <i class="bi bi-file-earmark-plus text-emerald-600"></i> Request Tournament DSO Sanction
+                </h3>
+                <p class="text-xs text-gray-500">Submit tournament proposal for District Sports Officer review & official sanction</p>
+            </div>
+            <button onclick="toggleModal(false)" type="button" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center font-bold transition">&times;</button>
+        </div>
+
+        <form method="POST" action="{% url 'tournaments' %}" enctype="multipart/form-data" class="space-y-4 overflow-y-auto pr-1 flex-1">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Tournament Title <span class="text-red-500">*</span></label>
+                    {{ form.title }}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Tournament Level Category <span class="text-red-500">*</span></label>
+                    {{ form.level_category }}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Age Eligibility / Age Condition <span class="text-red-500">*</span></label>
+                    {{ form.age_condition }}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Sport Discipline <span class="text-red-500">*</span></label>
+                    {{ form.sport }}
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Host District (DSO Jurisdiction) <span class="text-red-500">*</span></label>
+                    {{ form.district }}
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Venue Ground Address & Stadium <span class="text-red-500">*</span></label>
+                    {{ form.venue_name }}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Start Date <span class="text-red-500">*</span></label>
+                    {{ form.start_date }}
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">End Date <span class="text-red-500">*</span></label>
+                    {{ form.end_date }}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Entry Deadline <span class="text-red-500">*</span></label>
+                    {{ form.entry_deadline }}
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Expected Teams / Athletes <span class="text-red-500">*</span></label>
+                    {{ form.expected_teams }}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Organizer / Club / Board Name <span class="text-red-500">*</span></label>
+                    {{ form.organizer_name }}
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Organizer Phone Number <span class="text-red-500">*</span></label>
+                    {{ form.organizer_contact }}
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Official Contact Email <span class="text-red-500">*</span></label>
+                    {{ form.organizer_email }}
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Rulebook / Match Schedule PDF Document</label>
+                    {{ form.rulebook_doc }}
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-4 border-t mt-4">
+                <button type="button" onclick="toggleModal(false)" class="px-4 py-2 border rounded-xl text-xs font-extrabold text-gray-600 hover:bg-gray-50 cursor-pointer">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-extrabold hover:bg-emerald-700 shadow-md transition cursor-pointer">Submit to DSO for Sanction</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function toggleModal(show) {
+        document.getElementById('sanction-modal').classList.toggle('hidden', !show);
+    }
+</script>
+{% endblock %}

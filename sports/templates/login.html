@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ role_title|default:"Login" }} - Tamil Nadu Sports Development Platform{% endblock %}
+
+{% block content %}
+<div class="login-page-canvas">
+    
+    <!-- Watermark Silhouettes in Background -->
+    <div class="watermark-bg-elements">
+        <div class="watermark-icon runner-1"><i class="fa-solid fa-person-running"></i></div>
+        <div class="watermark-icon footballer-1"><i class="fa-solid fa-futbol"></i></div>
+        <div class="watermark-icon hockey-1"><i class="fa-solid fa-person-walking"></i></div>
+        <div class="watermark-icon runner-2"><i class="fa-solid fa-person-rays"></i></div>
+        <div class="watermark-icon emblem-bg"><i class="fa-solid fa-shield-halved"></i></div>
+    </div>
+
+    <div class="login-card-wrapper">
+
+        <!-- Top Branding Above Card -->
+        <div class="top-branding-header">
+            <div class="branding-logo-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="branding-text-group">
+                <span class="branding-title">Tamil Nadu</span>
+                <span class="branding-subtext">Sports Development Platform</span>
+            </div>
+        </div>
+
+        <!-- Role Quick Switching Bar -->
+        <div class="role-selector-header-nav overflow-x-auto flex-wrap">
+            <a href="{% url 'role_login' role='player' %}" class="role-tab-nav-btn {% if role|default:'player' == 'player' %}active{% endif %}">
+                <i class="fa-solid fa-running"></i> Player
+            </a>
+            <a href="{% url 'role_login' role='coach' %}" class="role-tab-nav-btn {% if role == 'coach' %}active{% endif %}">
+                <i class="fa-solid fa-clipboard-user"></i> Coach
+            </a>
+            <a href="{% url 'collector_login' %}" class="role-tab-nav-btn {% if role == 'officer' or role == 'collector' %}active{% endif %}">
+                <i class="fa-solid fa-landmark-flag"></i> Collector & DSO
+            </a>
+            <a href="{% url 'minister_login' %}" class="role-tab-nav-btn admin {% if role == 'minister' %}active{% endif %}">
+                <i class="fa-solid fa-crown text-amber-400"></i> Minister
+            </a>
+        </div>
+
+        <!-- Centered Login Card -->
+        <div class="login-card">
+            
+            <!-- Card Heading -->
+            <div class="card-title-box">
+                <span class="role-login-badge badge-{{ role|default:'player' }}" {% if role_theme_color %}style="border-color: {{ role_theme_color }}; color: {{ role_theme_color }};"{% endif %}>
+                    <i class="{% if role_icon_class %}{{ role_icon_class }}{% elif role == 'coach' %}fa-solid fa-clipboard-user{% elif role == 'officer' %}fa-solid fa-user-shield{% elif role == 'collector' %}fa-solid fa-building-columns{% elif role == 'minister' %}fa-solid fa-crown text-amber-400{% else %}fa-solid fa-running{% endif %}"></i> {{ role_badge|default:"Athlete Sign In" }}
+                </span>
+                <h1 class="card-login-heading">{{ role_title|default:"Athlete & Player Portal" }}</h1>
+                <p class="role-login-subtitle">{{ role_subtitle|default:"Sign in to access your athlete profile, tournament registrations, and grant applications." }}</p>
+            </div>
+
+            <!-- Validation Error Alert -->
+            {% if error_message %}
+                <div class="login-alert-box error">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>{{ error_message }}</span>
+                </div>
+            {% endif %}
+
+            <!-- Django Login Form -->
+            <form method="POST" action="{% if role == 'officer' %}{% url 'officer_login' %}{% elif role == 'collector' %}{% url 'collector_login' %}{% elif role == 'minister' %}{% url 'minister_login' %}{% elif role %}{% url 'role_login' role=role %}{% else %}{% url 'login' %}{% endif %}" class="login-form-body">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <!-- Email Field -->
+                <div class="form-group-custom">
+                    <label for="emailInput" class="form-label-custom">Email or Username</label>
+                    <div class="input-field-wrapper">
+                        {% if form %}
+                            {{ form.email }}
+                        {% else %}
+                            <input type="text" 
+                                   id="emailInput" 
+                                   name="email" 
+                                   class="form-control-custom" 
+                                   placeholder="Enter your email or username" 
+                                   required 
+                                   autocomplete="username">
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group-custom">
+                    <div class="password-label-row">
+                        <label for="passwordInput" class="form-label-custom">Password</label>
+                    </div>
+                    <div class="input-field-wrapper">
+                        {% if form %}
+                            {{ form.password }}
+                        {% else %}
+                            <input type="password" 
+                                   id="passwordInput" 
+                                   name="password" 
+                                   class="form-control-custom" 
+                                   placeholder="Enter your password" 
+                                   required 
+                                   autocomplete="current-password">
+                        {% endif %}
+                        <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility()" title="Toggle password visibility">
+                            <i class="bi bi-eye" id="passwordEyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Auxiliary Forgot Password Link -->
+                <div class="form-auxiliary-row">
+                    <a href="#" class="forgot-password-link" onclick="triggerGlobalNotification('Password reset link sent to your registered email.')">Forgot Password?</a>
+                </div>
+
+                <!-- Full-Width Emerald Submit Button -->
+                <button type="submit" class="btn-submit-emerald">
+                    Login to Portal
+                </button>
+            </form>
+
+            <!-- Footer Link -->
+            <div class="card-footer-register">
+                <p>Don't have an account? <a href="{% if role == 'coach' %}{% url 'coach_register' %}{% else %}{% url 'athlete_register' %}{% endif %}" class="register-here-link" id="registerHereBtn">Register here</a></p>
+                <p class="mt-2"><a href="{% url 'portal_home' %}" class="text-xs text-gray-500 hover:underline">&larr; Return to Portal Home</a></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function togglePasswordVisibility() {
+        const input = document.getElementById('passwordInput');
+        const icon = document.getElementById('passwordEyeIcon');
+        if (input) {
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'bi bi-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'bi bi-eye';
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if error_message %}
+        if (typeof triggerGlobalNotification === 'function') {
+            triggerGlobalNotification('{{ error_message|escapejs }}', 'error');
+        }
+        {% endif %}
+
+        const loginForm = document.querySelector('.login-form-body');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                const emailInput = document.getElementById('emailInput');
+                const passwordInput = document.getElementById('passwordInput');
+                let valid = true;
+
+                if (emailInput && !emailInput.value.trim()) {
+                    emailInput.style.borderColor = '#ef4444';
+                    valid = false;
+                }
+                if (passwordInput && !passwordInput.value) {
+                    passwordInput.style.borderColor = '#ef4444';
+                    valid = false;
+                }
+
+                if (!valid) {
+                    e.preventDefault();
+                    if (typeof triggerGlobalNotification === 'function') {
+                        triggerGlobalNotification('Please enter both Email/Username and Password credentials.', 'error');
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

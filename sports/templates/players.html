@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}TNSPORTS | School, College & Professional Players Roster{% endblock %}
+{% block nav_players %}active{% endblock %}
+
+{% block content %}
+    <!-- Hero Banner -->
+    <div class="page-hero">
+        <div class="hero-tag"><i class="fa-solid fa-user-ninja"></i> Players Hub & Roster</div>
+        <h1 class="page-hero-title">SCHOOL, COLLEGE & PRO PLAYERS ROSTER</h1>
+        <p class="page-hero-subtitle">Discover Tamil Nadu school student-athletes, college varsity talent, and world-class sports champions across disciplines.</p>
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{% url 'athlete_register' %}" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: var(--accent-emerald, #16a34a); padding: 0.75rem 1.5rem; font-weight: 700; border-radius: 0.75rem;">
+                <i class="fa-solid fa-user-plus"></i> Register as Athlete
+            </a>
+        </div>
+    </div>
+
+
+
+    <!-- Advanced Roster Filter Bar -->
+    <div style="background: var(--bg-card, white); border: 1px solid var(--border-color, #e2e8f0); border-radius: 1.25rem; padding: 1.25rem; margin-bottom: 2rem; box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.05rem; color: var(--text-primary, #0f172a);">
+                <span><i class="fa-solid fa-sliders" style="color: var(--accent-emerald, #16a34a);"></i> Filter Player Roster</span>
+                <span id="resultsCountBadge" style="font-size: 0.78rem; font-weight: 800; background: var(--accent-emerald, #16a34a); color: white; padding: 0.2rem 0.65rem; border-radius: 9999px;">Showing {{ total_count }} Players</span>
+            </div>
+            <button onclick="resetFilters()" style="background: transparent; border: none; color: var(--text-secondary, #64748b); font-size: 0.85rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; transition: color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-secondary, #64748b)'">
+                <i class="fa-solid fa-rotate-left"></i> Reset Filters
+            </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.85rem; align-items: center;">
+            <!-- Search Box -->
+            <div style="position: relative;">
+                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.9rem;"></i>
+                <input type="text" id="searchPlayerInput" placeholder="Search name, institution..." onkeyup="filterRoster()" style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.6rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-body, #f8fafc); color: var(--text-primary, #0f172a); font-size: 0.9rem; font-weight: 600; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--accent-emerald, #16a34a)'" onblur="this.style.borderColor='var(--border-color, #cbd5e1)'">
+            </div>
+
+            <!-- Category Filter Select -->
+            <div>
+                <select id="categoryFilterSelect" onchange="filterRoster()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-body, #f8fafc); font-size: 0.88rem; font-weight: 700; color: var(--text-primary, #1e293b); outline: none; cursor: pointer;">
+                    <option value="all">🏆 All Categories ({{ total_count }})</option>
+                    <option value="school">🎓 School Players ({{ school_count }})</option>
+                    <option value="college">🏛️ College Players ({{ college_count }})</option>
+                    <option value="pro">⭐ Pro & Elite ({{ pro_count }})</option>
+                </select>
+            </div>
+
+            <!-- Sport Filter Select -->
+            <div>
+                <select id="sportFilterSelect" onchange="filterRoster()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-body, #f8fafc); font-size: 0.88rem; font-weight: 700; color: var(--text-primary, #1e293b); outline: none; cursor: pointer;">
+                    <option value="all">⚽ All Sports</option>
+                    <option value="football">Football</option>
+                    <option value="cricket">Cricket</option>
+                    <option value="basketball">Basketball</option>
+                    <option value="athletics">Athletics</option>
+                    <option value="badminton">Badminton</option>
+                    <option value="chess">Chess</option>
+                    <option value="kabaddi">Kabaddi</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="swimming">Swimming</option>
+                    <option value="volleyball">Volleyball</option>
+                    <option value="weightlifting">Weightlifting</option>
+                    <option value="hockey">Hockey</option>
+                </select>
+            </div>
+
+            <!-- District Filter Select -->
+            <div>
+                <select id="districtFilterSelect" onchange="filterRoster()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-body, #f8fafc); font-size: 0.88rem; font-weight: 700; color: var(--text-primary, #1e293b); outline: none; cursor: pointer;">
+                    <option value="all">📍 All Districts</option>
+                    <option value="chennai">Chennai</option>
+                    <option value="coimbatore">Coimbatore</option>
+                    <option value="madurai">Madurai</option>
+                    <option value="tiruchirappalli">Tiruchirappalli</option>
+                    <option value="salem">Salem</option>
+                    <option value="tirunelveli">Tirunelveli</option>
+                    <option value="erode">Erode</option>
+                    <option value="vellore">Vellore</option>
+                    <option value="thanjavur">Thanjavur</option>
+                    <option value="kanchipuram">Kanchipuram</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Players Grid Roster -->
+    <div class="grid-cards" id="playersGrid">
+
+        {% for player in all_players %}
+        <div class="interactive-card athlete-item" 
+             data-category="{{ player.category }}" 
+             data-sport="{{ player.sport }}" 
+             data-district="{{ player.district|lower }}"
+             data-name="{{ player.name|lower }}" 
+             data-inst="{{ player.institution|lower }}">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid {{ player.badge_color }}; color: {{ player.badge_color }}; background-color: rgba(255, 255, 255, 0.05);">
+                        {% if player.category == 'school' %}
+                            <i class="fa-solid fa-graduation-cap"></i> School Player
+                        {% elif player.category == 'college' %}
+                            <i class="fa-solid fa-university"></i> College Player
+                        {% else %}
+                            <i class="fa-solid fa-star"></i> Pro / Elite
+                        {% endif %}
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> {{ player.district }}
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="{{ player.avatar }}" alt="{{ player.name }}" class="athlete-avatar" style="border-color: {{ player.badge_color }};">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">{{ player.name }}</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            {{ player.institution }}
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> {{ player.sport_label }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">{{ player.stat_1_val }}</div><div class="stat-lbl">{{ player.stat_1_lbl }}</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">{{ player.stat_2_val }}</div><div class="stat-lbl">{{ player.stat_2_lbl }}</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">{{ player.stat_3_val }}</div><div class="stat-lbl">{{ player.stat_3_lbl }}</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('{{ player.name|escapejs }}', '{{ player.category_label|escapejs }} &bull; {{ player.institution|escapejs }} ({{ player.district|escapejs }})', '{{ player.bio|escapejs }}', '{{ player.avatar|escapejs }}', '{{ player.sport_label|escapejs }}')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- Empty Roster Message -->
+    <div id="emptyRosterNotice" style="display: none; text-align: center; padding: 4rem 2rem; background: var(--bg-card, white); border-radius: 1rem; border: 1px dashed var(--border-color, #cbd5e1); margin-top: 1rem;">
+        <i class="fa-solid fa-user-slash" style="font-size: 3rem; color: #94a3b8; margin-bottom: 1rem;"></i>
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary, #1e293b);">No players found in this filter</h3>
+        <p style="color: var(--text-secondary, #64748b); max-width: 400px; margin: 0.5rem auto 1.5rem;">Try selecting another category or clear your search input to view registered athletes.</p>
+        <button class="btn-primary" onclick="resetFilters()">Reset All Filters</button>
+    </div>
+
+    <!-- Player Profile Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-content" style="max-width: 540px; border-radius: 1.25rem;">
+            <button class="modal-close" onclick="closeProfileModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.25rem;">
+                <img id="modalAvatar" src="" alt="Player Avatar" style="width: 80px; height: 80px; border-radius: 1rem; object-fit: cover; border: 3px solid var(--accent-emerald, #16a34a);">
+                <div>
+                    <h2 id="modalName" style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.2rem; color: var(--text-primary, #0f172a);">Player Name</h2>
+                    <div id="modalTeam" style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.9rem;">Institution & Location</div>
+                    <div id="modalSportTag" style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary, #64748b); margin-top: 0.15rem;">Sport</div>
+                </div>
+            </div>
+            
+            <div style="background: rgba(0, 0, 0, 0.03); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.25rem;">
+                <h4 style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--text-secondary, #475569); margin-bottom: 0.5rem;">Player Bio & Career Highlights</h4>
+                <p id="modalBio" style="color: var(--text-secondary, #334155); line-height: 1.6; font-size: 0.92rem;">Player biography content...</p>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem;">
+                <button class="btn-primary" style="flex: 1; justify-content: center;" onclick="closeProfileModal(); triggerGlobalNotification('Subscribed to Player Updates!');">
+                    <i class="fa-solid fa-heart"></i> Follow Player
+                </button>
+                <button style="padding: 0.75rem 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); font-weight: 700; background: transparent; cursor: pointer;" onclick="closeProfileModal()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function selectCategory(cat) {
+        const catSelect = document.getElementById('categoryFilterSelect');
+        if (catSelect) catSelect.value = cat;
+        filterRoster();
+    }
+
+    function filterRoster() {
+        const searchElem = document.getElementById('searchPlayerInput');
+        const catElem = document.getElementById('categoryFilterSelect');
+        const sportElem = document.getElementById('sportFilterSelect');
+        const distElem = document.getElementById('districtFilterSelect');
+
+        const query = searchElem ? searchElem.value.toLowerCase().trim() : '';
+        const activeCategory = catElem ? catElem.value : 'all';
+        const activeSport = sportElem ? sportElem.value : 'all';
+        const activeDistrict = distElem ? distElem.value : 'all';
+
+        const items = document.querySelectorAll('.athlete-item');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const itemCat = item.getAttribute('data-category') || '';
+            const itemSport = item.getAttribute('data-sport') || '';
+            const itemDistrict = item.getAttribute('data-district') || '';
+            const itemName = item.getAttribute('data-name') || '';
+            const itemInst = item.getAttribute('data-inst') || '';
+
+            const matchCat = (activeCategory === 'all' || itemCat === activeCategory);
+            const matchSport = (activeSport === 'all' || itemSport.includes(activeSport));
+            const matchDistrict = (activeDistrict === 'all' || itemDistrict.includes(activeDistrict));
+            const matchSearch = (!query || itemName.includes(query) || itemInst.includes(query) || itemDistrict.includes(query) || itemSport.includes(query));
+
+            if (matchCat && matchSport && matchDistrict && matchSearch) {
+                item.style.display = 'flex';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        const countBadge = document.getElementById('resultsCountBadge');
+        if (countBadge) {
+            countBadge.innerText = `Showing ${visibleCount} Player${visibleCount === 1 ? '' : 's'}`;
+        }
+
+        const notice = document.getElementById('emptyRosterNotice');
+        if (notice) {
+            notice.style.display = (visibleCount === 0) ? 'block' : 'none';
+        }
+    }
+
+    function resetFilters() {
+        if (document.getElementById('searchPlayerInput')) document.getElementById('searchPlayerInput').value = '';
+        if (document.getElementById('categoryFilterSelect')) document.getElementById('categoryFilterSelect').value = 'all';
+        if (document.getElementById('sportFilterSelect')) document.getElementById('sportFilterSelect').value = 'all';
+        if (document.getElementById('districtFilterSelect')) document.getElementById('districtFilterSelect').value = 'all';
+        filterRoster();
+    }
+
+    function openProfileModal(name, team, bio, avatar, sport) {
+        document.getElementById('modalName').innerText = name;
+        document.getElementById('modalTeam').innerText = team;
+        document.getElementById('modalBio').innerText = bio;
+        document.getElementById('modalAvatar').src = avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80';
+        document.getElementById('modalSportTag').innerText = 'Sport: ' + (sport || 'Multi-Discipline');
+        document.getElementById('profileModal').classList.add('active');
+    }
+
+    function closeProfileModal() {
+        document.getElementById('profileModal').classList.remove('active');
+    }
+</script>
+{% endblock %}
+

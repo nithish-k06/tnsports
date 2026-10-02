@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Clubs & Academies - TN Sports{% endblock %}
+{% block nav_clubs %}active{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-4 py-8">
+    
+    <!-- Alerts -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mb-4 p-3 rounded text-xs font-semibold {% if message.tags == 'success' %}bg-emerald-100 text-emerald-800 border border-emerald-300{% else %}bg-red-100 text-red-800 border border-red-300{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Header Strip with Register CTA -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900">Sports Clubs & Academies</h2>
+            <p class="text-xs text-gray-500">Discover verified training clubs or register your sports academy</p>
+        </div>
+        <button onclick="toggleModal(true)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-sm flex items-center gap-1.5 transition cursor-pointer">
+            <i class="bi bi-plus-circle"></i> Register New Club
+        </button>
+    </div>
+
+    <!-- Filter Controls -->
+    <form method="GET" action="{% url 'clubs' %}" class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-6">
+        <div class="sm:col-span-6 relative">
+            <i class="bi bi-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+            <input type="text" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Search club name..." class="w-full pl-9 pr-3 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500">
+        </div>
+        <div class="sm:col-span-3">
+            <select name="sport" onchange="this.form.submit()" class="w-full py-2 px-3 text-xs border border-gray-200 rounded-lg text-gray-600 bg-white">
+                <option value="">All Sports</option>
+                {% for sport in sports %}
+                    <option value="{{ sport.name }}" {% if request.GET.sport == sport.name %}selected{% endif %}>{{ sport.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="sm:col-span-3">
+            <select name="district" onchange="this.form.submit()" class="w-full py-2 px-3 text-xs border border-gray-200 rounded-lg text-gray-600 bg-white">
+                <option value="">All Districts</option>
+                {% for district in districts %}
+                    <option value="{{ district.name }}" {% if request.GET.district == district.name %}selected{% endif %}>{{ district.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+
+    <!-- Clubs Card Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for club in clubs %}
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow transition">
+            <div class="flex items-start gap-4 mb-4">
+                {% if club.logo and club.logo.url %}
+                    <img src="{{ club.logo.url }}" alt="{{ club.name }}" class="w-12 h-12 rounded-lg object-cover bg-gray-100 border">
+                {% else %}
+                    <div class="w-12 h-12 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold text-base">
+                        {{ club.name|slice:":2"|upper }}
+                    </div>
+                {% endif %}
+                <div>
+                    <h3 class="font-bold text-sm text-gray-900 leading-tight">{{ club.name }}</h3>
+                    <p class="text-[11px] text-emerald-700 font-semibold">{{ club.primary_sport.name }} • {{ club.district.name }}</p>
+                    <span class="inline-block mt-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] px-2 py-0.5 rounded-full font-medium">Verified Club</span>
+                </div>
+            </div>
+            <p class="text-xs text-gray-600 mb-3 line-clamp-2"><i class="bi bi-geo-alt text-gray-400 mr-1"></i>{{ club.address }}</p>
+            <div class="pt-3 border-t border-gray-100 flex justify-between items-center text-xs text-gray-500">
+                <span>Est. {{ club.established_year }}</span>
+                <span class="font-semibold text-gray-700">{{ club.total_members }}+ Members</span>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12 text-gray-500 text-xs">
+            No verified clubs found matching your criteria.
+        </div>
+        {% endfor %}
+    </div>
+
+</main>
+
+<!-- Registration Modal -->
+<div id="register-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full max-h-[85vh] overflow-y-auto p-6 shadow-2xl my-auto">
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+            <div>
+                <h3 class="font-bold text-base text-gray-900">Register Sports Club</h3>
+                <p class="text-xs text-gray-500">Submit affiliation details to TN Sports Development Authority</p>
+            </div>
+            <button onclick="toggleModal(false)" class="text-gray-400 hover:text-gray-600 text-lg cursor-pointer">&times;</button>
+        </div>
+
+        <form method="POST" action="{% url 'clubs' %}" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Club / Academy Name *</label>
+                    {{ form.name }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Govt Reg. Number *</label>
+                    {{ form.registration_number }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Primary Sport *</label>
+                    {{ form.primary_sport }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">District *</label>
+                    {{ form.district }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Established Year *</label>
+                    {{ form.established_year }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Contact Person *</label>
+                    {{ form.contact_person }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Official Email *</label>
+                    {{ form.email }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Phone Number *</label>
+                    {{ form.phone }}
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Address & Training Grounds *</label>
+                    {{ form.address }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Club Logo</label>
+                    {{ form.logo }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Affiliation / Reg Proof (PDF)</label>
+                    {{ form.reg_certificate }}
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-4 border-t mt-4">
+                <button type="button" onclick="toggleModal(false)" class="px-4 py-2 border rounded-lg text-xs font-semibold text-gray-600 hover:bg-gray-50 cursor-pointer">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-emerald-600 text-white rounded-lg text-xs font-semibold hover:bg-emerald-700 cursor-pointer">Submit Application</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function toggleModal(show) {
+        document.getElementById('register-modal').classList.toggle('hidden', !show);
+    }
+</script>
+{% endblock %}
+

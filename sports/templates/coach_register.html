@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Coach & Trainer Registration - Tamil Nadu Sports Development Platform{% endblock %}
+{% block nav_coaches %}active{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-900/95 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Decorative Gradient Background Glows -->
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 -right-40 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+
+        <!-- Breadcrumb & Back Link -->
+        <div class="mb-6 flex items-center justify-between">
+            <a href="{% url 'coaches' %}" class="inline-flex items-center text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors gap-2">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to Coaches Directory</span>
+            </a>
+            <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase bg-slate-800/80 px-3 py-1 rounded-full border border-slate-700/50">
+                SDAT Official Registration
+            </span>
+        </div>
+
+        <!-- Main Card Container -->
+        <div class="bg-slate-800/90 backdrop-blur-xl border border-slate-700/60 rounded-3xl shadow-2xl overflow-hidden">
+
+            <!-- Card Header Header Banner -->
+            <div class="bg-gradient-to-r from-emerald-900/80 via-slate-800 to-cyan-900/80 p-8 border-b border-slate-700/60 relative">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                    <div class="flex items-center gap-5">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-3xl shadow-inner shrink-0">
+                            <i class="fa-solid fa-whistle"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Coach & Trainer Registration</h1>
+                            <p class="text-slate-300 text-xs sm:text-sm mt-1">Enroll as a recognized state sports coach in the Tamil Nadu Development Portal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Body -->
+            <div class="p-6 sm:p-10">
+
+                <!-- Django Messages Alert -->
+                {% if messages %}
+                    <div class="mb-8 space-y-3">
+                        {% for message in messages %}
+                            <div class="p-4 rounded-xl border text-sm font-medium flex items-center gap-3 {% if message.tags == 'error' %}bg-rose-500/10 border-rose-500/30 text-rose-300{% else %}bg-emerald-500/10 border-emerald-500/30 text-emerald-300{% endif %}">
+                                <i class="fa-solid {% if message.tags == 'error' %}fa-circle-exclamation{% else %}fa-circle-check{% endif %} text-lg"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="POST" enctype="multipart/form-data" class="space-y-8" id="coachRegistrationForm" novalidate>
+                    {% csrf_token %}
+
+                    <div id="jsCoachErrorBox" class="hidden p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-300 text-xs transition-all">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-exclamation text-rose-400 text-base mt-0.5"></i>
+                            <div>
+                                <p class="font-bold mb-1 text-rose-200 text-sm">Please fix the registration errors below:</p>
+                                <ul id="jsCoachErrorList" class="list-disc list-inside space-y-1"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Non-Field Errors -->
+                    {% if form.non_field_errors %}
+                        <div class="p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-300 text-xs">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Section 1: Personal & Contact Information -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 pb-2 border-b border-slate-700/60">
+                            <i class="fa-solid fa-id-card text-emerald-400 text-lg"></i>
+                            <h2 class="text-lg font-bold text-white tracking-wide">1. Personal & Contact Details</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Full Name -->
+                            <div>
+                                <label for="coachNameInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                                    Full Name <span class="text-emerald-400">*</span>
+                                </label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <p class="text-rose-400 text-xs mt-1">{{ form.name.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- Email Address -->
+                            <div>
+                                <label for="coachEmailInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                                    Official Email Address <span class="text-emerald-400">*</span>
+                                </label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <p class="text-rose-400 text-xs mt-1">{{ form.email.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div>
+                                <label for="coachPhoneInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                                    Mobile Number <span class="text-emerald-400">*</span>
+                                </label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <p class="text-rose-400 text-xs mt-1">{{ form.phone.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- Photo Upload -->
+                            <div>
+                                <label for="coachPhotoInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                                    Profile Photo / Avatar
+                                </label>
+                                {{ form.photo }}
+                                <p class="text-slate-400 text-xs mt-1">Accepted formats: JPG, PNG, WEBP (Max 5MB)</p>
+                                {% if form.photo.errors %}
+                                    <p class="text-rose-400 text-xs mt-1">{{ form.photo.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Specialization & Region -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 pb-2 border-b border-slate-700/60">
+                            <i class="fa-solid fa-medal text-emerald-400 text-lg"></i>
+                            <h2 class="text-lg font-bold text-white tracking-wide">2. Coaching Qualifications & Jurisdiction</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Sport Discipline -->
+                            <div>
+                                <label for="coachSportSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                                    Primary Sport Discipline <span class="text-emerald-400">*</span>
+                                </label>
+                                {{ form.sport }}
+                                {% if form.sport.errors %}
+                                    <p class="text-rose-400 text-xs mt-1">{{ form.sport.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- Assigned District -->
+                            <div>
+                                <label for="coachDistrictSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                                    Assigned / Operating District <span class="text-emerald-400">*</span>
+                                </label>
+                                {{ form.district }}
+                                {% if form.district.errors %}
+                                    <p class="text-rose-400 text-xs mt-1">{{ form.district.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- Experience Years -->
+                            <div>
+                                <label for="coachExperienceInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                                    Coaching Experience (Years) <span class="text-emerald-400">*</span>
+                                </label>
+                                {{ form.experience_years }}
+                                {% if form.experience_years.errors %}
+                                    <p class="text-rose-400 text-xs mt-1">{{ form.experience_years.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- Specialization -->
+                            <div>
+                                <label for="coachSpecializationInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                                    Specialization / Role Focus <span class="text-emerald-400">*</span>
+                                </label>
+                                {{ form.specialization }}
+                                {% if form.specialization.errors %}
+                                    <p class="text-rose-400 text-xs mt-1">{{ form.specialization.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Certification Notice Card -->
+                    <div class="p-4 bg-slate-900/60 border border-slate-700/60 rounded-2xl flex items-start gap-4">
+                        <div class="text-emerald-400 text-xl shrink-0 mt-0.5">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            By registering as a coach, you confirm that your training qualifications, phone, and district assignments are accurate and meet SDAT Tamil Nadu coaching regulations. Your details will be displayed in the official Coaches Directory for student & athlete onboarding.
+                        </p>
+                    </div>
+
+                    <!-- Submit Actions -->
+                    <div class="flex flex-col sm:flex-row items-center justify-end gap-4 pt-4 border-t border-slate-700/60">
+                        <a href="{% url 'coaches' %}" class="w-full sm:w-auto px-6 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold text-sm rounded-xl transition-all text-center">
+                            Cancel
+                        </a>
+                        <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-600/30 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Submit Coach Registration</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('coachRegistrationForm');
+        const errorBox = document.getElementById('jsCoachErrorBox');
+        const errorList = document.getElementById('jsCoachErrorList');
+
+        if (form) {
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    this.classList.remove('border-rose-500', 'ring-2', 'ring-rose-500');
+                });
+                input.addEventListener('change', function() {
+                    this.classList.remove('border-rose-500', 'ring-2', 'ring-rose-500');
+                });
+            });
+
+            form.addEventListener('submit', function(e) {
+                let errors = [];
+                let firstInvalid = null;
+
+                function markInvalid(el, msg) {
+                    if (el) {
+                        el.classList.add('border-rose-500', 'ring-2', 'ring-rose-500');
+                        if (!firstInvalid) firstInvalid = el;
+                    }
+                    errors.push(msg);
+                }
+
+                const name = document.getElementById('coachNameInput');
+                if (!name || !name.value.trim()) {
+                    markInvalid(name, 'Full Name is required.');
+                }
+
+                const email = document.getElementById('coachEmailInput');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !email.value.trim()) {
+                    markInvalid(email, 'Official Email Address is required.');
+                } else if (!emailRegex.test(email.value.trim())) {
+                    markInvalid(email, 'Enter a valid email address.');
+                }
+
+                const phone = document.getElementById('coachPhoneInput');
+                const phoneRegex = /^[0-9+\s\-]{10,15}$/;
+                if (!phone || !phone.value.trim()) {
+                    markInvalid(phone, 'Mobile Number is required.');
+                } else if (!phoneRegex.test(phone.value.trim())) {
+                    markInvalid(phone, 'Enter a valid 10-digit mobile number.');
+                }
+
+                const sport = document.getElementById('coachSportSelect');
+                if (!sport || !sport.value) {
+                    markInvalid(sport, 'Primary Sport Discipline selection is required.');
+                }
+
+                const district = document.getElementById('coachDistrictSelect');
+                if (!district || !district.value) {
+                    markInvalid(district, 'Assigned Operating District selection is required.');
+                }
+
+                const exp = document.getElementById('coachExperienceInput');
+                if (!exp || exp.value === '' || parseInt(exp.value) < 0) {
+                    markInvalid(exp, 'Coaching Experience years must be specified.');
+                }
+
+                const spec = document.getElementById('coachSpecializationInput');
+                if (!spec || !spec.value.trim()) {
+                    markInvalid(spec, 'Specialization / Role Focus is required.');
+                }
+
+                if (errors.length > 0) {
+                    e.preventDefault();
+                    if (errorBox && errorList) {
+                        errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
+                        errorBox.classList.remove('hidden');
+                        errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    if (firstInvalid) firstInvalid.focus();
+                    if (typeof triggerGlobalNotification === 'function') {
+                        triggerGlobalNotification('Please correct the coach registration errors.');
+                    }
+                } else {
+                    if (errorBox) errorBox.classList.add('hidden');
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting Registration...`;
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

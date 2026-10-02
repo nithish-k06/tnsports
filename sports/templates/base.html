@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tamil Nadu Sports Development Platform - Discover talent, build careers, and promote sports across Tamil Nadu.">
+    <title>{% block title %}Tamil Nadu Sports Development Platform{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Static CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- App Container Card Wrapper (Matches Reference Screenshot Frame) -->
+    <div class="app-wrapper-container">
+
+        <!-- Header & Navigation -->
+        <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-emerald-500/20 shadow-2xl backdrop-blur-md sticky top-0 z-50">
+            <div class="header-container">
+                <a href="{% url 'portal_home' %}" class="logo group">
+                    <div class="logo-icon-emblem bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="logo-text-group">
+                        <span class="logo-title text-white tracking-tight">Tamil Nadu</span>
+                        <span class="logo-subtitle text-emerald-400 font-semibold tracking-wider uppercase text-[10px]">Sports Development Platform</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="{% url 'portal_home' %}" class="nav-link {% block nav_home %}{% endblock %}">Home</a></li>
+                    <li><a href="{% url 'sports' %}" class="nav-link {% block nav_sports %}{% endblock %}">Sports</a></li>
+                    <li><a href="{% url 'players' %}" class="nav-link {% block nav_players %}{% endblock %}">Players</a></li>
+                    <li><a href="{% url 'clubs' %}" class="nav-link {% block nav_clubs %}{% endblock %}">Clubs</a></li>
+                    <li><a href="{% url 'tournaments' %}" class="nav-link {% block nav_tournaments %}{% endblock %}">Tournaments</a></li>
+                    <li><a href="{% url 'districts' %}" class="nav-link {% block nav_districts %}{% endblock %}">Districts</a></li>
+                    <li><a href="{% url 'coaches' %}" class="nav-link {% block nav_coaches %}{% endblock %}">Coaches</a></li>
+                    <li><a href="{% url 'news' %}" class="nav-link {% block nav_news %}{% endblock %}">News</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-link {% block nav_contact %}{% endblock %}">Contact</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser or user.is_staff or user.username|slice:":8" == "minister" %}
+                            <a href="{% url 'minister_dashboard' %}" class="btn-player-dashboard bg-slate-900 text-amber-300 border border-amber-500/40 hover:bg-slate-800 shadow-lg shadow-amber-500/10" title="Minister Super Admin Control Center">
+                                <i class="fa-solid fa-crown text-amber-400"></i> Executive Portal
+                            </a>
+                        {% elif user.dso_profile or user.username|slice:":3" == "dso" or user.username|slice:":9" == "collector" %}
+                            <a href="{% url 'collector_dashboard' %}" class="btn-player-dashboard bg-emerald-950 text-emerald-300 border border-emerald-500/40" title="Collector & DSO Governance Dashboard">
+                                <i class="fa-solid fa-landmark-flag"></i> Collector & DSO Portal
+                            </a>
+                        {% elif user.username|slice:":5" == "coach" %}
+                            <a href="{% url 'coach_dashboard' %}" class="btn-player-dashboard bg-amber-950 text-amber-300 border border-amber-500/40" title="Certified Coach Portal">
+                                <i class="fa-solid fa-stopwatch text-amber-400"></i> Coach Portal
+                            </a>
+                        {% else %}
+                            <a href="{% url 'athlete_dashboard' %}" class="btn-player-dashboard bg-emerald-600 hover:bg-emerald-500 text-white" title="My Athlete Dashboard">
+                                <i class="fa-solid fa-gauge-high"></i> My Dashboard
+                            </a>
+                        {% endif %}
+                        <div class="user-profile-badge bg-slate-800/80 border border-slate-700 text-slate-200">
+                            <i class="fa-solid fa-circle-user text-emerald-400"></i>
+                            <span class="user-name-display">{{ user.first_name|default:user.username }}</span>
+                            <a href="{% url 'logout' %}" class="btn-logout-link text-slate-400 hover:text-red-400" title="Sign Out">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn-green-login bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 border border-emerald-400/30">
+                            <i class="fa-solid fa-lock"></i> Portal Login
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            {% if messages %}
+                <div id="djangoMessagesContainer" class="fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto">
+                    {% for message in messages %}
+                        <div class="toast-popup p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md {% if message.tags == 'success' %}bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40{% elif message.tags == 'error' or message.tags == 'danger' %}bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40{% elif message.tags == 'warning' %}bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40{% else %}bg-slate-900/95 text-blue-300 border-blue-500/50 shadow-blue-950/40{% endif %}">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid text-base {% if message.tags == 'success' %}fa-circle-check text-emerald-400{% elif message.tags == 'error' or message.tags == 'danger' %}fa-circle-xmark text-rose-400{% elif message.tags == 'warning' %}fa-triangle-exclamation text-amber-400{% else %}fa-circle-info text-blue-400{% endif %}"></i>
+                                <span class="leading-tight text-white font-semibold">{{ message }}</span>
+                            </div>
+                            <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                                <i class="fa-solid fa-xmark text-sm"></i>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <!-- Master Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="{% url 'portal_home' %}" class="logo">
+                        <div class="logo-icon-emblem"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="logo-text-group">
+                            <span class="logo-title">Tamil Nadu</span>
+                            <span class="logo-subtitle">Sports Development Platform</span>
+                        </div>
+                    </a>
+                    <p>A unified platform to discover talent, build careers, and promote sports across Tamil Nadu.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{% url 'portal_home' %}">Home</a></li>
+                        <li><a href="{% url 'sports' %}">Sports Disciplines</a></li>
+                        <li><a href="{% url 'players' %}">Player Roster</a></li>
+                        <li><a href="{% url 'clubs' %}">Clubs & Franchises</a></li>
+                        <li><a href="{% url 'tournaments' %}">Tournaments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Portals & Governance</h4>
+                    <ul>
+                        <li><a href="{% url 'districts' %}">Districts Portal</a></li>
+                        <li><a href="{% url 'minister_dashboard' %}"><i class="fa-solid fa-crown text-amber-500"></i> Sports Minister Portal</a></li>
+                        <li><a href="{% url 'collector_dashboard' %}"><i class="fa-solid fa-landmark-flag text-emerald-400"></i> Collector & DSO Portal</a></li>
+                        <li><a href="{% url 'athlete_register' %}">Player Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tamil Nadu Sports Development Platform. All rights reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Global Toast Notification UI -->
+    <div class="toast" id="globalToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="globalToastMessage">Notification update!</span>
+    </div>
+
+    {% if user.is_authenticated %}
+    <!-- Session Expiration Warning Modal -->
+    <div id="sessionTimeoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4 sm:p-6 overflow-y-auto transition-all">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative overflow-hidden transform animate-in fade-in zoom-in duration-200 my-auto max-h-[85vh] overflow-y-auto">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-2xl shrink-0">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white tracking-tight">Session Expiring Soon</h3>
+                    <p class="text-slate-400 text-xs mt-0.5">Idle Inactivity Warning</p>
+                </div>
+            </div>
+
+            <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                You have been inactive for a while. For security reasons, your portal session will expire automatically in <span id="sessionCountdown" class="font-extrabold text-amber-400 font-mono text-base">05:00</span>.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <button onclick="extendUserSession()" class="w-full sm:w-1/2 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Stay Logged In</span>
+                </button>
+                <a href="{% url 'logout' %}?reason=session_expired" class="w-full sm:w-1/2 py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl border border-slate-700 transition-all text-center">
+                    Log Out Now
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Core Global JavaScript & Idle Detection -->
+    <script>
+        function triggerGlobalNotification(message, type = 'info') {
+            let container = document.getElementById('djangoMessagesContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'djangoMessagesContainer';
+                container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const borderClass = type === 'error' ? 'bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40' : (type === 'success' ? 'bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40' : 'bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40');
+            const iconClass = type === 'error' ? 'fa-circle-xmark text-rose-400' : (type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-amber-400');
+
+            toast.className = `p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md ${borderClass}`;
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${iconClass} text-base"></i>
+                    <span class="leading-tight text-white font-semibold">${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('#djangoMessagesContainer .toast-popup');
+            alerts.forEach((alert, idx) => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000 + (idx * 500));
+            });
+        });
+
+        {% if user.is_authenticated %}
+        (function() {
+            // Idle Session Timeout Configuration (30 Minutes Total Session)
+            const IDLE_WARN_TIME = 25 * 60 * 1000; // 25 Minutes idle -> Show warning modal
+            const IDLE_LOGOUT_TIME = 30 * 60 * 1000; // 30 Minutes idle -> Logout
+            
+            let lastActivityTime = Date.now();
+            let countdownInterval = null;
+            let isModalShown = false;
+
+            function resetIdleTimer() {
+                if (!isModalShown) {
+                    lastActivityTime = Date.now();
+                }
+            }
+
+            // Listen for user activity
+            ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => {
+                window.addEventListener(evt, resetIdleTimer, { passive: true });
+            });
+
+            function checkIdleStatus() {
+                const now = Date.now();
+                const elapsed = now - lastActivityTime;
+
+                if (elapsed >= IDLE_LOGOUT_TIME) {
+                    window.location.href = "{% url 'logout' %}?reason=session_expired";
+                } else if (elapsed >= IDLE_WARN_TIME && !isModalShown) {
+                    showSessionWarningModal(IDLE_LOGOUT_TIME - elapsed);
+                }
+            }
+
+            function showSessionWarningModal(remainingMs) {
+                isModalShown = true;
+                const modal = document.getElementById('sessionTimeoutModal');
+                const countdownElem = document.getElementById('sessionCountdown');
+                if (modal) modal.classList.remove('hidden');
+
+                let secondsRemaining = Math.floor(remainingMs / 1000);
+
+                countdownInterval = setInterval(() => {
+                    secondsRemaining--;
+                    if (secondsRemaining <= 0) {
+                        clearInterval(countdownInterval);
+                        window.location.href = "{% url 'logout' %}?reason=session_expired";
+                        return;
+                    }
+                    const mins = Math.floor(secondsRemaining / 60);
+                    const secs = secondsRemaining % 60;
+                    if (countdownElem) {
+                        countdownElem.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                    }
+                }, 1000);
+            }
+
+            window.extendUserSession = function() {
+                fetch("{% url 'api_session_keepalive' %}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    const modal = document.getElementById('sessionTimeoutModal');
+                    if (modal) modal.classList.add('hidden');
+                    if (countdownInterval) clearInterval(countdownInterval);
+                    isModalShown = false;
+                    lastActivityTime = Date.now();
+                    triggerGlobalNotification("Session extended successfully!");
+                })
+                .catch(err => {
+                    window.location.reload();
+                });
+            };
+
+            // Periodically check idle status every 15 seconds
+            setInterval(checkIdleStatus, 15000);
+        })();
+        {% endif %}
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
