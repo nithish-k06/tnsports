@@ -325,9 +325,10 @@ class CoachDashboardTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('coach_dashboard'))
 
+    def test_portal_home_and_index_views(self):
+        response_portal = self.client.get(reverse('portal_home'))
+        self.assertEqual(response_portal.status_code, 200)
+        self.assertTemplateUsed(response_portal, 'portal_landing.html')
 
-
-
-
-
-
+        response_index = self.client.get(reverse('index'))
+        self.assertEqual(response_index.status_code, 200)

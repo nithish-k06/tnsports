@@ -361,10 +361,3 @@ class DistrictSubZoneForm(forms.ModelForm):
             'schools_count': forms.NumberInput(attrs={'class': 'w-full px-3 py-2 border rounded-xl text-xs font-semibold focus:ring-2 focus:ring-blue-500 outline-none', 'placeholder': '45'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'rounded text-blue-600 focus:ring-blue-500 h-4 w-4'}),
         }
-
-
-
-
-
-
-
