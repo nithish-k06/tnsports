@@ -206,7 +206,3 @@ class MinisterDSOOrderAdmin(admin.ModelAdmin):
     list_display = ('order_number', 'order_type', 'title', 'dso', 'district', 'priority', 'status', 'issued_at')
     list_filter = ('order_type', 'priority', 'status', 'district')
     search_fields = ('order_number', 'title', 'instruction')
-
-
-
-

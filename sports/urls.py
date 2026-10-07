@@ -78,6 +78,3 @@ urlpatterns = [
     path('portal/dso/tournaments/<int:tournament_id>/<str:action>/', dso_tournament_action, name='dso_tournament_action'),
     path('portal/dso/tournaments/sanction/', sanction_tournament, name='sanction_tournament'),
 ]
-
-
-
