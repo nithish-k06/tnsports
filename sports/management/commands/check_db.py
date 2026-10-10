@@ -42,22 +42,28 @@ class Command(BaseCommand):
         # Sanitize credentials for display
         engine = settings_dict.get("ENGINE", "Unknown")
         name = settings_dict.get("NAME", "Unknown")
-        user = settings_dict.get("USER", "Unknown")
-        host = settings_dict.get("HOST", "127.0.0.1") or "127.0.0.1"
-        port = settings_dict.get("PORT", "5432") or "5432"
+        is_sqlite = "sqlite" in engine
+        is_postgres = "postgresql" in engine
+
+        host = settings_dict.get("HOST", "") or ("Local File" if is_sqlite else "127.0.0.1")
+        port = settings_dict.get("PORT", "") or ("N/A" if is_sqlite else "5432")
+        user = settings_dict.get("USER", "") or ("N/A" if is_sqlite else "postgres")
         conn_max_age = settings_dict.get("CONN_MAX_AGE", 0)
         conn_health_checks = settings_dict.get("CONN_HEALTH_CHECKS", False)
         options_dict = settings_dict.get("OPTIONS", {})
-        sslmode = options_dict.get("sslmode", "not configured")
+        sslmode = options_dict.get("sslmode", "N/A" if is_sqlite else "not configured")
 
         self.stdout.write(f"Target Database Alias: {self.style.MIGRATE_LABEL(db_alias)}")
         self.stdout.write(f"Engine:               {engine}")
-        self.stdout.write(f"Host:                 {host}:{port}")
-        self.stdout.write(f"Database:             {name}")
-        self.stdout.write(f"User:                 {user}")
-        self.stdout.write(f"SSL Mode:             {sslmode}")
-        self.stdout.write(f"CONN_MAX_AGE:         {conn_max_age}s")
-        self.stdout.write(f"CONN_HEALTH_CHECKS:   {conn_health_checks}")
+        if is_sqlite:
+            self.stdout.write(f"Database Path:        {name}")
+        else:
+            self.stdout.write(f"Host:                 {host}:{port}")
+            self.stdout.write(f"Database:             {name}")
+            self.stdout.write(f"User:                 {user}")
+            self.stdout.write(f"SSL Mode:             {sslmode}")
+            self.stdout.write(f"CONN_MAX_AGE:         {conn_max_age}s")
+            self.stdout.write(f"CONN_HEALTH_CHECKS:   {conn_health_checks}")
         self.stdout.write("-" * 60)
 
         # Connection attempt loop
@@ -76,16 +82,20 @@ class Command(BaseCommand):
                     cursor.fetchone()
                     latency_ms = (time.perf_counter() - query_start) * 1000
 
-                    # Fetch Postgres version
+                    # Fetch database version
                     try:
-                        cursor.execute("SELECT version();")
-                        pg_version = cursor.fetchone()[0]
+                        if is_sqlite:
+                            cursor.execute("SELECT sqlite_version();")
+                            db_version = f"SQLite {cursor.fetchone()[0]}"
+                        else:
+                            cursor.execute("SELECT version();")
+                            db_version = cursor.fetchone()[0].split(",")[0]
                     except Exception:
-                        pg_version = "Unknown version"
+                        db_version = "Unknown version"
 
                 connected = True
                 self.stdout.write(self.style.SUCCESS(f"  [SUCCESS] Connected in {latency_ms:.2f} ms!"))
-                self.stdout.write(f"Server Version: {pg_version.split(',')[0]}")
+                self.stdout.write(f"Server/DB Version:    {db_version}")
 
             except Exception as exc:
                 elapsed = time.time() - start_time
@@ -96,25 +106,24 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.ERROR(f"  [ERROR] Connection failed: {exc}"))
                     raise CommandError(f"Database connection to '{db_alias}' failed: {exc}") from exc
 
-        # SSL inspection
-        try:
-            with db_conn.cursor() as cursor:
-                # Check PostgreSQL ssl_is_used function if ssl extension is available
-                try:
-                    cursor.execute("SELECT ssl_is_used();")
-                    ssl_active = cursor.fetchone()[0]
-                    self.stdout.write(f"SSL Active:           {self.style.SUCCESS('YES') if ssl_active else self.style.WARNING('NO')}")
-                except Exception:
-                    # Alternative check via backend connection info
-                    raw_conn = db_conn.connection
-                    ssl_in_use = False
-                    if hasattr(raw_conn, 'info') and hasattr(raw_conn.info, 'ssl_in_use'):
-                        ssl_in_use = raw_conn.info.ssl_in_use
-                    elif hasattr(raw_conn, 'ssl_in_use'):
-                        ssl_in_use = raw_conn.ssl_in_use
-                    self.stdout.write(f"SSL Encrypted:        {self.style.SUCCESS('YES') if ssl_in_use else 'NO / Not active on localhost'}")
-        except Exception:
-            pass
+        # SSL inspection for PostgreSQL
+        if is_postgres:
+            try:
+                with db_conn.cursor() as cursor:
+                    try:
+                        cursor.execute("SELECT ssl_is_used();")
+                        ssl_active = cursor.fetchone()[0]
+                        self.stdout.write(f"SSL Active:           {self.style.SUCCESS('YES') if ssl_active else self.style.WARNING('NO')}")
+                    except Exception:
+                        raw_conn = db_conn.connection
+                        ssl_in_use = False
+                        if hasattr(raw_conn, 'info') and hasattr(raw_conn.info, 'ssl_in_use'):
+                            ssl_in_use = raw_conn.info.ssl_in_use
+                        elif hasattr(raw_conn, 'ssl_in_use'):
+                            ssl_in_use = raw_conn.ssl_in_use
+                        self.stdout.write(f"SSL Encrypted:        {self.style.SUCCESS('YES') if ssl_in_use else 'NO / Not active on localhost'}")
+            except Exception:
+                pass
 
         # Check migrations status
         try:

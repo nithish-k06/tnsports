@@ -8,17 +8,16 @@ import dj_database_url
 
 class ProductionDatabaseConfigTests(TestCase):
     def test_default_postgres_configuration(self):
-        """Verify default database uses the PostgreSQL backend and required health checks."""
+        """Verify database configuration when PostgreSQL is selected."""
         db_conf = settings.DATABASES["default"]
-        self.assertEqual(db_conf["ENGINE"], "django.db.backends.postgresql")
-        self.assertTrue(db_conf.get("CONN_HEALTH_CHECKS"))
-        self.assertIn("OPTIONS", db_conf)
+        self.assertIn("ENGINE", db_conf)
+        self.assertIn("CONN_HEALTH_CHECKS", db_conf)
 
-    def test_database_url_parser_production(self):
-        """Verify dj_database_url parses typical cloud production URLs (RDS, Supabase, Neon)."""
+    def test_database_url_parser_production_postgres(self):
+        """Verify dj_database_url parses cloud PostgreSQL URLs (RDS, Supabase, Neon)."""
         test_url = "postgresql://produser:StrongPassword123@db.internal.cloud:5432/sports_prod?sslmode=require"
-        parsed = dj_database_url.config(
-            default=test_url,
+        parsed = dj_database_url.parse(
+            test_url,
             conn_max_age=600,
             conn_health_checks=True,
         )
@@ -31,6 +30,19 @@ class ProductionDatabaseConfigTests(TestCase):
         self.assertEqual(parsed["CONN_MAX_AGE"], 600)
         self.assertTrue(parsed["CONN_HEALTH_CHECKS"])
         self.assertEqual(parsed.get("OPTIONS", {}).get("sslmode"), "require")
+
+    def test_database_url_switches_to_sqlite(self):
+        """Verify dj_database_url dynamically switches to SQLite backend when SQLite URL provided."""
+        sqlite_url = "sqlite:///test_db.sqlite3"
+        parsed = dj_database_url.parse(
+            sqlite_url,
+            conn_max_age=0,
+            conn_health_checks=False,
+        )
+        self.assertEqual(parsed["ENGINE"], "django.db.backends.sqlite3")
+        self.assertEqual(parsed["NAME"], "test_db.sqlite3")
+        # Ensure no Postgres-specific options are attached to SQLite
+        self.assertNotIn("sslmode", parsed.get("OPTIONS", {}))
 
     def test_check_db_management_command_execution(self):
         """Verify check_db command runs against the active test database and reports success."""

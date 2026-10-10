@@ -104,39 +104,26 @@ DB_SSLMODE = os.getenv('DB_SSLMODE', '').strip()
 DB_CONNECT_TIMEOUT = os.getenv('DB_CONNECT_TIMEOUT', '').strip()
 DB_DISABLE_SERVER_SIDE_CURSORS = os.getenv('DB_DISABLE_SERVER_SIDE_CURSORS', 'False').lower() in ('true', '1', 'yes')
 
-DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
+
+# Check if discrete database parameters are explicitly defined in environment
+HAS_EXPLICIT_DB = bool(
+    os.getenv('DB_NAME') or os.getenv('POSTGRES_DB') or
+    os.getenv('DB_HOST') or os.getenv('POSTGRES_HOST') or
+    os.getenv('DB_ENGINE')
+)
 
 if DATABASE_URL and dj_database_url:
+    # 1. DYNAMIC SWITCHING: When DATABASE_URL is provided in environment (PostgreSQL, SQLite, MySQL, etc.)
     DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
+        'default': dj_database_url.parse(
+            DATABASE_URL,
             conn_max_age=DB_CONN_MAX_AGE,
             conn_health_checks=DB_CONN_HEALTH_CHECKS,
         )
     }
-    db_options = DATABASES['default'].setdefault('OPTIONS', {})
-    
-    # Configure SSL mode if specified or default to 'require' on remote production hosts
-    if DB_SSLMODE:
-        db_options['sslmode'] = DB_SSLMODE
-    elif not DEBUG and 'localhost' not in DATABASE_URL and '127.0.0.1' not in DATABASE_URL:
-        db_options.setdefault('sslmode', 'require')
-        
-    if DB_CONNECT_TIMEOUT:
-        db_options['connect_timeout'] = int(DB_CONNECT_TIMEOUT)
-        
-    if DB_DISABLE_SERVER_SIDE_CURSORS:
-        DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
-else:
-    db_options = {}
-    if DB_SSLMODE:
-        db_options['sslmode'] = DB_SSLMODE
-    elif not DEBUG and os.getenv('DB_HOST') not in (None, '', 'localhost', '127.0.0.1'):
-        db_options['sslmode'] = 'require'
-        
-    if DB_CONNECT_TIMEOUT:
-        db_options['connect_timeout'] = int(DB_CONNECT_TIMEOUT)
-
+elif HAS_EXPLICIT_DB:
+    # 2. DISCRETE CONFIGURATION: When discrete database variables are set
     DATABASES = {
         'default': {
             'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
@@ -147,9 +134,32 @@ else:
             'PORT': os.getenv('DB_PORT', os.getenv('POSTGRES_PORT', '5432')),
             'CONN_MAX_AGE': DB_CONN_MAX_AGE,
             'CONN_HEALTH_CHECKS': DB_CONN_HEALTH_CHECKS,
-            'OPTIONS': db_options,
         }
     }
+else:
+    # 3. ZERO-CONFIG LOCAL FALLBACK: When no DB URL is provided, dynamically switch to SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+# Apply PostgreSQL-specific tuning ONLY if the active backend is PostgreSQL
+active_engine = DATABASES['default'].get('ENGINE', '')
+if 'postgresql' in active_engine:
+    db_options = DATABASES['default'].setdefault('OPTIONS', {})
+
+    if DB_SSLMODE:
+        db_options['sslmode'] = DB_SSLMODE
+    elif not DEBUG:
+        host = DATABASES['default'].get('HOST', '')
+        if host and host not in ('localhost', '127.0.0.1'):
+            db_options.setdefault('sslmode', 'require')
+
+    if DB_CONNECT_TIMEOUT:
+        db_options['connect_timeout'] = int(DB_CONNECT_TIMEOUT)
+
     if DB_DISABLE_SERVER_SIDE_CURSORS:
         DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
 
