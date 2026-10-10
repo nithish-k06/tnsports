@@ -16,17 +16,37 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / '.env')
+    load_dotenv(BASE_DIR.parent / '.env')
+except ImportError:
+    pass
+
+try:
+    import dj_database_url
+except ImportError:
+    dj_database_url = None
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7fb057@-ql+2_!o9a80ohm2x#ipe#_+14q#sgcda)%qqmn-6x*'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-7fb057@-ql+2_!o9a80ohm2x#ipe#_+14q#sgcda)%qqmn-6x*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', '*').split(',') if host.strip()]
+
+# CSRF trusted origins for production domains (comma-separated, e.g., https://example.com)
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
+    if origin.strip()
+]
 
 
 # Application definition
@@ -75,16 +95,63 @@ WSGI_APPLICATION = 'soprts.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "sports_db",
-        "USER": "postgres",
-        "PASSWORD": "root",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+# Connection pooling & persistent connections
+# Production default: 600s (re-uses connections across requests, reducing handshake latency)
+# Development default: 0s (closes connections immediately)
+DB_CONN_MAX_AGE = int(os.getenv('DB_CONN_MAX_AGE', '600' if not DEBUG else '0'))
+DB_CONN_HEALTH_CHECKS = os.getenv('DB_CONN_HEALTH_CHECKS', 'True').lower() in ('true', '1', 'yes')
+DB_SSLMODE = os.getenv('DB_SSLMODE', '').strip()
+DB_CONNECT_TIMEOUT = os.getenv('DB_CONNECT_TIMEOUT', '').strip()
+DB_DISABLE_SERVER_SIDE_CURSORS = os.getenv('DB_DISABLE_SERVER_SIDE_CURSORS', 'False').lower() in ('true', '1', 'yes')
+
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+if DATABASE_URL and dj_database_url:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=DB_CONN_MAX_AGE,
+            conn_health_checks=DB_CONN_HEALTH_CHECKS,
+        )
     }
-}
+    db_options = DATABASES['default'].setdefault('OPTIONS', {})
+    
+    # Configure SSL mode if specified or default to 'require' on remote production hosts
+    if DB_SSLMODE:
+        db_options['sslmode'] = DB_SSLMODE
+    elif not DEBUG and 'localhost' not in DATABASE_URL and '127.0.0.1' not in DATABASE_URL:
+        db_options.setdefault('sslmode', 'require')
+        
+    if DB_CONNECT_TIMEOUT:
+        db_options['connect_timeout'] = int(DB_CONNECT_TIMEOUT)
+        
+    if DB_DISABLE_SERVER_SIDE_CURSORS:
+        DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
+else:
+    db_options = {}
+    if DB_SSLMODE:
+        db_options['sslmode'] = DB_SSLMODE
+    elif not DEBUG and os.getenv('DB_HOST') not in (None, '', 'localhost', '127.0.0.1'):
+        db_options['sslmode'] = 'require'
+        
+    if DB_CONNECT_TIMEOUT:
+        db_options['connect_timeout'] = int(DB_CONNECT_TIMEOUT)
+
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': os.getenv('DB_NAME', os.getenv('POSTGRES_DB', 'sports_db')),
+            'USER': os.getenv('DB_USER', os.getenv('POSTGRES_USER', 'postgres')),
+            'PASSWORD': os.getenv('DB_PASSWORD', os.getenv('POSTGRES_PASSWORD', 'root')),
+            'HOST': os.getenv('DB_HOST', os.getenv('POSTGRES_HOST', '127.0.0.1')),
+            'PORT': os.getenv('DB_PORT', os.getenv('POSTGRES_PORT', '5432')),
+            'CONN_MAX_AGE': DB_CONN_MAX_AGE,
+            'CONN_HEALTH_CHECKS': DB_CONN_HEALTH_CHECKS,
+            'OPTIONS': db_options,
+        }
+    }
+    if DB_DISABLE_SERVER_SIDE_CURSORS:
+        DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
 
 
 # Password validation
