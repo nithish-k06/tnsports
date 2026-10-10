@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tamil Nadu Sports Development Platform - Discover talent, build careers, and promote sports across Tamil Nadu.">
+    <title>Clubs & Academies - TN Sports</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Static CSS -->
+    <link rel="stylesheet" href="static/style.css">
+
+    
+</head>
+<body>
+
+    <!-- App Container Card Wrapper (Matches Reference Screenshot Frame) -->
+    <div class="app-wrapper-container">
+
+        <!-- Header & Navigation -->
+        <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-emerald-500/20 shadow-2xl backdrop-blur-md sticky top-0 z-50">
+            <div class="header-container">
+                <a href="index.html" class="logo group">
+                    <div class="logo-icon-emblem bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="logo-text-group">
+                        <span class="logo-title text-white tracking-tight">Tamil Nadu</span>
+                        <span class="logo-subtitle text-emerald-400 font-semibold tracking-wider uppercase text-[10px]">Sports Development Platform</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link ">Home</a></li>
+                    <li><a href="sports.html" class="nav-link ">Sports</a></li>
+                    <li><a href="players.html" class="nav-link ">Players</a></li>
+                    <li><a href="clubs.html" class="nav-link active">Clubs</a></li>
+                    <li><a href="tournaments.html" class="nav-link ">Tournaments</a></li>
+                    <li><a href="districts.html" class="nav-link ">Districts</a></li>
+                    <li><a href="coaches.html" class="nav-link ">Coaches</a></li>
+                    <li><a href="news.html" class="nav-link ">News</a></li>
+                    <li><a href="contact.html" class="nav-link ">Contact</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    
+                        <a href="login.html" class="btn-green-login bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 border border-emerald-400/30">
+                            <i class="fa-solid fa-lock"></i> Portal Login
+                        </a>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            
+            
+<main class="max-w-7xl mx-auto px-4 py-8">
+    
+    <!-- Alerts -->
+    
+
+    <!-- Header Strip with Register CTA -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900">Sports Clubs & Academies</h2>
+            <p class="text-xs text-gray-500">Discover verified training clubs or register your sports academy</p>
+        </div>
+        <button onclick="toggleModal(true)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-sm flex items-center gap-1.5 transition cursor-pointer">
+            <i class="bi bi-plus-circle"></i> Register New Club
+        </button>
+    </div>
+
+    <!-- Filter Controls -->
+    <form method="GET" action="/clubs/" class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-6">
+        <div class="sm:col-span-6 relative">
+            <i class="bi bi-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+            <input type="text" name="q" value="" placeholder="Search club name..." class="w-full pl-9 pr-3 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500">
+        </div>
+        <div class="sm:col-span-3">
+            <select name="sport" onchange="this.form.submit()" class="w-full py-2 px-3 text-xs border border-gray-200 rounded-lg text-gray-600 bg-white">
+                <option value="">All Sports</option>
+                
+                    <option value="Archery" >Archery</option>
+                
+                    <option value="Athletics &amp; Track" >Athletics &amp; Track</option>
+                
+                    <option value="Badminton" >Badminton</option>
+                
+                    <option value="Basketball" >Basketball</option>
+                
+                    <option value="Boxing" >Boxing</option>
+                
+                    <option value="Carrom" >Carrom</option>
+                
+                    <option value="Chess" >Chess</option>
+                
+                    <option value="Cricket" >Cricket</option>
+                
+                    <option value="Cycling" >Cycling</option>
+                
+                    <option value="Football" >Football</option>
+                
+                    <option value="Gymnastics" >Gymnastics</option>
+                
+                    <option value="Handball" >Handball</option>
+                
+                    <option value="Hockey" >Hockey</option>
+                
+                    <option value="Kabaddi" >Kabaddi</option>
+                
+                    <option value="Kho Kho" >Kho Kho</option>
+                
+                    <option value="Rowing &amp; Canoeing" >Rowing &amp; Canoeing</option>
+                
+                    <option value="Shooting" >Shooting</option>
+                
+                    <option value="Silambam" >Silambam</option>
+                
+                    <option value="Squash" >Squash</option>
+                
+                    <option value="Swimming &amp; Aquatics" >Swimming &amp; Aquatics</option>
+                
+                    <option value="Table Tennis" >Table Tennis</option>
+                
+                    <option value="Taekwondo &amp; Judo" >Taekwondo &amp; Judo</option>
+                
+                    <option value="Tennis" >Tennis</option>
+                
+                    <option value="Volleyball" >Volleyball</option>
+                
+                    <option value="Weightlifting" >Weightlifting</option>
+                
+                    <option value="Wrestling" >Wrestling</option>
+                
+            </select>
+        </div>
+        <div class="sm:col-span-3">
+            <select name="district" onchange="this.form.submit()" class="w-full py-2 px-3 text-xs border border-gray-200 rounded-lg text-gray-600 bg-white">
+                <option value="">All Districts</option>
+                
+                    <option value="Ariyalur" >Ariyalur</option>
+                
+                    <option value="Chengalpattu" >Chengalpattu</option>
+                
+                    <option value="Chennai" >Chennai</option>
+                
+                    <option value="Coimbatore" >Coimbatore</option>
+                
+                    <option value="Cuddalore" >Cuddalore</option>
+                
+                    <option value="Dharmapuri" >Dharmapuri</option>
+                
+                    <option value="Dindigul" >Dindigul</option>
+                
+                    <option value="Erode" >Erode</option>
+                
+                    <option value="Kallakurichi" >Kallakurichi</option>
+                
+                    <option value="Kanchipuram" >Kanchipuram</option>
+                
+                    <option value="Kanniyakumari" >Kanniyakumari</option>
+                
+                    <option value="Karur" >Karur</option>
+                
+                    <option value="Krishnagiri" >Krishnagiri</option>
+                
+                    <option value="Madurai" >Madurai</option>
+                
+                    <option value="Mayiladuthurai" >Mayiladuthurai</option>
+                
+                    <option value="Nagapattinam" >Nagapattinam</option>
+                
+                    <option value="Namakkal" >Namakkal</option>
+                
+                    <option value="Nilgiris" >Nilgiris</option>
+                
+                    <option value="Perambalur" >Perambalur</option>
+                
+                    <option value="Pudukkottai" >Pudukkottai</option>
+                
+                    <option value="Ramanathapuram" >Ramanathapuram</option>
+                
+                    <option value="Ranipet" >Ranipet</option>
+                
+                    <option value="Salem" >Salem</option>
+                
+                    <option value="Sivagangai" >Sivagangai</option>
+                
+                    <option value="Tenkasi" >Tenkasi</option>
+                
+                    <option value="Thanjavur" >Thanjavur</option>
+                
+                    <option value="Theni" >Theni</option>
+                
+                    <option value="Thoothukudi" >Thoothukudi</option>
+                
+                    <option value="Tiruchirappalli" >Tiruchirappalli</option>
+                
+                    <option value="Tirunelveli" >Tirunelveli</option>
+                
+                    <option value="Tirupathur" >Tirupathur</option>
+                
+                    <option value="Tiruppur" >Tiruppur</option>
+                
+                    <option value="Tiruvallur" >Tiruvallur</option>
+                
+                    <option value="Tiruvannamalai" >Tiruvannamalai</option>
+                
+                    <option value="Tiruvarur" >Tiruvarur</option>
+                
+                    <option value="Vellore" >Vellore</option>
+                
+                    <option value="Viluppuram" >Viluppuram</option>
+                
+                    <option value="Virudhunagar" >Virudhunagar</option>
+                
+            </select>
+        </div>
+    </form>
+
+    <!-- Clubs Card Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="col-span-full text-center py-12 text-gray-500 text-xs">
+            No verified clubs found matching your criteria.
+        </div>
+        
+    </div>
+
+</main>
+
+<!-- Registration Modal -->
+<div id="register-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full max-h-[85vh] overflow-y-auto p-6 shadow-2xl my-auto">
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+            <div>
+                <h3 class="font-bold text-base text-gray-900">Register Sports Club</h3>
+                <p class="text-xs text-gray-500">Submit affiliation details to TN Sports Development Authority</p>
+            </div>
+            <button onclick="toggleModal(false)" class="text-gray-400 hover:text-gray-600 text-lg cursor-pointer">&times;</button>
+        </div>
+
+        <form method="POST" action="/clubs/" enctype="multipart/form-data" class="space-y-4">
+            <input type="hidden" name="csrfmiddlewaretoken" value="er5p7919vNeFy8x0Ciwcp1W0G8lopIjHVgRhfL4hbaF5nJLuowkTZHr0EmhpK4eM">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Club / Academy Name *</label>
+                    <input type="text" name="name" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" placeholder="Club or Academy Name" maxlength="150" required id="id_name">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Govt Reg. Number *</label>
+                    <input type="text" name="registration_number" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" placeholder="e.g. TN/SPO/2026/0123" maxlength="60" required aria-describedby="id_registration_number_helptext" id="id_registration_number">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Primary Sport *</label>
+                    <select name="primary_sport" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" required id="id_primary_sport">
+  <option value="" selected>- Select an option -</option>
+
+  <option value="5">Archery</option>
+
+  <option value="6">Athletics &amp; Track</option>
+
+  <option value="7">Badminton</option>
+
+  <option value="8">Basketball</option>
+
+  <option value="9">Boxing</option>
+
+  <option value="10">Carrom</option>
+
+  <option value="11">Chess</option>
+
+  <option value="1">Cricket</option>
+
+  <option value="12">Cycling</option>
+
+  <option value="2">Football</option>
+
+  <option value="13">Gymnastics</option>
+
+  <option value="14">Handball</option>
+
+  <option value="15">Hockey</option>
+
+  <option value="3">Kabaddi</option>
+
+  <option value="16">Kho Kho</option>
+
+  <option value="17">Rowing &amp; Canoeing</option>
+
+  <option value="18">Shooting</option>
+
+  <option value="19">Silambam</option>
+
+  <option value="20">Squash</option>
+
+  <option value="21">Swimming &amp; Aquatics</option>
+
+  <option value="22">Table Tennis</option>
+
+  <option value="23">Taekwondo &amp; Judo</option>
+
+  <option value="24">Tennis</option>
+
+  <option value="25">Volleyball</option>
+
+  <option value="26">Weightlifting</option>
+
+  <option value="27">Wrestling</option>
+
+</select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">District *</label>
+                    <select name="district" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" required id="id_district">
+  <option value="" selected>- Select an option -</option>
+
+  <option value="4">Ariyalur</option>
+
+  <option value="5">Chengalpattu</option>
+
+  <option value="1">Chennai</option>
+
+  <option value="2">Coimbatore</option>
+
+  <option value="6">Cuddalore</option>
+
+  <option value="7">Dharmapuri</option>
+
+  <option value="8">Dindigul</option>
+
+  <option value="9">Erode</option>
+
+  <option value="10">Kallakurichi</option>
+
+  <option value="11">Kanchipuram</option>
+
+  <option value="12">Kanniyakumari</option>
+
+  <option value="13">Karur</option>
+
+  <option value="14">Krishnagiri</option>
+
+  <option value="3">Madurai</option>
+
+  <option value="15">Mayiladuthurai</option>
+
+  <option value="16">Nagapattinam</option>
+
+  <option value="17">Namakkal</option>
+
+  <option value="18">Nilgiris</option>
+
+  <option value="19">Perambalur</option>
+
+  <option value="20">Pudukkottai</option>
+
+  <option value="21">Ramanathapuram</option>
+
+  <option value="22">Ranipet</option>
+
+  <option value="23">Salem</option>
+
+  <option value="24">Sivagangai</option>
+
+  <option value="25">Tenkasi</option>
+
+  <option value="26">Thanjavur</option>
+
+  <option value="27">Theni</option>
+
+  <option value="28">Thoothukudi</option>
+
+  <option value="29">Tiruchirappalli</option>
+
+  <option value="30">Tirunelveli</option>
+
+  <option value="31">Tirupathur</option>
+
+  <option value="32">Tiruppur</option>
+
+  <option value="33">Tiruvallur</option>
+
+  <option value="34">Tiruvannamalai</option>
+
+  <option value="35">Tiruvarur</option>
+
+  <option value="36">Vellore</option>
+
+  <option value="37">Viluppuram</option>
+
+  <option value="38">Virudhunagar</option>
+
+</select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Established Year *</label>
+                    <input type="number" name="established_year" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" placeholder="e.g. 2015" min="0" required id="id_established_year">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Contact Person *</label>
+                    <input type="text" name="contact_person" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" placeholder="Secretary / President Name" maxlength="100" required id="id_contact_person">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Official Email *</label>
+                    <input type="email" name="email" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" placeholder="Official Email" maxlength="254" required id="id_email">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Phone Number *</label>
+                    <input type="text" name="phone" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" placeholder="+91 98765 43210" maxlength="15" required id="id_phone">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Address & Training Grounds *</label>
+                    <textarea name="address" cols="40" rows="2" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ground / Academy Address" required id="id_address">
+</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Club Logo</label>
+                    <input type="file" name="logo" class="w-full text-xs text-gray-500" accept="image/*" id="id_logo">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Affiliation / Reg Proof (PDF)</label>
+                    <input type="file" name="reg_certificate" class="w-full text-xs text-gray-500" id="id_reg_certificate">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-4 border-t mt-4">
+                <button type="button" onclick="toggleModal(false)" class="px-4 py-2 border rounded-lg text-xs font-semibold text-gray-600 hover:bg-gray-50 cursor-pointer">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-emerald-600 text-white rounded-lg text-xs font-semibold hover:bg-emerald-700 cursor-pointer">Submit Application</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+        </main>
+
+        <!-- Master Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon-emblem"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="logo-text-group">
+                            <span class="logo-title">Tamil Nadu</span>
+                            <span class="logo-subtitle">Sports Development Platform</span>
+                        </div>
+                    </a>
+                    <p>A unified platform to discover talent, build careers, and promote sports across Tamil Nadu.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="sports.html">Sports Disciplines</a></li>
+                        <li><a href="players.html">Player Roster</a></li>
+                        <li><a href="clubs.html">Clubs & Franchises</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Portals & Governance</h4>
+                    <ul>
+                        <li><a href="districts.html">Districts Portal</a></li>
+                        <li><a href="minister_dashboard.html"><i class="fa-solid fa-crown text-amber-500"></i> Sports Minister Portal</a></li>
+                        <li><a href="collector_dashboard.html"><i class="fa-solid fa-landmark-flag text-emerald-400"></i> Collector & DSO Portal</a></li>
+                        <li><a href="athlete_register.html">Player Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tamil Nadu Sports Development Platform. All rights reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Global Toast Notification UI -->
+    <div class="toast" id="globalToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="globalToastMessage">Notification update!</span>
+    </div>
+
+    
+
+    <!-- Core Global JavaScript & Idle Detection -->
+    <script>
+        function triggerGlobalNotification(message, type = 'info') {
+            let container = document.getElementById('djangoMessagesContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'djangoMessagesContainer';
+                container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const borderClass = type === 'error' ? 'bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40' : (type === 'success' ? 'bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40' : 'bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40');
+            const iconClass = type === 'error' ? 'fa-circle-xmark text-rose-400' : (type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-amber-400');
+
+            toast.className = `p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md ${borderClass}`;
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${iconClass} text-base"></i>
+                    <span class="leading-tight text-white font-semibold">${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('#djangoMessagesContainer .toast-popup');
+            alerts.forEach((alert, idx) => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000 + (idx * 500));
+            });
+        });
+
+        
+    </script>
+
+    
+<script>
+    function toggleModal(show) {
+        document.getElementById('register-modal').classList.toggle('hidden', !show);
+    }
+</script>
+
+</body>
+</html>

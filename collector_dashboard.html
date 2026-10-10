@@ -1,0 +1,1825 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tamil Nadu Sports Development Platform - Discover talent, build careers, and promote sports across Tamil Nadu.">
+    <title>District Collector & DSO Governance Portal - TN Sports</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Static CSS -->
+    <link rel="stylesheet" href="static/style.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+    .custom-collector-popup .leaflet-popup-content-wrapper {
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+    .custom-collector-popup .leaflet-popup-tip {
+        background: #0f172a !important;
+        border: 1px solid rgba(59, 130, 246, 0.4) !important;
+    }
+    .custom-collector-popup .leaflet-popup-content {
+        margin: 0 !important;
+        line-height: 1.4 !important;
+    }
+    .dso-active-pill {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        box-shadow: 0 4px 15px -3px rgba(37, 99, 235, 0.4);
+        color: #ffffff;
+    }
+</style>
+
+</head>
+<body>
+
+    <!-- App Container Card Wrapper (Matches Reference Screenshot Frame) -->
+    <div class="app-wrapper-container">
+
+        <!-- Header & Navigation -->
+        <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-emerald-500/20 shadow-2xl backdrop-blur-md sticky top-0 z-50">
+            <div class="header-container">
+                <a href="index.html" class="logo group">
+                    <div class="logo-icon-emblem bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="logo-text-group">
+                        <span class="logo-title text-white tracking-tight">Tamil Nadu</span>
+                        <span class="logo-subtitle text-emerald-400 font-semibold tracking-wider uppercase text-[10px]">Sports Development Platform</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link ">Home</a></li>
+                    <li><a href="sports.html" class="nav-link ">Sports</a></li>
+                    <li><a href="players.html" class="nav-link ">Players</a></li>
+                    <li><a href="clubs.html" class="nav-link ">Clubs</a></li>
+                    <li><a href="tournaments.html" class="nav-link ">Tournaments</a></li>
+                    <li><a href="districts.html" class="nav-link ">Districts</a></li>
+                    <li><a href="coaches.html" class="nav-link ">Coaches</a></li>
+                    <li><a href="news.html" class="nav-link ">News</a></li>
+                    <li><a href="contact.html" class="nav-link ">Contact</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    
+                        
+                            <a href="minister_dashboard.html" class="btn-player-dashboard bg-slate-900 text-amber-300 border border-amber-500/40 hover:bg-slate-800 shadow-lg shadow-amber-500/10" title="Minister Super Admin Control Center">
+                                <i class="fa-solid fa-crown text-amber-400"></i> Executive Portal
+                            </a>
+                        
+                        <div class="user-profile-badge bg-slate-800/80 border border-slate-700 text-slate-200">
+                            <i class="fa-solid fa-circle-user text-emerald-400"></i>
+                            <span class="user-name-display">Executive Admin</span>
+                            <a href="login.html" class="btn-logout-link text-slate-400 hover:text-red-400" title="Sign Out">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </a>
+                        </div>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            
+            
+<div class="min-h-screen bg-[#f4f6f9] flex">
+
+    <!-- Django Messages Toast Alert -->
+    
+
+    <!-- Sidebar Navigation (Dark Navy - Identical to Minister Dashboard) -->
+    <aside id="dsoSidebar" class="w-64 bg-[#061224] text-slate-300 min-h-screen flex flex-col justify-between shrink-0 shadow-2xl z-30 transition-all duration-300 hidden md:flex">
+        <div>
+            <!-- Sidebar Header / Branding -->
+            <div class="p-5 border-b border-slate-800/80 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 via-emerald-600 to-blue-600 p-0.5 shadow-md shrink-0 flex items-center justify-center">
+                    <div class="w-full h-full bg-[#061224] rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-amber-400 text-lg"></i>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-sm font-extrabold text-white tracking-tight leading-tight">Tamil Nadu</h2>
+                    <p class="text-[10px] text-blue-400 font-bold uppercase tracking-wider">SPORTS DEVELOPMENT PLATFORM</p>
+                    <span class="text-[9px] text-slate-400 block mt-0.5">Sports for a Stronger Tamil Nadu</span>
+                </div>
+            </div>
+
+            <!-- Active Dashboard Pill -->
+            <div class="p-3">
+                <a href="#" onclick="switchDsoTab('overview'); return false;" class="dso-active-pill w-full px-4 py-3 rounded-xl flex items-center gap-3 font-extrabold text-xs transition">
+                    <i class="fa-solid fa-house text-sm"></i>
+                    <span>DSO & Collector Dashboard</span>
+                </a>
+            </div>
+
+            <!-- DASHBOARD SECTIONS -->
+            <div class="px-3 py-2 space-y-1">
+                <span class="px-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-500 block mb-2 font-mono">DASHBOARD SECTIONS</span>
+
+                <a href="#" id="snav-overview" onclick="switchDsoTab('overview'); return false;" class="dso-nav-item flex items-center justify-between px-4 py-2.5 rounded-xl bg-blue-600/20 text-blue-300 border border-blue-500/30 transition text-xs font-extrabold group cursor-pointer">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-gauge-high nav-icon text-blue-400 w-4"></i> Overview</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-blue-400"></i>
+                </a>
+
+                <a href="#" id="snav-gis-map" onclick="switchDsoTab('gis-map'); return false;" class="dso-nav-item flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group cursor-pointer">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-map-location-dot nav-icon text-slate-400 group-hover:text-blue-400 w-4"></i> Sub-Zones & Map</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="#" id="snav-clubs" onclick="switchDsoTab('clubs'); return false;" class="dso-nav-item flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group cursor-pointer">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-building-columns nav-icon text-slate-400 group-hover:text-blue-400 w-4"></i> Club Verifications</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="#" id="snav-tournaments" onclick="switchDsoTab('tournaments'); return false;" class="dso-nav-item flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group cursor-pointer">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-trophy nav-icon text-slate-400 group-hover:text-blue-400 w-4"></i> Tournament Sanctions</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="#" id="snav-transfer-desk" onclick="switchDsoTab('transfer-desk'); return false;" class="dso-nav-item flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group cursor-pointer">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-arrows-split-up-and-left nav-icon text-slate-400 group-hover:text-amber-400 w-4"></i> Transfer & Reassign</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="#" id="snav-selection" onclick="switchDsoTab('selection'); return false;" class="dso-nav-item flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group cursor-pointer">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-file-circle-check nav-icon text-slate-400 group-hover:text-blue-400 w-4"></i> District Selection Teams</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="#" id="snav-clearances" onclick="switchDsoTab('clearances'); return false;" class="dso-nav-item flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group cursor-pointer">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-clipboard-check nav-icon text-slate-400 group-hover:text-blue-400 w-4"></i> Clearances & Budget</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <span class="px-4 text-[10px] font-extrabold uppercase tracking-widest text-slate-500 block pt-3 mb-2 font-mono">DISTRICT REGISTRIES</span>
+
+                <a href="players.html" class="flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-user-group text-slate-400 group-hover:text-blue-400 w-4"></i> Athletes</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="clubs.html" class="flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-building-columns text-slate-400 group-hover:text-blue-400 w-4"></i> Clubs</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="tournaments.html" class="flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-trophy text-slate-400 group-hover:text-blue-400 w-4"></i> Tournaments</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="districts.html" class="flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-slate-400 group-hover:text-blue-400 w-4"></i> Districts</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+
+                <a href="coaches.html" class="flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-slate-800/70 text-slate-300 hover:text-white transition text-xs font-semibold group">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-user-ninja text-slate-400 group-hover:text-blue-400 w-4"></i> Coaches</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 group-hover:text-slate-300"></i>
+                </a>
+            </div>
+
+            <!-- Quick Action Links Footer -->
+            <div class="px-4 py-3 border-t border-slate-800/80">
+                <button onclick="document.getElementById('tournamentSanctionModal').classList.remove('hidden')" type="button" class="w-full py-2.5 px-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-md">
+                    <i class="fa-solid fa-trophy"></i> Sanction Tournament
+                </button>
+                <a href="index.html" class="w-full mt-2 py-2 px-3 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 border border-white/10">
+                    <i class="fa-solid fa-globe text-amber-400"></i> Public Website Portal
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Body -->
+    <main class="flex-1 min-w-0 overflow-y-auto">
+        <!-- Top App Navigation Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-20 flex flex-wrap justify-between items-center gap-4 shadow-xs">
+            <div class="flex items-center gap-3">
+                <button type="button" onclick="document.getElementById('dsoSidebar').classList.toggle('hidden')" class="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+                <div>
+                    <span class="px-2.5 py-0.5 bg-blue-100 text-blue-800 text-[10px] font-extrabold rounded-full uppercase tracking-wider">District Governance</span>
+                    <h1 class="text-xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
+                        Coimbatore District Administrative Portal
+                    </h1>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="document.getElementById('dsoRequestModal').classList.remove('hidden')" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5 border border-indigo-500">
+                    <i class="fa-solid fa-paper-plane text-amber-300"></i> Request Transfer / Reassignment
+                </button>
+
+                
+                <!-- District Selector Dropdown for Admins / Collectors -->
+                <form method="GET" action="/portal/collector/" class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-700">
+                    <label for="distSelect" class="text-xs font-bold text-slate-300">District:</label>
+                    <select id="distSelect" name="district" onchange="this.form.submit()" class="bg-slate-900 text-white text-xs font-bold py-0.5 outline-none cursor-pointer">
+                        
+                        <option value="ariyalur" >Ariyalur</option>
+                        
+                        <option value="chengalpattu" >Chengalpattu</option>
+                        
+                        <option value="chennai" >Chennai</option>
+                        
+                        <option value="coimbatore" selected>Coimbatore</option>
+                        
+                        <option value="cuddalore" >Cuddalore</option>
+                        
+                        <option value="dharmapuri" >Dharmapuri</option>
+                        
+                        <option value="dindigul" >Dindigul</option>
+                        
+                        <option value="erode" >Erode</option>
+                        
+                        <option value="kallakurichi" >Kallakurichi</option>
+                        
+                        <option value="kanchipuram" >Kanchipuram</option>
+                        
+                        <option value="kanniyakumari" >Kanniyakumari</option>
+                        
+                        <option value="karur" >Karur</option>
+                        
+                        <option value="krishnagiri" >Krishnagiri</option>
+                        
+                        <option value="madurai" >Madurai</option>
+                        
+                        <option value="mayiladuthurai" >Mayiladuthurai</option>
+                        
+                        <option value="nagapattinam" >Nagapattinam</option>
+                        
+                        <option value="namakkal" >Namakkal</option>
+                        
+                        <option value="nilgiris" >Nilgiris</option>
+                        
+                        <option value="perambalur" >Perambalur</option>
+                        
+                        <option value="pudukkottai" >Pudukkottai</option>
+                        
+                        <option value="ramanathapuram" >Ramanathapuram</option>
+                        
+                        <option value="ranipet" >Ranipet</option>
+                        
+                        <option value="salem" >Salem</option>
+                        
+                        <option value="sivagangai" >Sivagangai</option>
+                        
+                        <option value="tenkasi" >Tenkasi</option>
+                        
+                        <option value="thanjavur" >Thanjavur</option>
+                        
+                        <option value="theni" >Theni</option>
+                        
+                        <option value="thoothukudi" >Thoothukudi</option>
+                        
+                        <option value="tiruchirappalli" >Tiruchirappalli</option>
+                        
+                        <option value="tirunelveli" >Tirunelveli</option>
+                        
+                        <option value="tirupathur" >Tirupathur</option>
+                        
+                        <option value="tiruppur" >Tiruppur</option>
+                        
+                        <option value="tiruvallur" >Tiruvallur</option>
+                        
+                        <option value="tiruvannamalai" >Tiruvannamalai</option>
+                        
+                        <option value="tiruvarur" >Tiruvarur</option>
+                        
+                        <option value="vellore" >Vellore</option>
+                        
+                        <option value="viluppuram" >Viluppuram</option>
+                        
+                        <option value="virudhunagar" >Virudhunagar</option>
+                        
+                    </select>
+                </form>
+                
+            </div>
+        </header>
+
+        <!-- Main Body Wrapper -->
+        <div class="p-6 max-w-7xl mx-auto space-y-6">
+
+            <!-- SECTION 1: OVERVIEW TAB -->
+            <div id="sec-overview" class="dso-tab-section space-y-6">
+                
+                <!-- Welcome Banner -->
+                <div class="bg-gradient-to-r from-blue-900 via-slate-900 to-indigo-900 rounded-3xl p-6 text-white shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border border-blue-800/40">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-400/30 rounded-full text-xs font-bold mb-2">
+                            <i class="fa-solid fa-user-gear"></i> District Administrative Governance & DSO
+                        </div>
+                        <h2 class="text-2xl font-extrabold tracking-tight">Governance Overview — Coimbatore District</h2>
+                        <p class="text-slate-300 text-xs mt-1">School onboarding, budget utilization, club verification & tournament approvals for <strong class="text-amber-300">Coimbatore</strong>.</p>
+                    </div>
+
+                    
+                </div>
+
+                <!-- 4 Metric Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-extrabold text-gray-900">142 / 150</span>
+                            <p class="text-xs font-semibold text-gray-500">Schools Onboarded</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-extrabold text-gray-900">₹32.4L</span>
+                            <p class="text-xs font-semibold text-gray-500">Budget Utilized (of ₹45.0L)</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-extrabold text-gray-900">188</span>
+                            <p class="text-xs font-semibold text-gray-500">Verified PET Teachers</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-extrabold text-gray-900">4 / 5</span>
+                            <p class="text-xs font-semibold text-gray-500">Dept Clearances Ready</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Action Cards Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Budget Overview Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs space-y-4">
+                        <h3 class="text-base font-extrabold text-gray-900 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-emerald-600"></i> District Sports Budget Allocation
+                        </h3>
+                        <div>
+                            <div class="flex justify-between text-xs font-bold mb-1.5">
+                                <span class="text-gray-700">Spent: ₹32.4 Lakhs</span>
+                                <span class="text-emerald-600">72% Utilized</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+                                <div class="bg-gradient-to-r from-emerald-500 to-teal-600 h-3 rounded-full" style="width: 72%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 pt-2 border-t border-gray-100 text-xs">
+                            <div class="p-3 bg-gray-50 rounded-xl">
+                                <span class="text-gray-500 font-semibold block">Sanctioned:</span>
+                                <span class="text-sm font-extrabold text-gray-900">₹45.0 Lakhs</span>
+                            </div>
+                            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                                <span class="text-emerald-700 font-semibold block">Remaining Balance:</span>
+                                <span class="text-sm font-extrabold text-emerald-800">₹12.6 Lakhs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clearances Summary Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs space-y-3">
+                        <h3 class="text-base font-extrabold text-gray-900 flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-check text-blue-600"></i> Inter-Department Clearances Checklist
+                        </h3>
+                        
+                        <div class="p-2.5 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2.5">
+                                <i class="bi bi-shield-check text-emerald-600 text-base"></i>
+                                <span class="font-bold text-gray-800">District Police &amp; Security Clearance</span>
+                            </div>
+                            
+                                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full">CLEARED</span>
+                            
+                        </div>
+                        
+                        <div class="p-2.5 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2.5">
+                                <i class="bi bi-heart-pulse-fill text-emerald-600 text-base"></i>
+                                <span class="font-bold text-gray-800">Health &amp; Emergency Ambulance Support</span>
+                            </div>
+                            
+                                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full">CLEARED</span>
+                            
+                        </div>
+                        
+                        <div class="p-2.5 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2.5">
+                                <i class="bi bi-building-check text-emerald-600 text-base"></i>
+                                <span class="font-bold text-gray-800">SDAT Stadium Infrastructure Inspection</span>
+                            </div>
+                            
+                                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full">CLEARED</span>
+                            
+                        </div>
+                        
+                        <div class="p-2.5 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2.5">
+                                <i class="bi bi-journal-check text-emerald-600 text-base"></i>
+                                <span class="font-bold text-gray-800">District Education Officer (DEO) Clearance</span>
+                            </div>
+                            
+                                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full">CLEARED</span>
+                            
+                        </div>
+                        
+                        <div class="p-2.5 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2.5">
+                                <i class="bi bi-clock-history text-amber-500 text-base"></i>
+                                <span class="font-bold text-gray-800">Transport &amp; Transit Security Protocol</span>
+                            </div>
+                            
+                                <span class="px-2 py-0.5 bg-amber-100 text-amber-800 text-[10px] font-extrabold rounded-full">PENDING</span>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SECTION 2: SUB-ZONES & GIS MAP TAB -->
+            <div id="sec-gis-map" class="dso-tab-section hidden space-y-6">
+                <!-- Interactive GIS Vector Map & Taluk Infrastructure Explorer -->
+                <div class="bg-slate-950 rounded-3xl p-6 border-2 border-blue-500/30 shadow-2xl space-y-4 text-white relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full text-[11px] font-extrabold uppercase mb-1">
+                                <i class="fa-solid fa-map-location-dot"></i> Interactive GIS District Map
+                            </div>
+                            <h3 class="text-xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                                Coimbatore District Spatial Infrastructure & Sub-Zone Map
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-0.5">Real-time geographical view of sub-zones, local taluks, stadiums, and active sports administration centers.</p>
+                        </div>
+                        
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button onclick="recenterCollectorMap()" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-300 rounded-xl transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-crosshairs text-blue-400"></i> Center Coimbatore
+                            </button>
+                            <span class="px-3 py-1.5 bg-blue-950/80 border border-blue-500/40 text-blue-300 text-xs font-mono font-bold rounded-xl flex items-center gap-1.5">
+                                <i class="fa-solid fa-location-pin text-red-400"></i> 11.0168, 76.9558
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Map Container Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                        <div class="lg:col-span-8 relative rounded-2xl overflow-hidden border border-slate-800 shadow-inner min-h-[440px]">
+                            <div id="collector-district-map" class="w-full h-full min-h-[440px] bg-[#0b1329] z-10"></div>
+                            
+                            <div class="absolute bottom-4 left-4 bg-slate-900/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-blue-500/30 text-[11px] text-slate-300 z-[1000] shadow-xl flex items-center gap-3">
+                                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 border border-white"></span> District HQ</div>
+                                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-white"></span> Active Sub-Zone</div>
+                                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 border border-white"></span> Local Taluk Pin</div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-4 bg-slate-900/80 rounded-2xl p-4 border border-slate-800 flex flex-col justify-between space-y-4">
+                            <div>
+                                <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                                    <span class="text-xs font-black uppercase text-slate-300 tracking-wider">Active Sub-Zones Overview</span>
+                                    <span class="px-2 py-0.5 bg-blue-900/60 text-blue-300 text-[10px] font-bold rounded-full border border-blue-500/30">3 Sub-Zones</span>
+                                </div>
+
+                                <div class="space-y-2.5 max-h-[350px] overflow-y-auto pr-1" id="subzone-map-list">
+                                    
+                                    <div onclick="focusSubZonePin(0)" class="p-3 bg-slate-950/70 hover:bg-slate-800/90 rounded-xl border border-slate-800 hover:border-blue-500/50 cursor-pointer transition group">
+                                        <div class="flex justify-between items-start mb-1">
+                                            <h4 class="text-xs font-bold text-white group-hover:text-blue-400 transition">Coimbatore North Sub-Zone</h4>
+                                            <span class="text-[10px] text-emerald-400 font-mono font-bold"><i class="fa-solid fa-person-running"></i> 0</span>
+                                        </div>
+                                        <p class="text-[10px] text-slate-400 truncate">Officer: Unassigned</p>
+                                        <div class="flex items-center gap-2 mt-2 text-[10px] text-slate-300 font-semibold">
+                                            <span class="bg-blue-950 text-blue-300 px-1.5 py-0.5 rounded border border-blue-800/50">0 Clubs</span>
+                                            <span class="bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50">0 Schools</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div onclick="focusSubZonePin(1)" class="p-3 bg-slate-950/70 hover:bg-slate-800/90 rounded-xl border border-slate-800 hover:border-blue-500/50 cursor-pointer transition group">
+                                        <div class="flex justify-between items-start mb-1">
+                                            <h4 class="text-xs font-bold text-white group-hover:text-blue-400 transition">Coimbatore South-Rural Sub-Zone</h4>
+                                            <span class="text-[10px] text-emerald-400 font-mono font-bold"><i class="fa-solid fa-person-running"></i> 0</span>
+                                        </div>
+                                        <p class="text-[10px] text-slate-400 truncate">Officer: Unassigned</p>
+                                        <div class="flex items-center gap-2 mt-2 text-[10px] text-slate-300 font-semibold">
+                                            <span class="bg-blue-950 text-blue-300 px-1.5 py-0.5 rounded border border-blue-800/50">0 Clubs</span>
+                                            <span class="bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50">0 Schools</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div onclick="focusSubZonePin(2)" class="p-3 bg-slate-950/70 hover:bg-slate-800/90 rounded-xl border border-slate-800 hover:border-blue-500/50 cursor-pointer transition group">
+                                        <div class="flex justify-between items-start mb-1">
+                                            <h4 class="text-xs font-bold text-white group-hover:text-blue-400 transition">Coimbatore Urban Sub-Zone</h4>
+                                            <span class="text-[10px] text-emerald-400 font-mono font-bold"><i class="fa-solid fa-person-running"></i> 0</span>
+                                        </div>
+                                        <p class="text-[10px] text-slate-400 truncate">Officer: Unassigned</p>
+                                        <div class="flex items-center gap-2 mt-2 text-[10px] text-slate-300 font-semibold">
+                                            <span class="bg-blue-950 text-blue-300 px-1.5 py-0.5 rounded border border-blue-800/50">0 Clubs</span>
+                                            <span class="bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50">0 Schools</span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="pt-3 border-t border-slate-800">
+                                <button onclick="openAddSubZoneModal()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-lg shadow-blue-900/40">
+                                    <i class="fa-solid fa-plus-circle"></i> Create Sub-Zone Pin on Map
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub-Zone Operational Management Cards -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h3 class="text-base font-extrabold text-gray-900 flex items-center gap-2">
+                                <i class="fa-solid fa-map-location-dot text-blue-600"></i> District Sub-Zone Governance & Taluk Operations
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-0.5">Management of active sports sub-zones, venues, and officers for <strong class="text-gray-800">Coimbatore District</strong>.</p>
+                        </div>
+                        <button onclick="openAddSubZoneModal()" type="button" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus"></i> Add Sub-Zone
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        
+                        <div class="p-5 bg-gradient-to-br from-slate-50 to-blue-50/40 rounded-2xl border border-gray-200 shadow-xs flex flex-col justify-between hover:border-blue-300 transition">
+                            <div>
+                                <div class="flex justify-between items-start gap-2 mb-2">
+                                    <h4 class="text-sm font-extrabold text-gray-900">Coimbatore North Sub-Zone</h4>
+                                    
+                                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full">Active</span>
+                                    
+                                </div>
+                                <p class="text-[11px] text-gray-600 font-semibold mb-3 flex items-start gap-1.5">
+                                    <i class="fa-solid fa-location-dot text-red-500 mt-0.5"></i>
+                                    <span>Places Covered: 
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Gandhipuram</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Mettupalayam</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Pollachi</span>
+                                        
+                                    </span>
+                                </p>
+                                <div class="space-y-1.5 text-xs text-gray-500 bg-white/80 p-3 rounded-xl border border-gray-100 mb-4">
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold text-gray-600">Officer In-Charge:</span>
+                                        <span class="font-bold text-gray-800">Not Assigned</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold text-gray-600">Contact Phone:</span>
+                                        <span class="font-bold text-gray-800">N/A</span>
+                                    </div>
+                                    <div class="flex justify-between pt-1 border-t border-gray-100 text-[11px]">
+                                        <span class="text-blue-700 font-bold"><i class="fa-solid fa-person-running"></i> 0 Athletes</span>
+                                        <span class="text-purple-700 font-bold"><i class="fa-solid fa-shield"></i> 0 Clubs</span>
+                                        <span class="text-emerald-700 font-bold"><i class="fa-solid fa-school"></i> 0 Schools</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-2 pt-2 border-t border-gray-200/60">
+                                <button onclick="openEditSubZoneModal('29', 'Coimbatore North Sub\u002DZone', 'Gandhipuram, Pollachi', '', '', '0', '0', '0', 'true', [56,58,57])" type="button" class="px-3 py-1.5 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Sub-Zone & Places
+                                </button>
+                                <a href="/portal/collector/subzone/29/delete/" onclick="return confirm('Are you sure you want to delete sub-zone Coimbatore North Sub-Zone?')" class="px-3 py-1.5 bg-white hover:bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="p-5 bg-gradient-to-br from-slate-50 to-blue-50/40 rounded-2xl border border-gray-200 shadow-xs flex flex-col justify-between hover:border-blue-300 transition">
+                            <div>
+                                <div class="flex justify-between items-start gap-2 mb-2">
+                                    <h4 class="text-sm font-extrabold text-gray-900">Coimbatore South-Rural Sub-Zone</h4>
+                                    
+                                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full">Active</span>
+                                    
+                                </div>
+                                <p class="text-[11px] text-gray-600 font-semibold mb-3 flex items-start gap-1.5">
+                                    <i class="fa-solid fa-location-dot text-red-500 mt-0.5"></i>
+                                    <span>Places Covered: 
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Kinathukadavu</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Mettupalayam</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Pollachi</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Saravanampatti</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Thudiyalur</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Valparai</span>
+                                        
+                                    </span>
+                                </p>
+                                <div class="space-y-1.5 text-xs text-gray-500 bg-white/80 p-3 rounded-xl border border-gray-100 mb-4">
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold text-gray-600">Officer In-Charge:</span>
+                                        <span class="font-bold text-gray-800">Not Assigned</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold text-gray-600">Contact Phone:</span>
+                                        <span class="font-bold text-gray-800">N/A</span>
+                                    </div>
+                                    <div class="flex justify-between pt-1 border-t border-gray-100 text-[11px]">
+                                        <span class="text-blue-700 font-bold"><i class="fa-solid fa-person-running"></i> 0 Athletes</span>
+                                        <span class="text-purple-700 font-bold"><i class="fa-solid fa-shield"></i> 0 Clubs</span>
+                                        <span class="text-emerald-700 font-bold"><i class="fa-solid fa-school"></i> 0 Schools</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-2 pt-2 border-t border-gray-200/60">
+                                <button onclick="openEditSubZoneModal('30', 'Coimbatore South\u002DRural Sub\u002DZone', 'Kinathukadavu, Valparai', '', '', '0', '0', '0', 'true', [61,58,57,59,60,62])" type="button" class="px-3 py-1.5 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Sub-Zone & Places
+                                </button>
+                                <a href="/portal/collector/subzone/30/delete/" onclick="return confirm('Are you sure you want to delete sub-zone Coimbatore South-Rural Sub-Zone?')" class="px-3 py-1.5 bg-white hover:bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="p-5 bg-gradient-to-br from-slate-50 to-blue-50/40 rounded-2xl border border-gray-200 shadow-xs flex flex-col justify-between hover:border-blue-300 transition">
+                            <div>
+                                <div class="flex justify-between items-start gap-2 mb-2">
+                                    <h4 class="text-sm font-extrabold text-gray-900">Coimbatore Urban Sub-Zone</h4>
+                                    
+                                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full">Active</span>
+                                    
+                                </div>
+                                <p class="text-[11px] text-gray-600 font-semibold mb-3 flex items-start gap-1.5">
+                                    <i class="fa-solid fa-location-dot text-red-500 mt-0.5"></i>
+                                    <span>Places Covered: 
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Gandhipuram</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">Peelamedu</span>
+                                        
+                                            <span class="inline-block bg-blue-100/90 text-blue-900 px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 shadow-2xs">RS Puram</span>
+                                        
+                                    </span>
+                                </p>
+                                <div class="space-y-1.5 text-xs text-gray-500 bg-white/80 p-3 rounded-xl border border-gray-100 mb-4">
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold text-gray-600">Officer In-Charge:</span>
+                                        <span class="font-bold text-gray-800">Not Assigned</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold text-gray-600">Contact Phone:</span>
+                                        <span class="font-bold text-gray-800">N/A</span>
+                                    </div>
+                                    <div class="flex justify-between pt-1 border-t border-gray-100 text-[11px]">
+                                        <span class="text-blue-700 font-bold"><i class="fa-solid fa-person-running"></i> 0 Athletes</span>
+                                        <span class="text-purple-700 font-bold"><i class="fa-solid fa-shield"></i> 0 Clubs</span>
+                                        <span class="text-emerald-700 font-bold"><i class="fa-solid fa-school"></i> 0 Schools</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-2 pt-2 border-t border-gray-200/60">
+                                <button onclick="openEditSubZoneModal('28', 'Coimbatore Urban Sub\u002DZone', 'RS Puram, Peelamedu', '', '', '0', '0', '0', 'true', [56,55,54])" type="button" class="px-3 py-1.5 bg-white hover:bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Sub-Zone & Places
+                                </button>
+                                <a href="/portal/collector/subzone/28/delete/" onclick="return confirm('Are you sure you want to delete sub-zone Coimbatore Urban Sub-Zone?')" class="px-3 py-1.5 bg-white hover:bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: CLUB VERIFICATIONS TAB -->
+            <div id="sec-clubs" class="dso-tab-section hidden space-y-6">
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="p-5 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-gray-50/50">
+                        <div>
+                            <h3 class="font-extrabold text-base text-gray-900 flex items-center gap-2">
+                                <i class="bi bi-file-earmark-check text-emerald-600 text-lg"></i>
+                                Pending Club Verification Queue
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-0.5">Review local sports club & academy affiliation requests in Coimbatore District</p>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
+                            0 Action Required
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider border-b border-gray-200">
+                                <tr>
+                                    <th class="p-4">Club / Academy Name</th>
+                                    <th class="p-4">Govt Reg. No</th>
+                                    <th class="p-4">Primary Sport</th>
+                                    <th class="p-4">Contact Person & Phone</th>
+                                    <th class="p-4 text-center">Status</th>
+                                    <th class="p-4 text-right">Approval Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                
+                                <tr>
+                                    <td colspan="6" class="p-8 text-center text-gray-500">
+                                        <i class="bi bi-check2-all text-2xl text-emerald-500 block mb-1"></i>
+                                        <span class="font-bold text-gray-700 text-xs">All Clear!</span>
+                                        <p class="text-[11px] text-gray-400 mt-0.5">No pending club registrations requiring action at this time.</p>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: TOURNAMENT SANCTIONS TAB -->
+            <div id="sec-tournaments" class="dso-tab-section hidden space-y-6">
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="p-5 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-gray-50/50">
+                        <div>
+                            <h3 class="font-extrabold text-base text-gray-900 flex items-center gap-2">
+                                <i class="bi bi-trophy text-emerald-600 text-lg"></i>
+                                Pending Tournament Sanction Requests
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-0.5">Review organizer & club applications for official District sanctioning</p>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">
+                            0 Pending Sanctions
+                        </span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider border-b border-gray-200">
+                                <tr>
+                                    <th class="p-4">Tournament</th>
+                                    <th class="p-4">Sport</th>
+                                    <th class="p-4">Dates</th>
+                                    <th class="p-4">Organizer</th>
+                                    <th class="p-4 text-right">Sanction Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                
+                                <tr>
+                                    <td colspan="5" class="p-6 text-center text-gray-400 text-xs">No pending tournament sanction requests.</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: TRANSFER & REASSIGNMENTS TAB -->
+            <div id="sec-transfer-desk" class="dso-tab-section hidden space-y-6">
+                <!-- DSO Official Transfer & Reassignment Desk Card -->
+                <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 border-2 border-indigo-500/30 shadow-2xl text-white space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-indigo-900/60 pb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-xs font-bold uppercase mb-2">
+                                <i class="fa-solid fa-arrows-split-up-and-left"></i> Official DSO Executive Desk
+                            </div>
+                            <h2 class="text-xl md:text-2xl font-extrabold tracking-tight flex items-center gap-2">
+                                DSO Transfer & Reassignment Request Portal
+                            </h2>
+                            <p class="text-xs text-slate-300 mt-1">Submit formal application for inter-district transfer or duty reassignment directly to the Sports Minister.</p>
+                        </div>
+                        
+                        <button onclick="document.getElementById('dsoRequestModal').classList.remove('hidden')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg transition flex items-center gap-2 border border-indigo-400/40 shrink-0">
+                            <i class="fa-solid fa-paper-plane text-amber-300"></i> Request Transfer / Reassignment
+                        </button>
+                    </div>
+
+                    <!-- List of Submitted Requests -->
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-extrabold text-slate-200 tracking-wide uppercase flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-indigo-400"></i> My Submitted Request Applications
+                        </h3>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-300">
+                                <thead class="bg-slate-900/90 text-slate-400 text-[11px] uppercase tracking-wider font-extrabold border-b border-slate-800">
+                                    <tr>
+                                        <th class="p-3">Ref ID</th>
+                                        <th class="p-3">Type</th>
+                                        <th class="p-3">Target District / Preferred Duty</th>
+                                        <th class="p-3">Reason / Rationale</th>
+                                        <th class="p-3">Submitted On</th>
+                                        <th class="p-3">Status</th>
+                                        <th class="p-3">Minister Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-800/60">
+                                    
+                                    <tr>
+                                        <td colspan="7" class="text-center py-6 text-slate-400 italic">
+                                            No transfer or reassignment requests submitted yet.
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 6: SELECTION TEAMS TAB -->
+            <div id="sec-selection" class="dso-tab-section hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="text-base font-extrabold text-gray-900 flex items-center gap-2">
+                                <i class="fa-solid fa-file-circle-check text-indigo-600"></i> District Selection Teams Authorization
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-0.5">District Collector authorization for state tournament entries.</p>
+                        </div>
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg border border-blue-200">
+                            4 Selection Lists
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-600 font-bold uppercase tracking-wider border-y border-gray-100">
+                                    <th class="py-3 px-4">Discipline / Squad</th>
+                                    <th class="py-3 px-4">Squad Size</th>
+                                    <th class="py-3 px-4">Submitted Date</th>
+                                    <th class="py-3 px-4">Status</th>
+                                    <th class="py-3 px-4 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 font-medium">
+                                
+                                <tr class="hover:bg-gray-50/80 transition">
+                                    <td class="py-3.5 px-4 font-extrabold text-gray-900">Athletics (Boys &amp; Girls)</td>
+                                    <td class="py-3.5 px-4 text-gray-600">32 Athletes</td>
+                                    <td class="py-3.5 px-4 text-gray-500">2026-09-08</td>
+                                    <td class="py-3.5 px-4">
+                                        
+                                            <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-md">APPROVED BY COLLECTOR</span>
+                                        
+                                    </td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        
+                                            <button class="px-3 py-1.5 bg-gray-100 text-gray-500 rounded-lg text-xs font-bold cursor-not-allowed" disabled>Authorized</button>
+                                        
+                                    </td>
+                                </tr>
+                                
+                                <tr class="hover:bg-gray-50/80 transition">
+                                    <td class="py-3.5 px-4 font-extrabold text-gray-900">Kabaddi Senior Team</td>
+                                    <td class="py-3.5 px-4 text-gray-600">14 Athletes</td>
+                                    <td class="py-3.5 px-4 text-gray-500">2026-09-07</td>
+                                    <td class="py-3.5 px-4">
+                                        
+                                            <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-md">APPROVED BY COLLECTOR</span>
+                                        
+                                    </td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        
+                                            <button class="px-3 py-1.5 bg-gray-100 text-gray-500 rounded-lg text-xs font-bold cursor-not-allowed" disabled>Authorized</button>
+                                        
+                                    </td>
+                                </tr>
+                                
+                                <tr class="hover:bg-gray-50/80 transition">
+                                    <td class="py-3.5 px-4 font-extrabold text-gray-900">Football Junior Squad</td>
+                                    <td class="py-3.5 px-4 text-gray-600">20 Athletes</td>
+                                    <td class="py-3.5 px-4 text-gray-500">2026-09-09</td>
+                                    <td class="py-3.5 px-4">
+                                        
+                                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold rounded-md">AWAITING SIGN-OFF</span>
+                                        
+                                    </td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        
+                                            <button onclick="alert('District Squad List for Football Junior Squad authorized successfully by Collector!')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition">Approve List</button>
+                                        
+                                    </td>
+                                </tr>
+                                
+                                <tr class="hover:bg-gray-50/80 transition">
+                                    <td class="py-3.5 px-4 font-extrabold text-gray-900">Cricket Inter-District Team</td>
+                                    <td class="py-3.5 px-4 text-gray-600">16 Athletes</td>
+                                    <td class="py-3.5 px-4 text-gray-500">2026-09-09</td>
+                                    <td class="py-3.5 px-4">
+                                        
+                                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold rounded-md">AWAITING SIGN-OFF</span>
+                                        
+                                    </td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        
+                                            <button onclick="alert('District Squad List for Cricket Inter-District Team authorized successfully by Collector!')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition">Approve List</button>
+                                        
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 7: CLEARANCES TAB -->
+            <div id="sec-clearances" class="dso-tab-section hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm space-y-4">
+                    <h3 class="text-base font-extrabold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-check text-blue-600"></i> Inter-Department Clearances Protocol
+                    </h3>
+                    <p class="text-xs text-gray-500">Venue readiness, police security & medical department clearances status for Coimbatore District.</p>
+                    <div class="space-y-3">
+                        
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-shield-check text-emerald-600 text-xl"></i>
+                                <div>
+                                    <span class="font-extrabold text-gray-900 block text-sm">District Police &amp; Security Clearance</span>
+                                    <span class="text-[11px] text-gray-500">Authorized for district sports trials and state tournaments</span>
+                                </div>
+                            </div>
+                            
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-extrabold rounded-full flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check"></i> CLEARED & SANCTIONED
+                                </span>
+                            
+                        </div>
+                        
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-heart-pulse-fill text-emerald-600 text-xl"></i>
+                                <div>
+                                    <span class="font-extrabold text-gray-900 block text-sm">Health &amp; Emergency Ambulance Support</span>
+                                    <span class="text-[11px] text-gray-500">Authorized for district sports trials and state tournaments</span>
+                                </div>
+                            </div>
+                            
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-extrabold rounded-full flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check"></i> CLEARED & SANCTIONED
+                                </span>
+                            
+                        </div>
+                        
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-building-check text-emerald-600 text-xl"></i>
+                                <div>
+                                    <span class="font-extrabold text-gray-900 block text-sm">SDAT Stadium Infrastructure Inspection</span>
+                                    <span class="text-[11px] text-gray-500">Authorized for district sports trials and state tournaments</span>
+                                </div>
+                            </div>
+                            
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-extrabold rounded-full flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check"></i> CLEARED & SANCTIONED
+                                </span>
+                            
+                        </div>
+                        
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-journal-check text-emerald-600 text-xl"></i>
+                                <div>
+                                    <span class="font-extrabold text-gray-900 block text-sm">District Education Officer (DEO) Clearance</span>
+                                    <span class="text-[11px] text-gray-500">Authorized for district sports trials and state tournaments</span>
+                                </div>
+                            </div>
+                            
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-extrabold rounded-full flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check"></i> CLEARED & SANCTIONED
+                                </span>
+                            
+                        </div>
+                        
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-clock-history text-amber-500 text-xl"></i>
+                                <div>
+                                    <span class="font-extrabold text-gray-900 block text-sm">Transport &amp; Transit Security Protocol</span>
+                                    <span class="text-[11px] text-gray-500">Authorized for district sports trials and state tournaments</span>
+                                </div>
+                            </div>
+                            
+                                <span class="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-extrabold rounded-full flex items-center gap-1">
+                                    <i class="fa-solid fa-clock"></i> PENDING VERIFICATION
+                                </span>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- DSO Transfer / Reassignment Request Modal -->
+<div id="dsoRequestModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto hidden">
+    <div class="bg-slate-950 text-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-indigo-500/40 my-auto">
+        <div class="bg-gradient-to-r from-indigo-900 to-slate-900 p-5 flex justify-between items-center border-b border-indigo-800">
+            <div>
+                <span class="px-2.5 py-0.5 bg-indigo-500/30 text-indigo-300 border border-indigo-400/30 rounded-full text-[10px] font-extrabold uppercase">Executive Application</span>
+                <h3 class="text-xl font-extrabold mt-1 text-white">Transfer / Reassignment Request</h3>
+            </div>
+            <button type="button" onclick="document.getElementById('dsoRequestModal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form method="POST" action="/portal/dso/request/submit/" class="p-6 space-y-4">
+            <input type="hidden" name="csrfmiddlewaretoken" value="b2qzlcAWByhh3ISYnLU2MXk9wi7nQ44ZZu1oIuQVDS6NCNYGtzFVjbK7QqiIT01B">
+
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">Application Type</label>
+                <select id="reqTypeSelect" name="request_type" onchange="toggleReqTypeFields(this.value)" class="w-full px-3.5 py-2.5 text-xs bg-slate-900 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="TRANSFER">District Transfer Request (Inter-District Relocation)</option>
+                    <option value="REASSIGNMENT">Duty Reassignment Request (Additional Charge / Zonal Duty)</option>
+                </select>
+            </div>
+
+            <!-- Target District Field (for TRANSFER) -->
+            <div id="transferDistrictField">
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">Preferred Target District</label>
+                <select name="preferred_district_id" class="w-full px-3.5 py-2.5 text-xs bg-slate-900 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="">-- Select Preferred District --</option>
+                    
+                    <option value="4">Ariyalur District</option>
+                    
+                    <option value="5">Chengalpattu District</option>
+                    
+                    <option value="1">Chennai District</option>
+                    
+                    <option value="2">Coimbatore District</option>
+                    
+                    <option value="6">Cuddalore District</option>
+                    
+                    <option value="7">Dharmapuri District</option>
+                    
+                    <option value="8">Dindigul District</option>
+                    
+                    <option value="9">Erode District</option>
+                    
+                    <option value="10">Kallakurichi District</option>
+                    
+                    <option value="11">Kanchipuram District</option>
+                    
+                    <option value="12">Kanniyakumari District</option>
+                    
+                    <option value="13">Karur District</option>
+                    
+                    <option value="14">Krishnagiri District</option>
+                    
+                    <option value="3">Madurai District</option>
+                    
+                    <option value="15">Mayiladuthurai District</option>
+                    
+                    <option value="16">Nagapattinam District</option>
+                    
+                    <option value="17">Namakkal District</option>
+                    
+                    <option value="18">Nilgiris District</option>
+                    
+                    <option value="19">Perambalur District</option>
+                    
+                    <option value="20">Pudukkottai District</option>
+                    
+                    <option value="21">Ramanathapuram District</option>
+                    
+                    <option value="22">Ranipet District</option>
+                    
+                    <option value="23">Salem District</option>
+                    
+                    <option value="24">Sivagangai District</option>
+                    
+                    <option value="25">Tenkasi District</option>
+                    
+                    <option value="26">Thanjavur District</option>
+                    
+                    <option value="27">Theni District</option>
+                    
+                    <option value="28">Thoothukudi District</option>
+                    
+                    <option value="29">Tiruchirappalli District</option>
+                    
+                    <option value="30">Tirunelveli District</option>
+                    
+                    <option value="31">Tirupathur District</option>
+                    
+                    <option value="32">Tiruppur District</option>
+                    
+                    <option value="33">Tiruvallur District</option>
+                    
+                    <option value="34">Tiruvannamalai District</option>
+                    
+                    <option value="35">Tiruvarur District</option>
+                    
+                    <option value="36">Vellore District</option>
+                    
+                    <option value="37">Viluppuram District</option>
+                    
+                    <option value="38">Virudhunagar District</option>
+                    
+                </select>
+            </div>
+
+            <!-- Preferred Duty Field (for REASSIGNMENT) -->
+            <div id="reassignmentDutyField" class="hidden">
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">Requested Duty / Zone / Responsibility</label>
+                <input type="text" name="preferred_duty" placeholder="e.g. Zonal Coordinator - North Zone / SDAT Stadium Complex In-Charge" class="w-full px-3.5 py-2.5 text-xs bg-slate-900 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">Detailed Reason / Rationale <span class="text-rose-400">*</span></label>
+                <textarea name="reason" rows="3" required placeholder="Provide compelling rationale for request..." class="w-full px-3.5 py-2.5 text-xs bg-slate-900 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">Additional Remarks (Optional)</label>
+                <textarea name="additional_remarks" rows="2" placeholder="Any additional notes or supporting details..." class="w-full px-3.5 py-2.5 text-xs bg-slate-900 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+            </div>
+
+            <div class="pt-2 flex justify-end gap-3 border-t border-slate-800">
+                <button type="button" onclick="document.getElementById('dsoRequestModal').classList.add('hidden')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl transition">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-paper-plane"></i> Submit Request
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- District Sub-Zone Management Modal -->
+<div id="subZoneModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-gray-100 animate-fadeIn my-auto flex flex-col max-h-[85vh]">
+        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 p-5 text-white flex justify-between items-center shrink-0">
+            <div>
+                <span class="px-2.5 py-0.5 bg-blue-500/30 text-blue-200 border border-blue-400/30 rounded-full text-[10px] font-extrabold uppercase">District Collector Control</span>
+                <h3 id="modalSubZoneTitle" class="text-xl font-extrabold mt-1">Add District Sub-Zone</h3>
+            </div>
+            <button type="button" onclick="closeSubZoneModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form method="POST" action="/portal/collector/subzone/save/" class="p-6 space-y-4 overflow-y-auto flex-1">
+            <input type="hidden" name="csrfmiddlewaretoken" value="b2qzlcAWByhh3ISYnLU2MXk9wi7nQ44ZZu1oIuQVDS6NCNYGtzFVjbK7QqiIT01B">
+            <input type="hidden" id="subzoneInputId" name="subzone_id" value="">
+            <input type="hidden" name="district_id" value="2">
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1">Sub-Zone / Taluk Name</label>
+                <input type="text" id="subzoneInputName" name="name" required placeholder="e.g. Coimbatore Urban Sub-Zone" class="w-full px-3.5 py-2.5 text-xs border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <div>
+                <div class="flex justify-between items-center mb-1.5">
+                    <label class="block text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-map-pin text-blue-600"></i> Select Places / Taluks in this Sub-Zone
+                    </label>
+                    <button type="button" onclick="toggleAllSubZonePlaces()" class="text-[10px] font-extrabold text-blue-600 hover:text-blue-800 transition">
+                        Select / Unselect All
+                    </button>
+                </div>
+                <div class="max-h-36 overflow-y-auto p-3 bg-gray-50 border border-gray-200 rounded-xl grid grid-cols-2 gap-2 text-xs">
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="56" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">Gandhipuram</span>
+                    </label>
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="61" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">Kinathukadavu</span>
+                    </label>
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="58" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">Mettupalayam</span>
+                    </label>
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="55" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">Peelamedu</span>
+                    </label>
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="57" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">Pollachi</span>
+                    </label>
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="54" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">RS Puram</span>
+                    </label>
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="59" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">Saravanampatti</span>
+                    </label>
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="60" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">Thudiyalur</span>
+                    </label>
+                    
+                    <label class="flex items-center gap-2 p-1.5 bg-white hover:bg-blue-50/60 rounded-lg border border-gray-100 cursor-pointer transition">
+                        <input type="checkbox" name="place_ids" value="62" class="subzone-place-check rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5">
+                        <span class="font-semibold text-gray-800 text-[11px]">Valparai</span>
+                    </label>
+                    
+                </div>
+            </div>
+
+            <div class="p-3 bg-blue-50/60 rounded-xl border border-blue-100">
+                <label class="block text-xs font-bold text-blue-900 mb-1 flex items-center gap-1">
+                    <i class="fa-solid fa-plus-circle text-blue-600"></i> Add New Place / Taluk to Coimbatore
+                </label>
+                <input type="text" id="subzoneInputNewPlace" name="new_place_name" placeholder="Type new place name (e.g. Saravanampatti)..." class="w-full px-3 py-1.5 text-xs border border-blue-200 rounded-lg bg-white outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Contact Officer Name</label>
+                    <input type="text" id="subzoneInputOfficer" name="contact_officer_name" placeholder="Officer In-Charge" class="w-full px-3.5 py-2.5 text-xs border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Official Contact Phone</label>
+                    <input type="text" id="subzoneInputPhone" name="contact_phone" placeholder="+91 98765 43210" class="w-full px-3.5 py-2.5 text-xs border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Athletes</label>
+                    <input type="number" id="subzoneInputAthletes" name="athletes_count" value="100" class="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Clubs</label>
+                    <input type="number" id="subzoneInputClubs" name="clubs_count" value="15" class="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Schools</label>
+                    <input type="number" id="subzoneInputSchools" name="schools_count" value="30" class="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl outline-none">
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-2">
+                <input type="checkbox" id="subzoneInputActive" name="is_active" checked class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4">
+                <label for="subzoneInputActive" class="text-xs font-bold text-gray-700">Sub-Zone Operational & Active</label>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 flex justify-end gap-3 shrink-0">
+                <button type="button" onclick="closeSubZoneModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs transition">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-xl text-xs shadow-md transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Sub-Zone & Places
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tournament Sanction Modal -->
+<div id="tournamentSanctionModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200 relative animate-fadeIn my-auto max-h-[85vh] overflow-y-auto">
+        <button onclick="document.getElementById('tournamentSanctionModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+            <i class="bi bi-x-lg text-lg"></i>
+        </button>
+
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                <i class="bi bi-trophy text-lg"></i>
+            </div>
+            <div>
+                <h3 class="text-base font-bold text-gray-900">Sanction District Tournament</h3>
+                <p class="text-xs text-gray-500">Issue official Collector & DSO approval for upcoming tournaments</p>
+            </div>
+        </div>
+
+        <form method="POST" action="/portal/dso/tournaments/sanction/" class="space-y-4">
+            <input type="hidden" name="csrfmiddlewaretoken" value="b2qzlcAWByhh3ISYnLU2MXk9wi7nQ44ZZu1oIuQVDS6NCNYGtzFVjbK7QqiIT01B">
+            <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">Tournament Title</label>
+                <input type="text" name="tournament_name" required placeholder="e.g., Chief Minister Trophy District Trials 2026" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">Sport Discipline</label>
+                <input type="text" name="sport_name" required placeholder="e.g., Athletics / Kabaddi / Football" class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <div class="pt-2 flex justify-end gap-2">
+                <button type="button" onclick="document.getElementById('tournamentSanctionModal').classList.add('hidden')" class="px-4 py-2 rounded-lg text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200">Cancel</button>
+                <button type="submit" class="px-4 py-2 rounded-lg text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm">Issue Sanction</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+        </main>
+
+        <!-- Master Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon-emblem"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="logo-text-group">
+                            <span class="logo-title">Tamil Nadu</span>
+                            <span class="logo-subtitle">Sports Development Platform</span>
+                        </div>
+                    </a>
+                    <p>A unified platform to discover talent, build careers, and promote sports across Tamil Nadu.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="sports.html">Sports Disciplines</a></li>
+                        <li><a href="players.html">Player Roster</a></li>
+                        <li><a href="clubs.html">Clubs & Franchises</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Portals & Governance</h4>
+                    <ul>
+                        <li><a href="districts.html">Districts Portal</a></li>
+                        <li><a href="minister_dashboard.html"><i class="fa-solid fa-crown text-amber-500"></i> Sports Minister Portal</a></li>
+                        <li><a href="collector_dashboard.html"><i class="fa-solid fa-landmark-flag text-emerald-400"></i> Collector & DSO Portal</a></li>
+                        <li><a href="athlete_register.html">Player Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tamil Nadu Sports Development Platform. All rights reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Global Toast Notification UI -->
+    <div class="toast" id="globalToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="globalToastMessage">Notification update!</span>
+    </div>
+
+    
+    <!-- Session Expiration Warning Modal -->
+    <div id="sessionTimeoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4 sm:p-6 overflow-y-auto transition-all">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative overflow-hidden transform animate-in fade-in zoom-in duration-200 my-auto max-h-[85vh] overflow-y-auto">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-2xl shrink-0">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white tracking-tight">Session Expiring Soon</h3>
+                    <p class="text-slate-400 text-xs mt-0.5">Idle Inactivity Warning</p>
+                </div>
+            </div>
+
+            <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                You have been inactive for a while. For security reasons, your portal session will expire automatically in <span id="sessionCountdown" class="font-extrabold text-amber-400 font-mono text-base">05:00</span>.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <button onclick="extendUserSession()" class="w-full sm:w-1/2 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Stay Logged In</span>
+                </button>
+                <a href="login.html" class="w-full sm:w-1/2 py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl border border-slate-700 transition-all text-center">
+                    Log Out Now
+                </a>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Core Global JavaScript & Idle Detection -->
+    <script>
+        function triggerGlobalNotification(message, type = 'info') {
+            let container = document.getElementById('djangoMessagesContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'djangoMessagesContainer';
+                container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const borderClass = type === 'error' ? 'bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40' : (type === 'success' ? 'bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40' : 'bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40');
+            const iconClass = type === 'error' ? 'fa-circle-xmark text-rose-400' : (type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-amber-400');
+
+            toast.className = `p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md ${borderClass}`;
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${iconClass} text-base"></i>
+                    <span class="leading-tight text-white font-semibold">${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('#djangoMessagesContainer .toast-popup');
+            alerts.forEach((alert, idx) => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000 + (idx * 500));
+            });
+        });
+
+        
+        (function() {
+            // Idle Session Timeout Configuration (30 Minutes Total Session)
+            const IDLE_WARN_TIME = 25 * 60 * 1000; // 25 Minutes idle -> Show warning modal
+            const IDLE_LOGOUT_TIME = 30 * 60 * 1000; // 30 Minutes idle -> Logout
+            
+            let lastActivityTime = Date.now();
+            let countdownInterval = null;
+            let isModalShown = false;
+
+            function resetIdleTimer() {
+                if (!isModalShown) {
+                    lastActivityTime = Date.now();
+                }
+            }
+
+            // Listen for user activity
+            ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => {
+                window.addEventListener(evt, resetIdleTimer, { passive: true });
+            });
+
+            function checkIdleStatus() {
+                const now = Date.now();
+                const elapsed = now - lastActivityTime;
+
+                if (elapsed >= IDLE_LOGOUT_TIME) {
+                    window.location.href = "/logout/?reason=session_expired";
+                } else if (elapsed >= IDLE_WARN_TIME && !isModalShown) {
+                    showSessionWarningModal(IDLE_LOGOUT_TIME - elapsed);
+                }
+            }
+
+            function showSessionWarningModal(remainingMs) {
+                isModalShown = true;
+                const modal = document.getElementById('sessionTimeoutModal');
+                const countdownElem = document.getElementById('sessionCountdown');
+                if (modal) modal.classList.remove('hidden');
+
+                let secondsRemaining = Math.floor(remainingMs / 1000);
+
+                countdownInterval = setInterval(() => {
+                    secondsRemaining--;
+                    if (secondsRemaining <= 0) {
+                        clearInterval(countdownInterval);
+                        window.location.href = "/logout/?reason=session_expired";
+                        return;
+                    }
+                    const mins = Math.floor(secondsRemaining / 60);
+                    const secs = secondsRemaining % 60;
+                    if (countdownElem) {
+                        countdownElem.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                    }
+                }, 1000);
+            }
+
+            window.extendUserSession = function() {
+                fetch("/api/session/keepalive/", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': 'b2qzlcAWByhh3ISYnLU2MXk9wi7nQ44ZZu1oIuQVDS6NCNYGtzFVjbK7QqiIT01B',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    const modal = document.getElementById('sessionTimeoutModal');
+                    if (modal) modal.classList.add('hidden');
+                    if (countdownInterval) clearInterval(countdownInterval);
+                    isModalShown = false;
+                    lastActivityTime = Date.now();
+                    triggerGlobalNotification("Session extended successfully!");
+                })
+                .catch(err => {
+                    window.location.reload();
+                });
+            };
+
+            // Periodically check idle status every 15 seconds
+            setInterval(checkIdleStatus, 15000);
+        })();
+        
+    </script>
+
+    
+<script>
+function switchDsoTab(tabId) {
+    const sections = document.querySelectorAll('.dso-tab-section');
+    sections.forEach(sec => sec.classList.add('hidden'));
+
+    const target = document.getElementById('sec-' + tabId);
+    if (target) {
+        target.classList.remove('hidden');
+    }
+
+    const navItems = document.querySelectorAll('.dso-nav-item');
+    navItems.forEach(item => {
+        item.classList.remove('bg-blue-600/20', 'text-blue-300', 'border', 'border-blue-500/30', 'font-extrabold');
+        item.classList.add('hover:bg-slate-800/70', 'text-slate-300', 'hover:text-white', 'font-semibold');
+
+        const icon = item.querySelector('.nav-icon');
+        if (icon) {
+            icon.classList.remove('text-blue-400', 'text-amber-400');
+            icon.classList.add('text-slate-400');
+        }
+        const chevron = item.querySelector('.fa-chevron-right');
+        if (chevron) {
+            chevron.classList.remove('text-blue-400');
+            chevron.classList.add('text-slate-500');
+        }
+    });
+
+    const activeNav = document.getElementById('snav-' + tabId);
+    if (activeNav) {
+        activeNav.classList.remove('hover:bg-slate-800/70', 'text-slate-300', 'hover:text-white', 'font-semibold');
+        activeNav.classList.add('bg-blue-600/20', 'text-blue-300', 'border', 'border-blue-500/30', 'font-extrabold');
+        const icon = activeNav.querySelector('.nav-icon');
+        if (icon) {
+            icon.classList.remove('text-slate-400');
+            icon.classList.add(tabId === 'transfer-desk' ? 'text-amber-400' : 'text-blue-400');
+        }
+        const chevron = activeNav.querySelector('.fa-chevron-right');
+        if (chevron) {
+            chevron.classList.remove('text-slate-500');
+            chevron.classList.add('text-blue-400');
+        }
+    }
+
+    if (tabId === 'gis-map' && typeof collectorMap !== 'undefined' && collectorMap) {
+        setTimeout(() => {
+            collectorMap.invalidateSize();
+        }, 150);
+    }
+}
+
+function openAddSubZoneModal() {
+    document.getElementById('modalSubZoneTitle').innerText = 'Add District Sub-Zone (Collector Portal)';
+    document.getElementById('subzoneInputId').value = '';
+    document.getElementById('subzoneInputName').value = '';
+    document.getElementById('subzoneInputNewPlace').value = '';
+    document.getElementById('subzoneInputOfficer').value = '';
+    document.getElementById('subzoneInputPhone').value = '';
+    document.getElementById('subzoneInputAthletes').value = '100';
+    document.getElementById('subzoneInputClubs').value = '15';
+    document.getElementById('subzoneInputSchools').value = '30';
+    document.getElementById('subzoneInputActive').checked = true;
+
+    const checkboxes = document.querySelectorAll('.subzone-place-check');
+    checkboxes.forEach(cb => cb.checked = false);
+
+    document.getElementById('subZoneModal').classList.remove('hidden');
+}
+
+function openEditSubZoneModal(id, name, placesSummary, officer, phone, athletes, clubs, schools, active, placeIdsArray) {
+    document.getElementById('modalSubZoneTitle').innerText = 'Edit ' + name + ' & Select Places';
+    document.getElementById('subzoneInputId').value = id;
+    document.getElementById('subzoneInputName').value = name;
+    document.getElementById('subzoneInputNewPlace').value = '';
+    document.getElementById('subzoneInputOfficer').value = officer;
+    document.getElementById('subzoneInputPhone').value = phone;
+    document.getElementById('subzoneInputAthletes').value = athletes;
+    document.getElementById('subzoneInputClubs').value = clubs;
+    document.getElementById('subzoneInputSchools').value = schools;
+    document.getElementById('subzoneInputActive').checked = (active === 'true' || active === true);
+
+    const checkboxes = document.querySelectorAll('.subzone-place-check');
+    checkboxes.forEach(cb => {
+        cb.checked = placeIdsArray && placeIdsArray.includes(parseInt(cb.value));
+    });
+
+    document.getElementById('subZoneModal').classList.remove('hidden');
+}
+
+function toggleAllSubZonePlaces() {
+    const checkboxes = document.querySelectorAll('.subzone-place-check');
+    const anyUnchecked = Array.from(checkboxes).some(cb => !cb.checked);
+    checkboxes.forEach(cb => cb.checked = anyUnchecked);
+}
+
+function closeSubZoneModal() {
+    document.getElementById('subZoneModal').classList.add('hidden');
+}
+
+function toggleReqTypeFields(val) {
+    const transField = document.getElementById('transferDistrictField');
+    const reassignField = document.getElementById('reassignmentDutyField');
+    if (val === 'TRANSFER') {
+        transField.classList.remove('hidden');
+        reassignField.classList.add('hidden');
+    } else {
+        transField.classList.add('hidden');
+        reassignField.classList.remove('hidden');
+    }
+}
+</script>
+<script>
+    const collectorCoords = [11.0168, 76.9558];
+    const subZonesData = [{"id": 29, "name": "Coimbatore North Sub-Zone", "officer": "Not Assigned", "phone": "N/A", "athletes": 0, "clubs": 0, "schools": 0, "lat": 11.0168, "lng": 76.9908, "places": ["Gandhipuram", "Mettupalayam", "Pollachi"], "covered_places": "Gandhipuram, Pollachi", "is_active": true}, {"id": 30, "name": "Coimbatore South-Rural Sub-Zone", "officer": "Not Assigned", "phone": "N/A", "athletes": 0, "clubs": 0, "schools": 0, "lat": 11.0627, "lng": 76.9293, "places": ["Kinathukadavu", "Mettupalayam", "Pollachi", "Saravanampatti", "Thudiyalur", "Valparai"], "covered_places": "Kinathukadavu, Valparai", "is_active": true}, {"id": 28, "name": "Coimbatore Urban Sub-Zone", "officer": "Not Assigned", "phone": "N/A", "athletes": 0, "clubs": 0, "schools": 0, "lat": 10.9553, "lng": 76.9203, "places": ["Gandhipuram", "Peelamedu", "RS Puram"], "covered_places": "RS Puram, Peelamedu", "is_active": true}];
+    const placesData = [{"id": 56, "name": "Gandhipuram", "lat": 11.0359, "lng": 76.9617}, {"id": 61, "name": "Kinathukadavu", "lat": 11.0341, "lng": 76.9827}, {"id": 58, "name": "Mettupalayam", "lat": 11.0113, "lng": 76.9995}, {"id": 55, "name": "Peelamedu", "lat": 10.9757, "lng": 76.9939}, {"id": 57, "name": "Pollachi", "lat": 10.9968, "lng": 76.9568}, {"id": 54, "name": "RS Puram", "lat": 10.9913, "lng": 76.9365}, {"id": 59, "name": "Saravanampatti", "lat": 11.007, "lng": 76.9129}, {"id": 60, "name": "Thudiyalur", "lat": 11.0424, "lng": 76.906}, {"id": 62, "name": "Valparai", "lat": 11.0352, "lng": 76.948}];
+    const districtSlug = "coimbatore";
+    const districtName = "Coimbatore";
+
+    let collectorMap;
+    let subzoneMarkers = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!document.getElementById('collector-district-map')) return;
+
+        collectorMap = L.map('collector-district-map', {
+            zoomControl: true,
+            attributionControl: false
+        }).setView(collectorCoords, 10);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{y}/{x}{r}.png', {
+            maxZoom: 19
+        }).addTo(collectorMap);
+
+        const hqIcon = L.divIcon({
+            className: 'hq-map-pin',
+            html: `<div class="bg-blue-600 text-white px-2.5 py-1 rounded-xl text-[10px] font-extrabold shadow-2xl border-2 border-white flex items-center gap-1 animate-pulse">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>${districtName} HQ</span>
+            </div>`,
+            iconSize: [130, 26],
+            iconAnchor: [65, 13]
+        });
+
+        const hqMarker = L.marker(collectorCoords, { icon: hqIcon }).addTo(collectorMap);
+        hqMarker.bindPopup(`
+            <div class="p-3 bg-slate-900 border border-blue-500/50 rounded-2xl text-xs text-white space-y-1 shadow-2xl">
+                <div class="font-extrabold text-blue-400 text-sm border-b border-slate-700 pb-1 flex items-center gap-1.5">
+                    <i class="fa-solid fa-building-columns"></i> ${districtName.toUpperCase()} COLLECTORATE
+                </div>
+                <p class="text-slate-300 text-[11px]">District Administrative & DSO Control Center</p>
+                <div class="text-[10px] text-emerald-400 font-mono pt-1">Coordinates: ${collectorCoords[0]}, ${collectorCoords[1]}</div>
+            </div>
+        `, { className: 'custom-collector-popup' });
+
+        subZonesData.forEach((sz, idx) => {
+            const szIcon = L.divIcon({
+                className: 'sz-map-pin',
+                html: `<div class="bg-slate-900/90 hover:bg-emerald-600 text-emerald-300 hover:text-white px-2.5 py-1 rounded-lg text-[10px] font-bold shadow-xl border border-emerald-500/40 flex items-center gap-1 cursor-pointer transition backdrop-blur-md">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    <span>${sz.name}</span>
+                </div>`,
+                iconSize: [120, 24],
+                iconAnchor: [60, 12]
+            });
+
+            const marker = L.marker([sz.lat, sz.lng], { icon: szIcon }).addTo(collectorMap);
+            const popupHtml = `
+                <div class="p-3.5 bg-slate-900/95 border border-emerald-500/50 rounded-2xl shadow-2xl text-xs text-white min-w-[200px] space-y-2">
+                    <div class="font-bold text-emerald-400 border-b border-slate-700 pb-1 uppercase flex justify-between items-center">
+                        <span>${sz.name}</span>
+                        <span class="text-[9px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/30">Active</span>
+                    </div>
+                    <div class="space-y-1 text-slate-300 text-[11px]">
+                        <div><strong>Officer:</strong> ${sz.officer}</div>
+                        <div><strong>Contact:</strong> ${sz.phone}</div>
+                        <div class="grid grid-cols-3 gap-1 text-center font-bold text-[10px] pt-1">
+                            <div class="bg-slate-800 p-1 rounded text-blue-300">${sz.athletes} Ath.</div>
+                            <div class="bg-slate-800 p-1 rounded text-purple-300">${sz.clubs} Clubs</div>
+                            <div class="bg-slate-800 p-1 rounded text-emerald-300">${sz.schools} Sch.</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            marker.bindPopup(popupHtml, { className: 'custom-collector-popup' });
+            subzoneMarkers.push(marker);
+        });
+
+        placesData.forEach(pl => {
+            const plIcon = L.divIcon({
+                className: 'pl-map-pin',
+                html: `<div class="bg-amber-950/80 text-amber-300 px-2 py-0.5 rounded text-[9px] font-bold border border-amber-500/40 shadow">
+                    <i class="fa-solid fa-location-dot"></i> ${pl.name}
+                </div>`,
+                iconSize: [90, 20],
+                iconAnchor: [45, 10]
+            });
+            L.marker([pl.lat, pl.lng], { icon: plIcon }).addTo(collectorMap);
+        });
+
+        fetch('static/tn_districts.geojson')
+            .then(res => res.json())
+            .then(geojson => {
+                L.geoJSON(geojson, {
+                    style: function(feature) {
+                        const dName = (feature.properties.district || feature.properties.dt_nm || feature.properties.NAME_2 || '').toLowerCase();
+                        const currentSlug = districtSlug.replace(/[^a-z0-9]/g, '');
+                        const normDName = dName.replace(/[^a-z0-9]/g, '');
+
+                        if (normDName.includes(currentSlug) || currentSlug.includes(normDName)) {
+                            return {
+                                fillColor: '#3b82f6',
+                                weight: 3,
+                                opacity: 1,
+                                color: '#60a5fa',
+                                fillOpacity: 0.25
+                            };
+                        }
+                        return {
+                            fillColor: '#0f172a',
+                            weight: 1,
+                            opacity: 0.3,
+                            color: '#334155',
+                            fillOpacity: 0.05
+                        };
+                    }
+                }).addTo(collectorMap);
+            })
+            .catch(err => console.log('Boundary GeoJSON fallback:', err));
+    });
+
+    function recenterCollectorMap() {
+        if (collectorMap) {
+            collectorMap.setView(collectorCoords, 10);
+        }
+    }
+
+    function focusSubZonePin(index) {
+        if (subzoneMarkers[index] && collectorMap) {
+            const marker = subzoneMarkers[index];
+            collectorMap.setView(marker.getLatLng(), 12, { animate: true });
+            marker.openPopup();
+        }
+    }
+</script>
+
+</body>
+</html>

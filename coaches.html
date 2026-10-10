@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tamil Nadu Sports Development Platform - Discover talent, build careers, and promote sports across Tamil Nadu.">
+    <title>Coaches Directory - Tamil Nadu Sports Development Platform</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Static CSS -->
+    <link rel="stylesheet" href="static/style.css">
+
+    
+</head>
+<body>
+
+    <!-- App Container Card Wrapper (Matches Reference Screenshot Frame) -->
+    <div class="app-wrapper-container">
+
+        <!-- Header & Navigation -->
+        <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-emerald-500/20 shadow-2xl backdrop-blur-md sticky top-0 z-50">
+            <div class="header-container">
+                <a href="index.html" class="logo group">
+                    <div class="logo-icon-emblem bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="logo-text-group">
+                        <span class="logo-title text-white tracking-tight">Tamil Nadu</span>
+                        <span class="logo-subtitle text-emerald-400 font-semibold tracking-wider uppercase text-[10px]">Sports Development Platform</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link ">Home</a></li>
+                    <li><a href="sports.html" class="nav-link ">Sports</a></li>
+                    <li><a href="players.html" class="nav-link ">Players</a></li>
+                    <li><a href="clubs.html" class="nav-link ">Clubs</a></li>
+                    <li><a href="tournaments.html" class="nav-link ">Tournaments</a></li>
+                    <li><a href="districts.html" class="nav-link ">Districts</a></li>
+                    <li><a href="coaches.html" class="nav-link active">Coaches</a></li>
+                    <li><a href="news.html" class="nav-link ">News</a></li>
+                    <li><a href="contact.html" class="nav-link ">Contact</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    
+                        <a href="login.html" class="btn-green-login bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 border border-emerald-400/30">
+                            <i class="fa-solid fa-lock"></i> Portal Login
+                        </a>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            
+            
+<div class="coaches-page-container">
+
+    <!-- Page Header Title & Subtitle + CTA -->
+    <div class="coaches-header-area flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+        <div>
+            <h1 class="coaches-page-title text-3xl font-extrabold text-slate-900 tracking-tight">Coaches & Trainers</h1>
+            <p class="coaches-page-subtitle text-slate-600 text-sm mt-1">Discover certified sports trainers, mentors, and athletic coaches across Tamil Nadu.</p>
+        </div>
+        <div class="flex items-center gap-3 flex-wrap">
+            <a href="coach_dashboard.html" class="inline-flex items-center gap-2 px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-stopwatch"></i>
+                <span>Coach Dashboard</span>
+            </a>
+            <a href="coach_register.html" class="inline-flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-emerald-500/20 transition-all transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Register as Coach</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Filter Strip (Single-Row Grid / Flexbox) -->
+    <div class="coaches-filter-card">
+        <form method="GET" action="/coaches/" class="coaches-filter-form" id="coachesFilterForm">
+            
+            <!-- Left: Search Field -->
+            <div class="filter-search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" 
+                       name="q" 
+                       value="" 
+                       class="filter-input-search" 
+                       placeholder="Search coaches..." 
+                       autocomplete="off">
+            </div>
+
+            <!-- Center: Sport Dropdown Menu -->
+            <div class="filter-select-box">
+                <i class="fa-solid fa-volleyball select-icon"></i>
+                <select name="sport" class="filter-select-control" onchange="document.getElementById('coachesFilterForm').submit()">
+                    <option value="">All Sports</option>
+                    
+                        <option value="Archery" >
+                            Archery
+                        </option>
+                    
+                        <option value="Athletics &amp; Track" >
+                            Athletics &amp; Track
+                        </option>
+                    
+                        <option value="Badminton" >
+                            Badminton
+                        </option>
+                    
+                        <option value="Basketball" >
+                            Basketball
+                        </option>
+                    
+                        <option value="Boxing" >
+                            Boxing
+                        </option>
+                    
+                        <option value="Carrom" >
+                            Carrom
+                        </option>
+                    
+                        <option value="Chess" >
+                            Chess
+                        </option>
+                    
+                        <option value="Cricket" >
+                            Cricket
+                        </option>
+                    
+                        <option value="Cycling" >
+                            Cycling
+                        </option>
+                    
+                        <option value="Football" >
+                            Football
+                        </option>
+                    
+                        <option value="Gymnastics" >
+                            Gymnastics
+                        </option>
+                    
+                        <option value="Handball" >
+                            Handball
+                        </option>
+                    
+                        <option value="Hockey" >
+                            Hockey
+                        </option>
+                    
+                        <option value="Kabaddi" >
+                            Kabaddi
+                        </option>
+                    
+                        <option value="Kho Kho" >
+                            Kho Kho
+                        </option>
+                    
+                        <option value="Rowing &amp; Canoeing" >
+                            Rowing &amp; Canoeing
+                        </option>
+                    
+                        <option value="Shooting" >
+                            Shooting
+                        </option>
+                    
+                        <option value="Silambam" >
+                            Silambam
+                        </option>
+                    
+                        <option value="Squash" >
+                            Squash
+                        </option>
+                    
+                        <option value="Swimming &amp; Aquatics" >
+                            Swimming &amp; Aquatics
+                        </option>
+                    
+                        <option value="Table Tennis" >
+                            Table Tennis
+                        </option>
+                    
+                        <option value="Taekwondo &amp; Judo" >
+                            Taekwondo &amp; Judo
+                        </option>
+                    
+                        <option value="Tennis" >
+                            Tennis
+                        </option>
+                    
+                        <option value="Volleyball" >
+                            Volleyball
+                        </option>
+                    
+                        <option value="Weightlifting" >
+                            Weightlifting
+                        </option>
+                    
+                        <option value="Wrestling" >
+                            Wrestling
+                        </option>
+                    
+                </select>
+                <i class="fa-solid fa-chevron-down select-caret"></i>
+            </div>
+
+            <!-- Right: District Dropdown Menu -->
+            <div class="filter-select-box">
+                <i class="fa-solid fa-location-dot select-icon"></i>
+                <select name="district" class="filter-select-control" onchange="document.getElementById('coachesFilterForm').submit()">
+                    <option value="">All Districts</option>
+                    
+                        <option value="Ariyalur" >
+                            Ariyalur
+                        </option>
+                    
+                        <option value="Chengalpattu" >
+                            Chengalpattu
+                        </option>
+                    
+                        <option value="Chennai" >
+                            Chennai
+                        </option>
+                    
+                        <option value="Coimbatore" >
+                            Coimbatore
+                        </option>
+                    
+                        <option value="Cuddalore" >
+                            Cuddalore
+                        </option>
+                    
+                        <option value="Dharmapuri" >
+                            Dharmapuri
+                        </option>
+                    
+                        <option value="Dindigul" >
+                            Dindigul
+                        </option>
+                    
+                        <option value="Erode" >
+                            Erode
+                        </option>
+                    
+                        <option value="Kallakurichi" >
+                            Kallakurichi
+                        </option>
+                    
+                        <option value="Kanchipuram" >
+                            Kanchipuram
+                        </option>
+                    
+                        <option value="Kanniyakumari" >
+                            Kanniyakumari
+                        </option>
+                    
+                        <option value="Karur" >
+                            Karur
+                        </option>
+                    
+                        <option value="Krishnagiri" >
+                            Krishnagiri
+                        </option>
+                    
+                        <option value="Madurai" >
+                            Madurai
+                        </option>
+                    
+                        <option value="Mayiladuthurai" >
+                            Mayiladuthurai
+                        </option>
+                    
+                        <option value="Nagapattinam" >
+                            Nagapattinam
+                        </option>
+                    
+                        <option value="Namakkal" >
+                            Namakkal
+                        </option>
+                    
+                        <option value="Nilgiris" >
+                            Nilgiris
+                        </option>
+                    
+                        <option value="Perambalur" >
+                            Perambalur
+                        </option>
+                    
+                        <option value="Pudukkottai" >
+                            Pudukkottai
+                        </option>
+                    
+                        <option value="Ramanathapuram" >
+                            Ramanathapuram
+                        </option>
+                    
+                        <option value="Ranipet" >
+                            Ranipet
+                        </option>
+                    
+                        <option value="Salem" >
+                            Salem
+                        </option>
+                    
+                        <option value="Sivagangai" >
+                            Sivagangai
+                        </option>
+                    
+                        <option value="Tenkasi" >
+                            Tenkasi
+                        </option>
+                    
+                        <option value="Thanjavur" >
+                            Thanjavur
+                        </option>
+                    
+                        <option value="Theni" >
+                            Theni
+                        </option>
+                    
+                        <option value="Thoothukudi" >
+                            Thoothukudi
+                        </option>
+                    
+                        <option value="Tiruchirappalli" >
+                            Tiruchirappalli
+                        </option>
+                    
+                        <option value="Tirunelveli" >
+                            Tirunelveli
+                        </option>
+                    
+                        <option value="Tirupathur" >
+                            Tirupathur
+                        </option>
+                    
+                        <option value="Tiruppur" >
+                            Tiruppur
+                        </option>
+                    
+                        <option value="Tiruvallur" >
+                            Tiruvallur
+                        </option>
+                    
+                        <option value="Tiruvannamalai" >
+                            Tiruvannamalai
+                        </option>
+                    
+                        <option value="Tiruvarur" >
+                            Tiruvarur
+                        </option>
+                    
+                        <option value="Vellore" >
+                            Vellore
+                        </option>
+                    
+                        <option value="Viluppuram" >
+                            Viluppuram
+                        </option>
+                    
+                        <option value="Virudhunagar" >
+                            Virudhunagar
+                        </option>
+                    
+                </select>
+                <i class="fa-solid fa-chevron-down select-caret"></i>
+            </div>
+
+            <!-- Filter Submit & Reset Actions -->
+            <div class="filter-actions-group">
+                <button type="submit" class="btn-filter-apply">
+                    <i class="fa-solid fa-filter"></i> Filter
+                </button>
+                
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Coaches List Stack Container (White Background Card with Soft Shadow) -->
+    <div class="coaches-table-card">
+
+        <!-- Table Header (Visible on Desktop) -->
+        <div class="coaches-table-header">
+            <div class="col-profile">Coach & Discipline</div>
+            <div class="col-district">District</div>
+            <div class="col-experience">Experience</div>
+            <div class="col-specialization">Specialization</div>
+            <div class="col-action">Action</div>
+        </div>
+
+        <!-- Coach Row Stack -->
+        <div class="coaches-row-stack">
+            
+            <div class="coach-item-row">
+                
+                <!-- Profile Column: Avatar + Name + Sport -->
+                <div class="col-profile profile-flex">
+                    <div class="coach-avatar-wrapper">
+                        
+                            <img src="/media/coaches/default.png" alt="Admin" class="coach-avatar-img">
+                        
+                    </div>
+                    <div class="coach-profile-info">
+                        <h3 class="coach-name">Admin</h3>
+                        <span class="coach-sport-tag">
+                            <i class="fa-solid fa-tag"></i> Athletics &amp; Track
+                        </span>
+                    </div>
+                </div>
+
+                <!-- District Column -->
+                <div class="col-district">
+                    <span class="coach-district-text">
+                        <i class="fa-solid fa-location-dot text-gray-400"></i> Coimbatore
+                    </span>
+                </div>
+
+                <!-- Experience Column -->
+                <div class="col-experience">
+                    <span class="coach-meta-label">Experience:</span>
+                    <span class="coach-meta-val font-semibold">8 Years</span>
+                </div>
+
+                <!-- Specialization Column -->
+                <div class="col-specialization">
+                    <span class="coach-meta-label">Specialization:</span>
+                    <span class="coach-spec-badge">High Performance Athletics &amp; Sprint Tactics</span>
+                </div>
+
+                <!-- Action Column: Outlined Green Contact Button -->
+                <div class="col-action">
+                    <button type="button" 
+                            class="btn-contact-outline" 
+                            onclick="openContactModal(1, 'Admin', 'Athletics \u0026 Track', 'Coimbatore', '8 Years', 'High Performance Athletics \u0026 Sprint Tactics', 'admin@example.com', '+91 98401 99999')">
+                        Contact
+                    </button>
+                </div>
+
+            </div>
+            
+            <div class="coach-item-row">
+                
+                <!-- Profile Column: Avatar + Name + Sport -->
+                <div class="col-profile profile-flex">
+                    <div class="coach-avatar-wrapper">
+                        
+                            <img src="/media/coaches/default.png" alt="Executive Admin" class="coach-avatar-img">
+                        
+                    </div>
+                    <div class="coach-profile-info">
+                        <h3 class="coach-name">Executive Admin</h3>
+                        <span class="coach-sport-tag">
+                            <i class="fa-solid fa-tag"></i> Athletics &amp; Track
+                        </span>
+                    </div>
+                </div>
+
+                <!-- District Column -->
+                <div class="col-district">
+                    <span class="coach-district-text">
+                        <i class="fa-solid fa-location-dot text-gray-400"></i> Coimbatore
+                    </span>
+                </div>
+
+                <!-- Experience Column -->
+                <div class="col-experience">
+                    <span class="coach-meta-label">Experience:</span>
+                    <span class="coach-meta-val font-semibold">8 Years</span>
+                </div>
+
+                <!-- Specialization Column -->
+                <div class="col-specialization">
+                    <span class="coach-meta-label">Specialization:</span>
+                    <span class="coach-spec-badge">High Performance Athletics &amp; Sprint Tactics</span>
+                </div>
+
+                <!-- Action Column: Outlined Green Contact Button -->
+                <div class="col-action">
+                    <button type="button" 
+                            class="btn-contact-outline" 
+                            onclick="openContactModal(2, 'Executive Admin', 'Athletics \u0026 Track', 'Coimbatore', '8 Years', 'High Performance Athletics \u0026 Sprint Tactics', 'admin@tnsports.gov.in', '+91 98401 99999')">
+                        Contact
+                    </button>
+                </div>
+
+            </div>
+            
+        </div>
+
+    </div>
+
+    <!-- Django Pagination Controls -->
+    
+
+</div>
+
+<!-- Interactive Coach Contact Modal Popup -->
+<div class="contact-modal-overlay" id="coachContactModal">
+    <div class="contact-modal-card">
+        <button class="modal-close-btn" onclick="closeContactModal()">&times;</button>
+        <div class="modal-header">
+            <div class="modal-avatar-emblem">
+                <i class="fa-solid fa-address-card"></i>
+            </div>
+            <div>
+                <h3 class="modal-coach-name" id="modalCoachName">Coach Name</h3>
+                <span class="modal-coach-sport" id="modalCoachSport">Sport &bull; Location</span>
+            </div>
+        </div>
+
+        <div class="modal-details-grid">
+            <div class="detail-box">
+                <span class="detail-label">Experience</span>
+                <strong class="detail-value" id="modalCoachExp">15 Years</strong>
+            </div>
+            <div class="detail-box">
+                <span class="detail-label">Specialization</span>
+                <strong class="detail-value" id="modalCoachSpec">Batting</strong>
+            </div>
+        </div>
+
+        <div class="modal-contact-info">
+            <div class="contact-row">
+                <i class="fa-solid fa-envelope"></i>
+                <div>
+                    <span class="contact-label">Official Email</span>
+                    <a href="#" id="modalCoachEmailLink" class="contact-link"><strong id="modalCoachEmail">email@tnsports.gov.in</strong></a>
+                </div>
+            </div>
+            <div class="contact-row">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                    <span class="contact-label">Phone Hotline</span>
+                    <a href="#" id="modalCoachPhoneLink" class="contact-link"><strong id="modalCoachPhone">+91 98401 12345</strong></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn-send-message" onclick="sendDirectMessage()">
+                <i class="fa-solid fa-paper-plane"></i> Send Inquiry Message
+            </button>
+        </div>
+    </div>
+</div>
+
+        </main>
+
+        <!-- Master Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon-emblem"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="logo-text-group">
+                            <span class="logo-title">Tamil Nadu</span>
+                            <span class="logo-subtitle">Sports Development Platform</span>
+                        </div>
+                    </a>
+                    <p>A unified platform to discover talent, build careers, and promote sports across Tamil Nadu.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="sports.html">Sports Disciplines</a></li>
+                        <li><a href="players.html">Player Roster</a></li>
+                        <li><a href="clubs.html">Clubs & Franchises</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Portals & Governance</h4>
+                    <ul>
+                        <li><a href="districts.html">Districts Portal</a></li>
+                        <li><a href="minister_dashboard.html"><i class="fa-solid fa-crown text-amber-500"></i> Sports Minister Portal</a></li>
+                        <li><a href="collector_dashboard.html"><i class="fa-solid fa-landmark-flag text-emerald-400"></i> Collector & DSO Portal</a></li>
+                        <li><a href="athlete_register.html">Player Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tamil Nadu Sports Development Platform. All rights reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Global Toast Notification UI -->
+    <div class="toast" id="globalToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="globalToastMessage">Notification update!</span>
+    </div>
+
+    
+
+    <!-- Core Global JavaScript & Idle Detection -->
+    <script>
+        function triggerGlobalNotification(message, type = 'info') {
+            let container = document.getElementById('djangoMessagesContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'djangoMessagesContainer';
+                container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const borderClass = type === 'error' ? 'bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40' : (type === 'success' ? 'bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40' : 'bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40');
+            const iconClass = type === 'error' ? 'fa-circle-xmark text-rose-400' : (type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-amber-400');
+
+            toast.className = `p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md ${borderClass}`;
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${iconClass} text-base"></i>
+                    <span class="leading-tight text-white font-semibold">${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('#djangoMessagesContainer .toast-popup');
+            alerts.forEach((alert, idx) => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000 + (idx * 500));
+            });
+        });
+
+        
+    </script>
+
+    
+<script>
+    function openContactModal(id, name, sport, district, experience, specialization, email, phone) {
+        document.getElementById('modalCoachName').innerText = name;
+        document.getElementById('modalCoachSport').innerText = `${sport} • ${district}`;
+        document.getElementById('modalCoachExp').innerText = experience;
+        document.getElementById('modalCoachSpec').innerText = specialization;
+        document.getElementById('modalCoachEmail').innerText = email;
+        document.getElementById('modalCoachEmailLink').href = `mailto:${email}`;
+        document.getElementById('modalCoachPhone').innerText = phone;
+        document.getElementById('modalCoachPhoneLink').href = `tel:${phone.replace(/\s+/g, '')}`;
+
+        const modal = document.getElementById('coachContactModal');
+        if (modal) modal.classList.add('show');
+    }
+
+    function closeContactModal() {
+        const modal = document.getElementById('coachContactModal');
+        if (modal) modal.classList.remove('show');
+    }
+
+    function sendDirectMessage() {
+        const name = document.getElementById('modalCoachName').innerText;
+        closeContactModal();
+        triggerGlobalNotification(`Inquiry message dispatch portal opened for ${name}.`);
+    }
+
+    // Close modal when clicking backdrop
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('coachContactModal');
+        if (event.target === modal) {
+            closeContactModal();
+        }
+    });
+</script>
+
+</body>
+</html>

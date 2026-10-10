@@ -1,0 +1,1010 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tamil Nadu Sports Development Platform - Discover talent, build careers, and promote sports across Tamil Nadu.">
+    <title>TNSPORTS | School, College & Professional Players Roster</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Static CSS -->
+    <link rel="stylesheet" href="static/style.css">
+
+    
+</head>
+<body>
+
+    <!-- App Container Card Wrapper (Matches Reference Screenshot Frame) -->
+    <div class="app-wrapper-container">
+
+        <!-- Header & Navigation -->
+        <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-emerald-500/20 shadow-2xl backdrop-blur-md sticky top-0 z-50">
+            <div class="header-container">
+                <a href="index.html" class="logo group">
+                    <div class="logo-icon-emblem bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="logo-text-group">
+                        <span class="logo-title text-white tracking-tight">Tamil Nadu</span>
+                        <span class="logo-subtitle text-emerald-400 font-semibold tracking-wider uppercase text-[10px]">Sports Development Platform</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link ">Home</a></li>
+                    <li><a href="sports.html" class="nav-link ">Sports</a></li>
+                    <li><a href="players.html" class="nav-link active">Players</a></li>
+                    <li><a href="clubs.html" class="nav-link ">Clubs</a></li>
+                    <li><a href="tournaments.html" class="nav-link ">Tournaments</a></li>
+                    <li><a href="districts.html" class="nav-link ">Districts</a></li>
+                    <li><a href="coaches.html" class="nav-link ">Coaches</a></li>
+                    <li><a href="news.html" class="nav-link ">News</a></li>
+                    <li><a href="contact.html" class="nav-link ">Contact</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    
+                        <a href="login.html" class="btn-green-login bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 border border-emerald-400/30">
+                            <i class="fa-solid fa-lock"></i> Portal Login
+                        </a>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            
+            
+    <!-- Hero Banner -->
+    <div class="page-hero">
+        <div class="hero-tag"><i class="fa-solid fa-user-ninja"></i> Players Hub & Roster</div>
+        <h1 class="page-hero-title">SCHOOL, COLLEGE & PRO PLAYERS ROSTER</h1>
+        <p class="page-hero-subtitle">Discover Tamil Nadu school student-athletes, college varsity talent, and world-class sports champions across disciplines.</p>
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="athlete_register.html" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: var(--accent-emerald, #16a34a); padding: 0.75rem 1.5rem; font-weight: 700; border-radius: 0.75rem;">
+                <i class="fa-solid fa-user-plus"></i> Register as Athlete
+            </a>
+        </div>
+    </div>
+
+
+
+    <!-- Advanced Roster Filter Bar -->
+    <div style="background: var(--bg-card, white); border: 1px solid var(--border-color, #e2e8f0); border-radius: 1.25rem; padding: 1.25rem; margin-bottom: 2rem; box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.05rem; color: var(--text-primary, #0f172a);">
+                <span><i class="fa-solid fa-sliders" style="color: var(--accent-emerald, #16a34a);"></i> Filter Player Roster</span>
+                <span id="resultsCountBadge" style="font-size: 0.78rem; font-weight: 800; background: var(--accent-emerald, #16a34a); color: white; padding: 0.2rem 0.65rem; border-radius: 9999px;">Showing 14 Players</span>
+            </div>
+            <button onclick="resetFilters()" style="background: transparent; border: none; color: var(--text-secondary, #64748b); font-size: 0.85rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; transition: color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-secondary, #64748b)'">
+                <i class="fa-solid fa-rotate-left"></i> Reset Filters
+            </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.85rem; align-items: center;">
+            <!-- Search Box -->
+            <div style="position: relative;">
+                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.9rem;"></i>
+                <input type="text" id="searchPlayerInput" placeholder="Search name, institution..." onkeyup="filterRoster()" style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.6rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-body, #f8fafc); color: var(--text-primary, #0f172a); font-size: 0.9rem; font-weight: 600; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--accent-emerald, #16a34a)'" onblur="this.style.borderColor='var(--border-color, #cbd5e1)'">
+            </div>
+
+            <!-- Category Filter Select -->
+            <div>
+                <select id="categoryFilterSelect" onchange="filterRoster()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-body, #f8fafc); font-size: 0.88rem; font-weight: 700; color: var(--text-primary, #1e293b); outline: none; cursor: pointer;">
+                    <option value="all">🏆 All Categories (14)</option>
+                    <option value="school">🎓 School Players (4)</option>
+                    <option value="college">🏛️ College Players (4)</option>
+                    <option value="pro">⭐ Pro & Elite (6)</option>
+                </select>
+            </div>
+
+            <!-- Sport Filter Select -->
+            <div>
+                <select id="sportFilterSelect" onchange="filterRoster()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-body, #f8fafc); font-size: 0.88rem; font-weight: 700; color: var(--text-primary, #1e293b); outline: none; cursor: pointer;">
+                    <option value="all">⚽ All Sports</option>
+                    <option value="football">Football</option>
+                    <option value="cricket">Cricket</option>
+                    <option value="basketball">Basketball</option>
+                    <option value="athletics">Athletics</option>
+                    <option value="badminton">Badminton</option>
+                    <option value="chess">Chess</option>
+                    <option value="kabaddi">Kabaddi</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="swimming">Swimming</option>
+                    <option value="volleyball">Volleyball</option>
+                    <option value="weightlifting">Weightlifting</option>
+                    <option value="hockey">Hockey</option>
+                </select>
+            </div>
+
+            <!-- District Filter Select -->
+            <div>
+                <select id="districtFilterSelect" onchange="filterRoster()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-body, #f8fafc); font-size: 0.88rem; font-weight: 700; color: var(--text-primary, #1e293b); outline: none; cursor: pointer;">
+                    <option value="all">📍 All Districts</option>
+                    <option value="chennai">Chennai</option>
+                    <option value="coimbatore">Coimbatore</option>
+                    <option value="madurai">Madurai</option>
+                    <option value="tiruchirappalli">Tiruchirappalli</option>
+                    <option value="salem">Salem</option>
+                    <option value="tirunelveli">Tirunelveli</option>
+                    <option value="erode">Erode</option>
+                    <option value="vellore">Vellore</option>
+                    <option value="thanjavur">Thanjavur</option>
+                    <option value="kanchipuram">Kanchipuram</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Players Grid Roster -->
+    <div class="grid-cards" id="playersGrid">
+
+        
+        <div class="interactive-card athlete-item" 
+             data-category="school" 
+             data-sport="athletics" 
+             data-district="chennai"
+             data-name="kavya sundaram" 
+             data-inst="st. bede&#x27;s anglo-indian hs, chennai">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #10b981; color: #10b981; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-graduation-cap"></i> School Player
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Chennai
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Kavya Sundaram" class="athlete-avatar" style="border-color: #10b981;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Kavya Sundaram</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            St. Bede&#x27;s Anglo-Indian HS, Chennai
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Athletics &amp; Sprint
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">11.4s</div><div class="stat-lbl">100m Record</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">3x Gold</div><div class="stat-lbl">State Games</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">Grade 11</div><div class="stat-lbl">Academic</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Kavya Sundaram', 'School Player &bull; St. Bede\u0027s Anglo\u002DIndian HS, Chennai (Chennai)', 'Under\u002D17 State Champion sprinter breaking district 100m and 200m track records. Captain of St. Bede\u0027s track team.', 'https://images.unsplash.com/photo\u002D1544005313\u002D94ddf0286df2?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Athletics \u0026 Sprint')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="school" 
+             data-sport="football" 
+             data-district="coimbatore"
+             data-name="rithvik varman" 
+             data-inst="don bosco high school, coimbatore">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #10b981; color: #10b981; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-graduation-cap"></i> School Player
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Coimbatore
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Rithvik Varman" class="athlete-avatar" style="border-color: #10b981;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Rithvik Varman</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            Don Bosco High School, Coimbatore
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Football
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">22</div><div class="stat-lbl">Goals (Season)</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">11</div><div class="stat-lbl">Assists</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">U-17 Capt</div><div class="stat-lbl">Role</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Rithvik Varman', 'School Player &bull; Don Bosco High School, Coimbatore (Coimbatore)', 'Dynamic playmaker and attacking striker leading Don Bosco\u0027s triumph in the Subroto Cup state qualifiers.', 'https://images.unsplash.com/photo\u002D1507003211169\u002D0a1dd7228f2d?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Football')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="school" 
+             data-sport="chess" 
+             data-district="chennai"
+             data-name="ananya natarajan" 
+             data-inst="dav girls senior secondary school, chennai">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #10b981; color: #10b981; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-graduation-cap"></i> School Player
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Chennai
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Ananya Natarajan" class="athlete-avatar" style="border-color: #10b981;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Ananya Natarajan</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            DAV Girls Senior Secondary School, Chennai
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Chess &amp; Mind Sports
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">2145</div><div class="stat-lbl">FIDE Rating</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">WIM</div><div class="stat-lbl">Title</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">Grade 10</div><div class="stat-lbl">Academic</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Ananya Natarajan', 'School Player &bull; DAV Girls Senior Secondary School, Chennai (Chennai)', 'Prodigious Woman International Master (WIM) norm holder. National U\u002D15 champion representing India at World Youth Championship.', 'https://images.unsplash.com/photo\u002D1534528741775\u002D53994a69daeb?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Chess \u0026 Mind Sports')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="school" 
+             data-sport="basketball" 
+             data-district="salem"
+             data-name="pranav kumar" 
+             data-inst="montfort matric higher sec school, yercaud">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #10b981; color: #10b981; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-graduation-cap"></i> School Player
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Salem
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Pranav Kumar" class="athlete-avatar" style="border-color: #10b981;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Pranav Kumar</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            Montfort Matric Higher Sec School, Yercaud
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Basketball
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">24.5</div><div class="stat-lbl">PPG</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">8.2</div><div class="stat-lbl">RPG</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">6&#x27;4&quot;</div><div class="stat-lbl">Height</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Pranav Kumar', 'School Player &bull; Montfort Matric Higher Sec School, Yercaud (Salem)', 'Phenom point guard leading Salem district school basketball team with supreme perimeter shooting and defense.', 'https://images.unsplash.com/photo\u002D1500648767791\u002D00dcc994a43e?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Basketball')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="college" 
+             data-sport="cricket" 
+             data-district="chennai"
+             data-name="siddharth ramanathan" 
+             data-inst="loyola college, chennai">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #0284c7; color: #0284c7; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-university"></i> College Player
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Chennai
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Siddharth Ramanathan" class="athlete-avatar" style="border-color: #0284c7;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Siddharth Ramanathan</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            Loyola College, Chennai
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Cricket
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">648</div><div class="stat-lbl">Runs (Varsity)</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">58.2</div><div class="stat-lbl">Bat Avg</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">B.Com 3rd Yr</div><div class="stat-lbl">Degree</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Siddharth Ramanathan', 'College Player &bull; Loyola College, Chennai (Chennai)', 'Opening batsman for Loyola College and Tamil Nadu U\u002D23 Ranji squad member. Known for aggressive strokeplay.', 'https://images.unsplash.com/photo\u002D1506794778202\u002Dcad84cf45f1d?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Cricket')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="college" 
+             data-sport="badminton" 
+             data-district="coimbatore"
+             data-name="priya dharshini" 
+             data-inst="psg college of technology, coimbatore">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #0284c7; color: #0284c7; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-university"></i> College Player
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Coimbatore
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Priya Dharshini" class="athlete-avatar" style="border-color: #0284c7;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Priya Dharshini</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            PSG College of Technology, Coimbatore
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Badminton
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">#1</div><div class="stat-lbl">State Uni Rank</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">2x Gold</div><div class="stat-lbl">All India Inter-Uni</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">B.E. ECE</div><div class="stat-lbl">Degree</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Priya Dharshini', 'College Player &bull; PSG College of Technology, Coimbatore (Coimbatore)', 'All\u002DIndia Inter\u002DUniversity singles champion. Represents PSG Tech in national ranking tournaments with stellar shuttle control.', 'https://images.unsplash.com/photo\u002D1573496359142\u002Db8d87734a5a2?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Badminton')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="college" 
+             data-sport="football" 
+             data-district="chengalpattu"
+             data-name="karthik subramanian" 
+             data-inst="madras christian college (mcc), tambaram">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #0284c7; color: #0284c7; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-university"></i> College Player
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Chengalpattu
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Karthik Subramanian" class="athlete-avatar" style="border-color: #0284c7;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Karthik Subramanian</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            Madras Christian College (MCC), Tambaram
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Football
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">14</div><div class="stat-lbl">Clean Sheets</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">91%</div><div class="stat-lbl">Save Pct</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">BA English</div><div class="stat-lbl">Degree</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Karthik Subramanian', 'College Player &bull; Madras Christian College (MCC), Tambaram (Chengalpattu)', 'Commanding goalkeeper and MCC Varsity Team Captain. Selected for South Zone Inter\u002DUniversity Championship squad.', 'https://images.unsplash.com/photo\u002D1492562080023\u002Dab3db95bfbce?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Football')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="college" 
+             data-sport="kabaddi" 
+             data-district="tirunelveli"
+             data-name="meera krishnan" 
+             data-inst="st. xavier&#x27;s college, palayamkottai">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #0284c7; color: #0284c7; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-university"></i> College Player
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Tirunelveli
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Meera Krishnan" class="athlete-avatar" style="border-color: #0284c7;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Meera Krishnan</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            St. Xavier&#x27;s College, Palayamkottai
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Kabaddi
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">112</div><div class="stat-lbl">Raid Pts</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">78%</div><div class="stat-lbl">Tackle Acc</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">B.Sc Physics</div><div class="stat-lbl">Degree</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Meera Krishnan', 'College Player &bull; St. Xavier\u0027s College, Palayamkottai (Tirunelveli)', 'Star raider for St. Xavier\u0027s Women Kabaddi team and Gold Medalist at State University Sports League.', 'https://images.unsplash.com/photo\u002D1531746020798\u002De6953c6e8e04?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Kabaddi')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="pro" 
+             data-sport="football" 
+             data-district="international"
+             data-name="jude bellingham" 
+             data-inst="real madrid &amp; england">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #d97706; color: #d97706; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-star"></i> Pro / Elite
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> International
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Jude Bellingham" class="athlete-avatar" style="border-color: #d97706;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Jude Bellingham</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            Real Madrid &amp; England
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Football
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">28</div><div class="stat-lbl">Goals</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">14</div><div class="stat-lbl">Assists</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">9.2</div><div class="stat-lbl">Avg Rating</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Jude Bellingham', 'Pro / Elite &bull; Real Madrid \u0026 England (International)', 'Midfield Dynamo who transformed European football with 28 goals and 14 assists in 2025/26. Golden Boy \u0026 Kopa Trophy winner.', 'https://images.unsplash.com/photo\u002D1508098682722\u002De99c43a406b2?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Football')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="pro" 
+             data-sport="cricket" 
+             data-district="india"
+             data-name="virat kohli" 
+             data-inst="india national team">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #d97706; color: #d97706; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-star"></i> Pro / Elite
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> India
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Virat Kohli" class="athlete-avatar" style="border-color: #d97706;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Virat Kohli</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            India National Team
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Cricket
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">26K+</div><div class="stat-lbl">Runs</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">80</div><div class="stat-lbl">Centuries</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">53.6</div><div class="stat-lbl">Avg</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Virat Kohli', 'Pro / Elite &bull; India National Team (India)', 'Modern cricket legend holding numerous chase masterclass records, 80 international centuries, and T20 World Cup MVP.', 'https://images.unsplash.com/photo\u002D1531415074968\u002D036ba1b575da?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Cricket')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="pro" 
+             data-sport="f1" 
+             data-district="international"
+             data-name="max verstappen" 
+             data-inst="red bull racing">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #d97706; color: #d97706; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-star"></i> Pro / Elite
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> International
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Max Verstappen" class="athlete-avatar" style="border-color: #d97706;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Max Verstappen</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            Red Bull Racing
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Formula 1
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">61</div><div class="stat-lbl">Wins</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">4x</div><div class="stat-lbl">WDC Champ</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">102</div><div class="stat-lbl">Podiums</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Max Verstappen', 'Pro / Elite &bull; Red Bull Racing (International)', 'Dominant Formula 1 World Driver Champion with 61 Grand Prix victories and unparalleled rain racing precision.', 'https://images.unsplash.com/photo\u002D1568605117036\u002D5fe5e7bab0b7?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Formula 1')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="pro" 
+             data-sport="basketball" 
+             data-district="international"
+             data-name="lebron james" 
+             data-inst="la lakers">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #d97706; color: #d97706; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-star"></i> Pro / Elite
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> International
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="LeBron James" class="athlete-avatar" style="border-color: #d97706;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">LeBron James</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            LA Lakers
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Basketball
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">40K+</div><div class="stat-lbl">PTS</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">4x</div><div class="stat-lbl">NBA Champ</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">20x</div><div class="stat-lbl">All-Star</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('LeBron James', 'Pro / Elite &bull; LA Lakers (International)', 'All\u002Dtime leading scorer in NBA history, 4\u002Dtime NBA Champion, and 4\u002Dtime League MVP across two decades.', 'https://images.unsplash.com/photo\u002D1546519638\u002D68e109498ffc?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Basketball')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="pro" 
+             data-sport="football" 
+             data-district="international"
+             data-name="erling haaland" 
+             data-inst="manchester city &amp; norway">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #d97706; color: #d97706; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-star"></i> Pro / Elite
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> International
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Erling Haaland" class="athlete-avatar" style="border-color: #d97706;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Erling Haaland</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            Manchester City &amp; Norway
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Football
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">36</div><div class="stat-lbl">Goals</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">2x</div><div class="stat-lbl">Golden Boot</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">8.9</div><div class="stat-lbl">Rating</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Erling Haaland', 'Pro / Elite &bull; Manchester City \u0026 Norway (International)', 'Goal\u002Dscoring powerhouse holding the Premier League single\u002Dseason goal record with unmatched physicality and speed.', 'https://images.unsplash.com/photo\u002D1574629810360\u002D7efbbe195018?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Football')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+        <div class="interactive-card athlete-item" 
+             data-category="pro" 
+             data-sport="tennis" 
+             data-district="international"
+             data-name="iga świątek" 
+             data-inst="wta tour world #1">
+            <div>
+                <!-- Category Badge Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; border: 1px solid #d97706; color: #d97706; background-color: rgba(255, 255, 255, 0.05);">
+                        
+                            <i class="fa-solid fa-star"></i> Pro / Elite
+                        
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600;">
+                        <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> International
+                    </span>
+                </div>
+
+                <div class="athlete-header">
+                    <img src="https://images.unsplash.com/photo-1511193311914-0346f16efe90?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Iga Świątek" class="athlete-avatar" style="border-color: #d97706;">
+                    <div class="athlete-info">
+                        <h3 style="font-size: 1.15rem; font-weight: 800;">Iga Świątek</h3>
+                        <span style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.82rem; display: block; margin-top: 0.15rem;">
+                            WTA Tour World #1
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary, #64748b); font-weight: 600; display: block; margin-top: 0.1rem;">
+                            <i class="fa-solid fa-medal text-amber-500"></i> Tennis
+                        </span>
+                    </div>
+                </div>
+
+                <div class="athlete-stats-grid" style="margin-top: 1rem;">
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">5x</div><div class="stat-lbl">Grand Slams</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">#1</div><div class="stat-lbl">WTA Rank</div></div>
+                    <div class="stat-item"><div class="stat-val" style="font-weight: 800; font-size: 1.05rem;">22</div><div class="stat-lbl">Titles</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" 
+                    onclick="openProfileModal('Iga Świątek', 'Pro / Elite &bull; WTA Tour World #1 (International)', 'Dominant 5\u002Dtime Grand Slam Champion and Roland Garros specialist renowned for intense baseline rally control.', 'https://images.unsplash.com/photo\u002D1511193311914\u002D0346f16efe90?auto\u003Dformat\u0026fit\u003Dcrop\u0026w\u003D200\u0026q\u003D80', 'Tennis')">
+                View Full Profile <i class="fa-solid fa-id-card"></i>
+            </button>
+        </div>
+        
+
+    </div>
+
+    <!-- Empty Roster Message -->
+    <div id="emptyRosterNotice" style="display: none; text-align: center; padding: 4rem 2rem; background: var(--bg-card, white); border-radius: 1rem; border: 1px dashed var(--border-color, #cbd5e1); margin-top: 1rem;">
+        <i class="fa-solid fa-user-slash" style="font-size: 3rem; color: #94a3b8; margin-bottom: 1rem;"></i>
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary, #1e293b);">No players found in this filter</h3>
+        <p style="color: var(--text-secondary, #64748b); max-width: 400px; margin: 0.5rem auto 1.5rem;">Try selecting another category or clear your search input to view registered athletes.</p>
+        <button class="btn-primary" onclick="resetFilters()">Reset All Filters</button>
+    </div>
+
+    <!-- Player Profile Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-content" style="max-width: 540px; border-radius: 1.25rem;">
+            <button class="modal-close" onclick="closeProfileModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.25rem;">
+                <img id="modalAvatar" src="" alt="Player Avatar" style="width: 80px; height: 80px; border-radius: 1rem; object-fit: cover; border: 3px solid var(--accent-emerald, #16a34a);">
+                <div>
+                    <h2 id="modalName" style="font-size: 1.5rem; font-weight: 900; margin-bottom: 0.2rem; color: var(--text-primary, #0f172a);">Player Name</h2>
+                    <div id="modalTeam" style="color: var(--accent-cyan, #0284c7); font-weight: 700; font-size: 0.9rem;">Institution & Location</div>
+                    <div id="modalSportTag" style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary, #64748b); margin-top: 0.15rem;">Sport</div>
+                </div>
+            </div>
+            
+            <div style="background: rgba(0, 0, 0, 0.03); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.25rem;">
+                <h4 style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--text-secondary, #475569); margin-bottom: 0.5rem;">Player Bio & Career Highlights</h4>
+                <p id="modalBio" style="color: var(--text-secondary, #334155); line-height: 1.6; font-size: 0.92rem;">Player biography content...</p>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem;">
+                <button class="btn-primary" style="flex: 1; justify-content: center;" onclick="closeProfileModal(); triggerGlobalNotification('Subscribed to Player Updates!');">
+                    <i class="fa-solid fa-heart"></i> Follow Player
+                </button>
+                <button style="padding: 0.75rem 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-color, #cbd5e1); font-weight: 700; background: transparent; cursor: pointer;" onclick="closeProfileModal()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+        </main>
+
+        <!-- Master Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon-emblem"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="logo-text-group">
+                            <span class="logo-title">Tamil Nadu</span>
+                            <span class="logo-subtitle">Sports Development Platform</span>
+                        </div>
+                    </a>
+                    <p>A unified platform to discover talent, build careers, and promote sports across Tamil Nadu.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="sports.html">Sports Disciplines</a></li>
+                        <li><a href="players.html">Player Roster</a></li>
+                        <li><a href="clubs.html">Clubs & Franchises</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Portals & Governance</h4>
+                    <ul>
+                        <li><a href="districts.html">Districts Portal</a></li>
+                        <li><a href="minister_dashboard.html"><i class="fa-solid fa-crown text-amber-500"></i> Sports Minister Portal</a></li>
+                        <li><a href="collector_dashboard.html"><i class="fa-solid fa-landmark-flag text-emerald-400"></i> Collector & DSO Portal</a></li>
+                        <li><a href="athlete_register.html">Player Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tamil Nadu Sports Development Platform. All rights reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Global Toast Notification UI -->
+    <div class="toast" id="globalToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="globalToastMessage">Notification update!</span>
+    </div>
+
+    
+
+    <!-- Core Global JavaScript & Idle Detection -->
+    <script>
+        function triggerGlobalNotification(message, type = 'info') {
+            let container = document.getElementById('djangoMessagesContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'djangoMessagesContainer';
+                container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const borderClass = type === 'error' ? 'bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40' : (type === 'success' ? 'bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40' : 'bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40');
+            const iconClass = type === 'error' ? 'fa-circle-xmark text-rose-400' : (type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-amber-400');
+
+            toast.className = `p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md ${borderClass}`;
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${iconClass} text-base"></i>
+                    <span class="leading-tight text-white font-semibold">${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('#djangoMessagesContainer .toast-popup');
+            alerts.forEach((alert, idx) => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000 + (idx * 500));
+            });
+        });
+
+        
+    </script>
+
+    
+<script>
+    function selectCategory(cat) {
+        const catSelect = document.getElementById('categoryFilterSelect');
+        if (catSelect) catSelect.value = cat;
+        filterRoster();
+    }
+
+    function filterRoster() {
+        const searchElem = document.getElementById('searchPlayerInput');
+        const catElem = document.getElementById('categoryFilterSelect');
+        const sportElem = document.getElementById('sportFilterSelect');
+        const distElem = document.getElementById('districtFilterSelect');
+
+        const query = searchElem ? searchElem.value.toLowerCase().trim() : '';
+        const activeCategory = catElem ? catElem.value : 'all';
+        const activeSport = sportElem ? sportElem.value : 'all';
+        const activeDistrict = distElem ? distElem.value : 'all';
+
+        const items = document.querySelectorAll('.athlete-item');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const itemCat = item.getAttribute('data-category') || '';
+            const itemSport = item.getAttribute('data-sport') || '';
+            const itemDistrict = item.getAttribute('data-district') || '';
+            const itemName = item.getAttribute('data-name') || '';
+            const itemInst = item.getAttribute('data-inst') || '';
+
+            const matchCat = (activeCategory === 'all' || itemCat === activeCategory);
+            const matchSport = (activeSport === 'all' || itemSport.includes(activeSport));
+            const matchDistrict = (activeDistrict === 'all' || itemDistrict.includes(activeDistrict));
+            const matchSearch = (!query || itemName.includes(query) || itemInst.includes(query) || itemDistrict.includes(query) || itemSport.includes(query));
+
+            if (matchCat && matchSport && matchDistrict && matchSearch) {
+                item.style.display = 'flex';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        const countBadge = document.getElementById('resultsCountBadge');
+        if (countBadge) {
+            countBadge.innerText = `Showing ${visibleCount} Player${visibleCount === 1 ? '' : 's'}`;
+        }
+
+        const notice = document.getElementById('emptyRosterNotice');
+        if (notice) {
+            notice.style.display = (visibleCount === 0) ? 'block' : 'none';
+        }
+    }
+
+    function resetFilters() {
+        if (document.getElementById('searchPlayerInput')) document.getElementById('searchPlayerInput').value = '';
+        if (document.getElementById('categoryFilterSelect')) document.getElementById('categoryFilterSelect').value = 'all';
+        if (document.getElementById('sportFilterSelect')) document.getElementById('sportFilterSelect').value = 'all';
+        if (document.getElementById('districtFilterSelect')) document.getElementById('districtFilterSelect').value = 'all';
+        filterRoster();
+    }
+
+    function openProfileModal(name, team, bio, avatar, sport) {
+        document.getElementById('modalName').innerText = name;
+        document.getElementById('modalTeam').innerText = team;
+        document.getElementById('modalBio').innerText = bio;
+        document.getElementById('modalAvatar').src = avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80';
+        document.getElementById('modalSportTag').innerText = 'Sport: ' + (sport || 'Multi-Discipline');
+        document.getElementById('profileModal').classList.add('active');
+    }
+
+    function closeProfileModal() {
+        document.getElementById('profileModal').classList.remove('active');
+    }
+</script>
+
+</body>
+</html>

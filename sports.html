@@ -1,0 +1,1370 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tamil Nadu Sports Development Platform - Discover talent, build careers, and promote sports across Tamil Nadu.">
+    <title>Sports Directory | Tamil Nadu Sports Development Platform</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Static CSS -->
+    <link rel="stylesheet" href="static/style.css">
+
+    
+</head>
+<body>
+
+    <!-- App Container Card Wrapper (Matches Reference Screenshot Frame) -->
+    <div class="app-wrapper-container">
+
+        <!-- Header & Navigation -->
+        <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-emerald-500/20 shadow-2xl backdrop-blur-md sticky top-0 z-50">
+            <div class="header-container">
+                <a href="index.html" class="logo group">
+                    <div class="logo-icon-emblem bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="logo-text-group">
+                        <span class="logo-title text-white tracking-tight">Tamil Nadu</span>
+                        <span class="logo-subtitle text-emerald-400 font-semibold tracking-wider uppercase text-[10px]">Sports Development Platform</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link ">Home</a></li>
+                    <li><a href="sports.html" class="nav-link active">Sports</a></li>
+                    <li><a href="players.html" class="nav-link ">Players</a></li>
+                    <li><a href="clubs.html" class="nav-link ">Clubs</a></li>
+                    <li><a href="tournaments.html" class="nav-link ">Tournaments</a></li>
+                    <li><a href="districts.html" class="nav-link ">Districts</a></li>
+                    <li><a href="coaches.html" class="nav-link ">Coaches</a></li>
+                    <li><a href="news.html" class="nav-link ">News</a></li>
+                    <li><a href="contact.html" class="nav-link ">Contact</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    
+                        <a href="login.html" class="btn-green-login bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 border border-emerald-400/30">
+                            <i class="fa-solid fa-lock"></i> Portal Login
+                        </a>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            
+            
+    <!-- Page Header & Filtering Controls Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
+                    Sports Disciplines
+                </h2>
+                <p class="text-xs md:text-sm text-gray-500 mt-1">
+                    Discover recognized sports academies, state trials, and athletic rosters across Tamil Nadu (26 Disciplines).
+                </p>
+            </div>
+
+            <!-- Search and Filter Form -->
+            <form method="GET" action="/sports/" class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                <!-- Search Input -->
+                <div class="relative flex-1 md:w-64">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <i class="bi bi-search text-sm"></i>
+                    </div>
+                    <input type="text" name="q" value="" placeholder="Search sports or discipline..." 
+                           class="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-300 rounded-xl text-xs font-medium text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm">
+                </div>
+
+                <!-- Category Selector -->
+                <div class="relative">
+                    <select name="category" onchange="this.form.submit()" 
+                            class="appearance-none bg-white border border-gray-300 rounded-xl pl-4 pr-9 py-2.5 text-xs font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm cursor-pointer">
+                        <option value="All Categories" selected>All Categories</option>
+                        
+                        <option value="Team Sports" >Team Sports</option>
+                        
+                        <option value="Individual Sports" >Individual Sports</option>
+                        
+                        <option value="Racket Sports" >Racket Sports</option>
+                        
+                        <option value="Water Sports" >Water Sports</option>
+                        
+                        <option value="Combat &amp; Martial Arts" >Combat &amp; Martial Arts</option>
+                        
+                        <option value="Traditional &amp; Indigenous" >Traditional &amp; Indigenous</option>
+                        
+                        <option value="Mind &amp; Precision" >Mind &amp; Precision</option>
+                        
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                        <i class="bi bi-chevron-down text-xs"></i>
+                    </div>
+                </div>
+
+                
+            </form>
+        </div>
+
+        <!-- Quick Category Pill Selector Bar -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+            <a href="sports.html" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap bg-emerald-600 text-white shadow-sm">
+                All Disciplines (26)
+            </a>
+            
+            <a href="sports.html?category=Team Sports" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Team Sports
+            </a>
+            
+            <a href="sports.html?category=Individual Sports" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Individual Sports
+            </a>
+            
+            <a href="sports.html?category=Racket Sports" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Racket Sports
+            </a>
+            
+            <a href="sports.html?category=Water Sports" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Water Sports
+            </a>
+            
+            <a href="sports.html?category=Combat &amp; Martial Arts" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Combat &amp; Martial Arts
+            </a>
+            
+            <a href="sports.html?category=Traditional &amp; Indigenous" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Traditional &amp; Indigenous
+            </a>
+            
+            <a href="sports.html?category=Mind &amp; Precision" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">
+                Mind &amp; Precision
+            </a>
+            
+        </div>
+    </section>
+
+    <!-- Sports 3-Column Card Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Archery discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #059669;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #05966910;">
+                            
+                                <img src="https://images.unsplash.com/photo-1511067007398-7e4b90cfa4bc?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Archery Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-crosshair text-2xl" style="color: #059669; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #05966915; color: #059669; border-color: #05966930;">
+                                Mind &amp; Precision
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Archery</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Recurve and Compound archery ranges, state ranking trials, and Olympic preparation.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Athletics &amp; Track discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #9333ea;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #9333ea10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Athletics &amp; Track Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-person-running text-2xl" style="color: #9333ea; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #9333ea15; color: #9333ea; border-color: #9333ea30;">
+                                Individual Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Athletics &amp; Track</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        100m, 400m, relay, long jump, and synthetic track events across SDAT district complexes.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Badminton discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #d97706;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #d9770610;">
+                            
+                                <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Badminton Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-feather text-2xl" style="color: #d97706; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #d9770615; color: #d97706; border-color: #d9770630;">
+                                Racket Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Badminton</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Indoor wooden court facilities, state ranking tournaments, and high-performance academies.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Basketball discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #e11d48;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #e11d4810;">
+                            
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Basketball Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-basketball text-2xl" style="color: #e11d48; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #e11d4815; color: #e11d48; border-color: #e11d4830;">
+                                Team Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Basketball</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Inter-college tournaments, SDAT indoor stadiums, and national championship rosters.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Boxing discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #be123c;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #be123c10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Boxing Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-hand-back-fist text-2xl" style="color: #be123c; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #be123c15; color: #be123c; border-color: #be123c30;">
+                                Combat &amp; Martial Arts
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Boxing</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        North Chennai ring legacy, youth category tournaments, and high-intensity sparring rings.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Carrom discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #854d0e;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #854d0e10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Carrom Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-dice text-2xl" style="color: #854d0e; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #854d0e15; color: #854d0e; border-color: #854d0e30;">
+                                Mind &amp; Precision
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Carrom</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        International Carrom Federation recognized tournaments and state ranking meets.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Chess discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #475569;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #47556910;">
+                            
+                                <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Chess Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-chess-knight text-2xl" style="color: #475569; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #47556915; color: #475569; border-color: #47556930;">
+                                Mind &amp; Precision
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Chess</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Global chess capital host of 44th Chess Olympiad with 85+ Grandmasters from Tamil Nadu.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Cricket discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #008751;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #00875110;">
+                            
+                                <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Cricket Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-cricket-bat-ball text-2xl" style="color: #008751; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #00875115; color: #008751; border-color: #00875130;">
+                                Team Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Cricket</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Governed across 38 districts with premier TNPL T20 leagues and SDAT turf grounds.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Cycling discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #047857;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #04785710;">
+                            
+                                <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Cycling Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-bicycle text-2xl" style="color: #047857; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #04785715; color: #047857; border-color: #04785730;">
+                                Individual Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Cycling</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Velodrome track racing, road cycling rallies, and state endurance championships.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Football discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #dc2626;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #dc262610;">
+                            
+                                <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Football Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-futbol text-2xl" style="color: #dc2626; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #dc262615; color: #dc2626; border-color: #dc262630;">
+                                Team Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Football</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Statewide district leagues, Jawaharlal Nehru Stadium turf, and Chief Minister Cup tournaments.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Gymnastics discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #db2777;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #db277710;">
+                            
+                                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Gymnastics Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-child-reaching text-2xl" style="color: #db2777; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #db277715; color: #db2777; border-color: #db277730;">
+                                Individual Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Gymnastics</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Artistic and Rhythmic gymnastics academies fostering agility and youth balance.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Handball discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #991b1b;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #991b1b10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Handball Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-circle-play text-2xl" style="color: #991b1b; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #991b1b15; color: #991b1b; border-color: #991b1b30;">
+                                Team Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Handball</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Fast outdoor and indoor handball championships across school districts.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Hockey discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #2563eb;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #2563eb10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Hockey Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-person-walking text-2xl" style="color: #2563eb; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #2563eb15; color: #2563eb; border-color: #2563eb30;">
+                                Team Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Hockey</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Mayor Radhakrishnan AstroTurf Stadium host of Asian Champions Trophy and national trials.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Kabaddi discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #ea580c;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #ea580c10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1565992441121-4367c2967103?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Kabaddi Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-bolt text-2xl" style="color: #ea580c; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
+                                Traditional &amp; Indigenous
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Kabaddi</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Tamil Nadu ancestral sport with professional PKL franchises and school level championships.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Kho Kho discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #d97706;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #d9770610;">
+                            
+                                <img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Kho Kho Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-people-group text-2xl" style="color: #d97706; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #d9770615; color: #d97706; border-color: #d9770630;">
+                                Traditional &amp; Indigenous
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Kho Kho</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Traditional Indian tag sport with active Ultimate Kho Kho leagues and district tournament circuits across Tamil Nadu.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Rowing &amp; Canoeing discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #0369a1;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #0369a110;">
+                            
+                                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Rowing &amp; Canoeing Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-water text-2xl" style="color: #0369a1; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #0369a115; color: #0369a1; border-color: #0369a130;">
+                                Water Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Rowing &amp; Canoeing</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Madras Boat Club water sports on Adyar River and Muttukadu backwaters regattas.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Shooting discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #334155;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #33415510;">
+                            
+                                <img src="https://images.unsplash.com/photo-1595590424283-b8f17842773f?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Shooting Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-bullseye text-2xl" style="color: #334155; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #33415515; color: #334155; border-color: #33415530;">
+                                Mind &amp; Precision
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Shooting</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        10m Air Rifle and Pistol shooting ranges in Chennai and Coimbatore sports centers.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Silambam discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #b45309;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #b4530910;">
+                            
+                                <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Silambam Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-wand-magic-sparkles text-2xl" style="color: #b45309; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #b4530915; color: #b45309; border-color: #b4530930;">
+                                Traditional &amp; Indigenous
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Silambam</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Official traditional martial art of Tamil Nadu recognized under sports quota recruitment.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Squash discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #15803d;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #15803d10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Squash Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-square-full text-2xl" style="color: #15803d; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #15803d15; color: #15803d; border-color: #15803d30;">
+                                Racket Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Squash</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Indian Squash Academy in Chennai training Commonwealth and Asian Games medalists.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Swimming &amp; Aquatics discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #06b6d4;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #06b6d410;">
+                            
+                                <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Swimming &amp; Aquatics Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-person-swimming text-2xl" style="color: #06b6d4; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #06b6d415; color: #06b6d4; border-color: #06b6d430;">
+                                Water Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Swimming &amp; Aquatics</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Olympic-size 50m pools in Velachery aquatic complex, diving, and open water trials.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Table Tennis discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #f97316;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #f9731610;">
+                            
+                                <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Table Tennis Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-table-tennis-paddle-ball text-2xl" style="color: #f97316; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #f9731615; color: #f97316; border-color: #f9731630;">
+                                Racket Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Table Tennis</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Fast-paced indoor sport with national champions and specialized coaching centres.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Taekwondo &amp; Judo discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #4338ca;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #4338ca10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Taekwondo &amp; Judo Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-shield-halved text-2xl" style="color: #4338ca; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #4338ca15; color: #4338ca; border-color: #4338ca30;">
+                                Combat &amp; Martial Arts
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Taekwondo &amp; Judo</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Belt grading, sparring bouts, and self-defense training programs for school students.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Tennis discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #65a30d;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #65a30d10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Tennis Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-circle-dot text-2xl" style="color: #65a30d; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #65a30d15; color: #65a30d; border-color: #65a30d30;">
+                                Racket Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Tennis</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        SDAT Nungambakkam Tennis Stadium home to ATP Challenger and Davis Cup events.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Volleyball discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #0284c7;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #0284c710;">
+                            
+                                <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Volleyball Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-volleyball text-2xl" style="color: #0284c7; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
+                                Team Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Volleyball</span>
+                        
+                            <i class="fa-solid fa-fire text-amber-500 text-xs" title="Popular Discipline"></i>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Coastal and indoor championship leagues producing international players for India.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Weightlifting discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #7c3aed;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #7c3aed10;">
+                            
+                                <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Weightlifting Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-dumbbell text-2xl" style="color: #7c3aed; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #7c3aed15; color: #7c3aed; border-color: #7c3aed30;">
+                                Individual Sports
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Weightlifting</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Snatch, Clean &amp; Jerk state championships and SDAT gym weight training centres.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-pointer relative overflow-hidden" 
+                 onclick="triggerGlobalNotification('Exploring Wrestling discipline & state roster...')">
+                
+                <!-- Category Color Bar Top -->
+                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: #c026d3;"></div>
+
+                <div>
+                    <!-- Logo / Emblem Header -->
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm shrink-0 bg-slate-50 group-hover:scale-105 transition-transform" style="background-color: #c026d310;">
+                            
+                                <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Wrestling Logo" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';">
+                                <i class="fa-solid fa-user-ninja text-2xl" style="color: #c026d3; display: none;"></i>
+                            
+                        </div>
+
+                        <div class="text-right">
+                            <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full inline-block border" style="background-color: #c026d315; color: #c026d3; border-color: #c026d330;">
+                                Combat &amp; Martial Arts
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-2 flex items-center gap-2">
+                        <span>Wrestling</span>
+                        
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
+                        Freestyle and Greco-Roman mat wrestling competitions across district sports complexes.
+                    </p>
+                </div>
+
+                <!-- Card Footer Actions -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600 group-hover:text-emerald-700">
+                    <span>View Roster & Trials</span>
+                    <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+        </main>
+
+        <!-- Master Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon-emblem"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="logo-text-group">
+                            <span class="logo-title">Tamil Nadu</span>
+                            <span class="logo-subtitle">Sports Development Platform</span>
+                        </div>
+                    </a>
+                    <p>A unified platform to discover talent, build careers, and promote sports across Tamil Nadu.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="sports.html">Sports Disciplines</a></li>
+                        <li><a href="players.html">Player Roster</a></li>
+                        <li><a href="clubs.html">Clubs & Franchises</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Portals & Governance</h4>
+                    <ul>
+                        <li><a href="districts.html">Districts Portal</a></li>
+                        <li><a href="minister_dashboard.html"><i class="fa-solid fa-crown text-amber-500"></i> Sports Minister Portal</a></li>
+                        <li><a href="collector_dashboard.html"><i class="fa-solid fa-landmark-flag text-emerald-400"></i> Collector & DSO Portal</a></li>
+                        <li><a href="athlete_register.html">Player Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tamil Nadu Sports Development Platform. All rights reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Global Toast Notification UI -->
+    <div class="toast" id="globalToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="globalToastMessage">Notification update!</span>
+    </div>
+
+    
+
+    <!-- Core Global JavaScript & Idle Detection -->
+    <script>
+        function triggerGlobalNotification(message, type = 'info') {
+            let container = document.getElementById('djangoMessagesContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'djangoMessagesContainer';
+                container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const borderClass = type === 'error' ? 'bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40' : (type === 'success' ? 'bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40' : 'bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40');
+            const iconClass = type === 'error' ? 'fa-circle-xmark text-rose-400' : (type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-amber-400');
+
+            toast.className = `p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md ${borderClass}`;
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${iconClass} text-base"></i>
+                    <span class="leading-tight text-white font-semibold">${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('#djangoMessagesContainer .toast-popup');
+            alerts.forEach((alert, idx) => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000 + (idx * 500));
+            });
+        });
+
+        
+    </script>
+
+    
+</body>
+</html>

@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tamil Nadu Sports Development Platform - Discover talent, build careers, and promote sports across Tamil Nadu.">
+    <title>Tournaments - Multi-Filter Search - TN Sports Platform</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Static CSS -->
+    <link rel="stylesheet" href="static/style.css">
+
+    
+</head>
+<body>
+
+    <!-- App Container Card Wrapper (Matches Reference Screenshot Frame) -->
+    <div class="app-wrapper-container">
+
+        <!-- Header & Navigation -->
+        <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-emerald-500/20 shadow-2xl backdrop-blur-md sticky top-0 z-50">
+            <div class="header-container">
+                <a href="index.html" class="logo group">
+                    <div class="logo-icon-emblem bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="logo-text-group">
+                        <span class="logo-title text-white tracking-tight">Tamil Nadu</span>
+                        <span class="logo-subtitle text-emerald-400 font-semibold tracking-wider uppercase text-[10px]">Sports Development Platform</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link ">Home</a></li>
+                    <li><a href="sports.html" class="nav-link ">Sports</a></li>
+                    <li><a href="players.html" class="nav-link ">Players</a></li>
+                    <li><a href="clubs.html" class="nav-link ">Clubs</a></li>
+                    <li><a href="tournaments.html" class="nav-link active">Tournaments</a></li>
+                    <li><a href="districts.html" class="nav-link ">Districts</a></li>
+                    <li><a href="coaches.html" class="nav-link ">Coaches</a></li>
+                    <li><a href="news.html" class="nav-link ">News</a></li>
+                    <li><a href="contact.html" class="nav-link ">Contact</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    
+                        <a href="login.html" class="btn-green-login bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 border border-emerald-400/30">
+                            <i class="fa-solid fa-lock"></i> Portal Login
+                        </a>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            
+            
+<main class="max-w-7xl mx-auto px-4 py-8 space-y-6">
+    
+    <!-- Django Notification Alerts -->
+    
+
+    <!-- Hero Header Strip with Sanction CTA -->
+    <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 text-white shadow-xl border border-indigo-500/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-full text-xs font-extrabold mb-2">
+                <i class="bi bi-trophy-fill text-amber-400"></i> Official SDAT State & District Sanctioned Meet
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Tamil Nadu State & District Tournaments</h2>
+            <p class="text-xs text-slate-300 mt-1 max-w-2xl">
+                Browse sanctioned competitions for School Students (EMIS), College & University Athletes, and General Open Category tournaments across all 38 districts.
+            </p>
+        </div>
+
+        <button onclick="toggleModal(true)" class="px-5 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-extrabold text-xs rounded-xl shadow-lg transition flex items-center gap-2 shrink-0 cursor-pointer">
+            <i class="bi bi-file-earmark-plus-fill text-sm"></i> Request DSO Tournament Sanction
+        </button>
+    </div>
+
+    <!-- Category Level Quick Tabs -->
+    <div class="flex flex-wrap items-center gap-2 bg-white p-2 rounded-2xl border border-gray-200 shadow-xs text-xs font-extrabold">
+        <a href="tournaments.html" class="px-4 py-2 rounded-xl transition flex items-center gap-2 bg-slate-900 text-white shadow-xs">
+            <i class="bi bi-grid-fill"></i> All Tournaments <span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-emerald-400">2</span>
+        </a>
+
+        <a href="tournaments.html?level=SCHOOL" class="px-4 py-2 rounded-xl transition flex items-center gap-2 text-gray-600 hover:bg-gray-100">
+            🏫 School Level <span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-50 text-emerald-700">0</span>
+        </a>
+
+        <a href="tournaments.html?level=COLLEGE" class="px-4 py-2 rounded-xl transition flex items-center gap-2 text-gray-600 hover:bg-gray-100">
+            🎓 College / University Level <span class="px-2 py-0.5 rounded-full text-[10px] bg-blue-50 text-blue-700">0</span>
+        </a>
+
+        <a href="tournaments.html?level=GENERAL" class="px-4 py-2 rounded-xl transition flex items-center gap-2 text-gray-600 hover:bg-gray-100">
+            🌐 General / Open Category <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-50 text-amber-800">2</span>
+        </a>
+    </div>
+
+    <!-- Comprehensive Filter Suite Form -->
+    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+            <h3 class="text-xs font-black uppercase tracking-wider text-gray-800 flex items-center gap-2">
+                <i class="bi bi-funnel-fill text-indigo-600"></i> Tournament Advanced Filters & Search
+            </h3>
+            
+        </div>
+
+        <form method="GET" action="/tournaments/" class="space-y-4">
+            
+            <!-- Live Search Bar -->
+            <div class="relative">
+                <i class="bi bi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                <input type="text" 
+                       name="q" 
+                       value="" 
+                       placeholder="Search tournaments by title, venue, organizer name or age keywords..." 
+                       class="w-full pl-9 pr-24 py-2.5 bg-gray-50 border border-gray-300 rounded-xl text-xs font-bold text-gray-900 focus:bg-white focus:border-indigo-500 outline-none shadow-2xs">
+                <button type="submit" class="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold rounded-lg transition shadow-2xs">
+                    Search
+                </button>
+            </div>
+
+            <!-- Filter Dropdowns Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
+                
+                <!-- 1. Tournament Level Category -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Category Level</label>
+                    <select name="level" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All Category Levels</option>
+                        <option value="SCHOOL" >🏫 School Level (U-14/17/19)</option>
+                        <option value="COLLEGE" >🎓 College & University (U-25)</option>
+                        <option value="GENERAL" >🌐 General / Open Category</option>
+                    </select>
+                </div>
+
+                <!-- 2. Host District -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Host District</label>
+                    <select name="district" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All 38 Districts</option>
+                        
+                            <option value="ariyalur" >Ariyalur District</option>
+                        
+                            <option value="chengalpattu" >Chengalpattu District</option>
+                        
+                            <option value="chennai" >Chennai District</option>
+                        
+                            <option value="coimbatore" >Coimbatore District</option>
+                        
+                            <option value="cuddalore" >Cuddalore District</option>
+                        
+                            <option value="dharmapuri" >Dharmapuri District</option>
+                        
+                            <option value="dindigul" >Dindigul District</option>
+                        
+                            <option value="erode" >Erode District</option>
+                        
+                            <option value="kallakurichi" >Kallakurichi District</option>
+                        
+                            <option value="kanchipuram" >Kanchipuram District</option>
+                        
+                            <option value="kanniyakumari" >Kanniyakumari District</option>
+                        
+                            <option value="karur" >Karur District</option>
+                        
+                            <option value="krishnagiri" >Krishnagiri District</option>
+                        
+                            <option value="madurai" >Madurai District</option>
+                        
+                            <option value="mayiladuthurai" >Mayiladuthurai District</option>
+                        
+                            <option value="nagapattinam" >Nagapattinam District</option>
+                        
+                            <option value="namakkal" >Namakkal District</option>
+                        
+                            <option value="nilgiris" >Nilgiris District</option>
+                        
+                            <option value="perambalur" >Perambalur District</option>
+                        
+                            <option value="pudukkottai" >Pudukkottai District</option>
+                        
+                            <option value="ramanathapuram" >Ramanathapuram District</option>
+                        
+                            <option value="ranipet" >Ranipet District</option>
+                        
+                            <option value="salem" >Salem District</option>
+                        
+                            <option value="sivagangai" >Sivagangai District</option>
+                        
+                            <option value="tenkasi" >Tenkasi District</option>
+                        
+                            <option value="thanjavur" >Thanjavur District</option>
+                        
+                            <option value="theni" >Theni District</option>
+                        
+                            <option value="thoothukudi" >Thoothukudi District</option>
+                        
+                            <option value="tiruchirappalli" >Tiruchirappalli District</option>
+                        
+                            <option value="tirunelveli" >Tirunelveli District</option>
+                        
+                            <option value="tirupathur" >Tirupathur District</option>
+                        
+                            <option value="tiruppur" >Tiruppur District</option>
+                        
+                            <option value="tiruvallur" >Tiruvallur District</option>
+                        
+                            <option value="tiruvannamalai" >Tiruvannamalai District</option>
+                        
+                            <option value="tiruvarur" >Tiruvarur District</option>
+                        
+                            <option value="vellore" >Vellore District</option>
+                        
+                            <option value="viluppuram" >Viluppuram District</option>
+                        
+                            <option value="virudhunagar" >Virudhunagar District</option>
+                        
+                    </select>
+                </div>
+
+                <!-- 3. Sport Discipline -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Sport Discipline</label>
+                    <select name="sport" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All Sports</option>
+                        
+                            <option value="Archery" >Archery</option>
+                        
+                            <option value="Athletics &amp; Track" >Athletics &amp; Track</option>
+                        
+                            <option value="Badminton" >Badminton</option>
+                        
+                            <option value="Basketball" >Basketball</option>
+                        
+                            <option value="Boxing" >Boxing</option>
+                        
+                            <option value="Carrom" >Carrom</option>
+                        
+                            <option value="Chess" >Chess</option>
+                        
+                            <option value="Cricket" >Cricket</option>
+                        
+                            <option value="Cycling" >Cycling</option>
+                        
+                            <option value="Football" >Football</option>
+                        
+                            <option value="Gymnastics" >Gymnastics</option>
+                        
+                            <option value="Handball" >Handball</option>
+                        
+                            <option value="Hockey" >Hockey</option>
+                        
+                            <option value="Kabaddi" >Kabaddi</option>
+                        
+                            <option value="Kho Kho" >Kho Kho</option>
+                        
+                            <option value="Rowing &amp; Canoeing" >Rowing &amp; Canoeing</option>
+                        
+                            <option value="Shooting" >Shooting</option>
+                        
+                            <option value="Silambam" >Silambam</option>
+                        
+                            <option value="Squash" >Squash</option>
+                        
+                            <option value="Swimming &amp; Aquatics" >Swimming &amp; Aquatics</option>
+                        
+                            <option value="Table Tennis" >Table Tennis</option>
+                        
+                            <option value="Taekwondo &amp; Judo" >Taekwondo &amp; Judo</option>
+                        
+                            <option value="Tennis" >Tennis</option>
+                        
+                            <option value="Volleyball" >Volleyball</option>
+                        
+                            <option value="Weightlifting" >Weightlifting</option>
+                        
+                            <option value="Wrestling" >Wrestling</option>
+                        
+                    </select>
+                </div>
+
+                <!-- 4. Age Group Condition -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Age Group Condition</label>
+                    <select name="age" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All Age Groups</option>
+                        <option value="U-14" >Under 14 (U-14)</option>
+                        <option value="U-17" >Under 17 (U-17)</option>
+                        <option value="U-19" >Under 19 (U-19)</option>
+                        <option value="U-23" >Under 23 (U-23)</option>
+                        <option value="U-25" >Under 25 (U-25)</option>
+                        <option value="Open" >Open Category (All Ages)</option>
+                        <option value="Masters" >Masters / Veterans (35+)</option>
+                    </select>
+                </div>
+
+                <!-- 5. Registration Window & Deadline -->
+                <div>
+                    <label class="block text-[11px] font-extrabold text-gray-600 uppercase mb-1">Registration Status</label>
+                    <select name="deadline" onchange="this.form.submit()" class="w-full py-2 px-3 border border-gray-300 rounded-xl font-bold text-gray-800 bg-gray-50 focus:bg-white focus:border-indigo-500 outline-none">
+                        <option value="">All Registration Statuses</option>
+                        <option value="OPEN" >⚡ Active Entry Deadline</option>
+                        <option value="UPCOMING" >📅 Upcoming Matches</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </form>
+
+        <!-- Active Applied Filter Badges -->
+        
+    </div>
+
+    <!-- Tournaments Display Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4 group relative overflow-hidden">
+            
+            <div class="space-y-3">
+                <!-- Level Badge & DSO Approval Pill -->
+                <div class="flex flex-wrap justify-between items-center gap-1.5 border-b border-gray-100 pb-2.5">
+                    
+                        <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-900 border border-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">
+                            🌐 General Open Category
+                        </span>
+                    
+
+                    <span class="text-[10px] font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full">
+                        Archery
+                    </span>
+                </div>
+
+                <div>
+                    <h3 class="font-extrabold text-sm text-gray-900 group-hover:text-emerald-600 transition leading-snug">
+                        ghjfhg
+                    </h3>
+                    <p class="text-xs font-bold text-gray-600 mt-1 flex items-center gap-1">
+                        <i class="bi bi-geo-alt-fill text-emerald-600"></i> mghyjdgt, <span class="text-gray-900">Ariyalur</span>
+                    </p>
+                </div>
+
+                <!-- Age Condition & Eligibility Box -->
+                <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1 text-xs">
+                    <div class="flex items-center justify-between text-[11px] font-extrabold">
+                        <span class="text-gray-700 flex items-center gap-1">
+                            <i class="bi bi-person-badge-fill text-indigo-600"></i> Age Eligibility:
+                        </span>
+                        <span class="text-indigo-900 font-bold bg-indigo-100/80 px-2 py-0.5 rounded-md">
+                            Open Category (All Ages)
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between text-[10px] text-gray-500 pt-1">
+                        <span>Expected Teams: <strong class="text-gray-800 font-mono">8</strong></span>
+                        <span>DSO Approved <i class="bi bi-check-circle-fill text-emerald-600"></i></span>
+                    </div>
+                </div>
+
+                <div class="space-y-1 text-xs text-gray-600">
+                    <p class="flex items-center justify-between text-[11px]">
+                        <span class="font-medium text-gray-500"><i class="bi bi-calendar-event mr-1 text-emerald-600"></i> Dates:</span>
+                        <strong class="text-gray-900">Oct 01, 2026 &ndash; Oct 01, 2026</strong>
+                    </p>
+                    <p class="flex items-center justify-between text-[11px]">
+                        <span class="font-medium text-gray-500"><i class="bi bi-clock-history mr-1 text-amber-600"></i> Entry Deadline:</span>
+                        <strong class="text-red-600">Oct 01, 2026</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="border-t border-gray-100 pt-3 flex items-center justify-between text-xs">
+                <div class="truncate max-w-[170px]">
+                    <span class="text-[10px] text-gray-400 block font-semibold">Organizer</span>
+                    <span class="font-extrabold text-gray-800 text-[11px] truncate block">bgfh</span>
+                </div>
+                <a href="mailto:ni7@gmail.com" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-extrabold transition shrink-0 flex items-center gap-1">
+                    Contact <i class="bi bi-arrow-right-short text-base"></i>
+                </a>
+            </div>
+
+        </div>
+        
+        <div class="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4 group relative overflow-hidden">
+            
+            <div class="space-y-3">
+                <!-- Level Badge & DSO Approval Pill -->
+                <div class="flex flex-wrap justify-between items-center gap-1.5 border-b border-gray-100 pb-2.5">
+                    
+                        <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-900 border border-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">
+                            🌐 General Open Category
+                        </span>
+                    
+
+                    <span class="text-[10px] font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded-full">
+                        Basketball
+                    </span>
+                </div>
+
+                <div>
+                    <h3 class="font-extrabold text-sm text-gray-900 group-hover:text-emerald-600 transition leading-snug">
+                        khjg
+                    </h3>
+                    <p class="text-xs font-bold text-gray-600 mt-1 flex items-center gap-1">
+                        <i class="bi bi-geo-alt-fill text-emerald-600"></i> bjgg, <span class="text-gray-900">Ariyalur</span>
+                    </p>
+                </div>
+
+                <!-- Age Condition & Eligibility Box -->
+                <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1 text-xs">
+                    <div class="flex items-center justify-between text-[11px] font-extrabold">
+                        <span class="text-gray-700 flex items-center gap-1">
+                            <i class="bi bi-person-badge-fill text-indigo-600"></i> Age Eligibility:
+                        </span>
+                        <span class="text-indigo-900 font-bold bg-indigo-100/80 px-2 py-0.5 rounded-md">
+                            Open Category (All Ages)
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between text-[10px] text-gray-500 pt-1">
+                        <span>Expected Teams: <strong class="text-gray-800 font-mono">8</strong></span>
+                        <span>DSO Approved <i class="bi bi-check-circle-fill text-emerald-600"></i></span>
+                    </div>
+                </div>
+
+                <div class="space-y-1 text-xs text-gray-600">
+                    <p class="flex items-center justify-between text-[11px]">
+                        <span class="font-medium text-gray-500"><i class="bi bi-calendar-event mr-1 text-emerald-600"></i> Dates:</span>
+                        <strong class="text-gray-900">Oct 01, 2026 &ndash; Oct 01, 2026</strong>
+                    </p>
+                    <p class="flex items-center justify-between text-[11px]">
+                        <span class="font-medium text-gray-500"><i class="bi bi-clock-history mr-1 text-amber-600"></i> Entry Deadline:</span>
+                        <strong class="text-red-600">Sep 30, 2026</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="border-t border-gray-100 pt-3 flex items-center justify-between text-xs">
+                <div class="truncate max-w-[170px]">
+                    <span class="text-[10px] text-gray-400 block font-semibold">Organizer</span>
+                    <span class="font-extrabold text-gray-800 text-[11px] truncate block">hiuyfyy</span>
+                </div>
+                <a href="mailto:ni7@gmail.com" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-extrabold transition shrink-0 flex items-center gap-1">
+                    Contact <i class="bi bi-arrow-right-short text-base"></i>
+                </a>
+            </div>
+
+        </div>
+        
+    </div>
+</main>
+
+<!-- Request Modal for DSO Approval -->
+<div id="sanction-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-hidden p-6 shadow-2xl my-auto border border-gray-100 flex flex-col">
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+            <div>
+                <h3 class="font-black text-base text-gray-900 flex items-center gap-2">
+                    <i class="bi bi-file-earmark-plus text-emerald-600"></i> Request Tournament DSO Sanction
+                </h3>
+                <p class="text-xs text-gray-500">Submit tournament proposal for District Sports Officer review & official sanction</p>
+            </div>
+            <button onclick="toggleModal(false)" type="button" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center font-bold transition">&times;</button>
+        </div>
+
+        <form method="POST" action="/tournaments/" enctype="multipart/form-data" class="space-y-4 overflow-y-auto pr-1 flex-1">
+            <input type="hidden" name="csrfmiddlewaretoken" value="qphDW9OcszVmgEcigYLE8VnB31p25h6euZgFycuWbzcAFWXWe4BPxLeughka2mfm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Tournament Title <span class="text-red-500">*</span></label>
+                    <input type="text" name="title" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" placeholder="e.g., Kongu Trophy District Football 2026" maxlength="200" required id="id_title">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Tournament Level Category <span class="text-red-500">*</span></label>
+                    <select name="level_category" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" aria-describedby="id_level_category_helptext" id="id_level_category">
+  <option value="SCHOOL">School Level</option>
+
+  <option value="COLLEGE">College / University Level</option>
+
+  <option value="GENERAL" selected>General / Open Age Level</option>
+
+</select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Age Eligibility / Age Condition <span class="text-red-500">*</span></label>
+                    <input type="text" name="age_condition" value="Open Category (All Ages)" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" placeholder="e.g. Under 14, Under 17, Under 25, Open 18+, Masters 35+" maxlength="100" aria-describedby="id_age_condition_helptext" id="id_age_condition">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Sport Discipline <span class="text-red-500">*</span></label>
+                    <select name="sport" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" required id="id_sport">
+  <option value="" selected>- Select an option -</option>
+
+  <option value="5">Archery</option>
+
+  <option value="6">Athletics &amp; Track</option>
+
+  <option value="7">Badminton</option>
+
+  <option value="8">Basketball</option>
+
+  <option value="9">Boxing</option>
+
+  <option value="10">Carrom</option>
+
+  <option value="11">Chess</option>
+
+  <option value="1">Cricket</option>
+
+  <option value="12">Cycling</option>
+
+  <option value="2">Football</option>
+
+  <option value="13">Gymnastics</option>
+
+  <option value="14">Handball</option>
+
+  <option value="15">Hockey</option>
+
+  <option value="3">Kabaddi</option>
+
+  <option value="16">Kho Kho</option>
+
+  <option value="17">Rowing &amp; Canoeing</option>
+
+  <option value="18">Shooting</option>
+
+  <option value="19">Silambam</option>
+
+  <option value="20">Squash</option>
+
+  <option value="21">Swimming &amp; Aquatics</option>
+
+  <option value="22">Table Tennis</option>
+
+  <option value="23">Taekwondo &amp; Judo</option>
+
+  <option value="24">Tennis</option>
+
+  <option value="25">Volleyball</option>
+
+  <option value="26">Weightlifting</option>
+
+  <option value="27">Wrestling</option>
+
+</select>
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Host District (DSO Jurisdiction) <span class="text-red-500">*</span></label>
+                    <select name="district" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" required id="id_district">
+  <option value="" selected>- Select an option -</option>
+
+  <option value="4">Ariyalur</option>
+
+  <option value="5">Chengalpattu</option>
+
+  <option value="1">Chennai</option>
+
+  <option value="2">Coimbatore</option>
+
+  <option value="6">Cuddalore</option>
+
+  <option value="7">Dharmapuri</option>
+
+  <option value="8">Dindigul</option>
+
+  <option value="9">Erode</option>
+
+  <option value="10">Kallakurichi</option>
+
+  <option value="11">Kanchipuram</option>
+
+  <option value="12">Kanniyakumari</option>
+
+  <option value="13">Karur</option>
+
+  <option value="14">Krishnagiri</option>
+
+  <option value="3">Madurai</option>
+
+  <option value="15">Mayiladuthurai</option>
+
+  <option value="16">Nagapattinam</option>
+
+  <option value="17">Namakkal</option>
+
+  <option value="18">Nilgiris</option>
+
+  <option value="19">Perambalur</option>
+
+  <option value="20">Pudukkottai</option>
+
+  <option value="21">Ramanathapuram</option>
+
+  <option value="22">Ranipet</option>
+
+  <option value="23">Salem</option>
+
+  <option value="24">Sivagangai</option>
+
+  <option value="25">Tenkasi</option>
+
+  <option value="26">Thanjavur</option>
+
+  <option value="27">Theni</option>
+
+  <option value="28">Thoothukudi</option>
+
+  <option value="29">Tiruchirappalli</option>
+
+  <option value="30">Tirunelveli</option>
+
+  <option value="31">Tirupathur</option>
+
+  <option value="32">Tiruppur</option>
+
+  <option value="33">Tiruvallur</option>
+
+  <option value="34">Tiruvannamalai</option>
+
+  <option value="35">Tiruvarur</option>
+
+  <option value="36">Vellore</option>
+
+  <option value="37">Viluppuram</option>
+
+  <option value="38">Virudhunagar</option>
+
+</select>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Venue Ground Address & Stadium <span class="text-red-500">*</span></label>
+                    <input type="text" name="venue_name" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" placeholder="Stadium or Ground Name" maxlength="200" required aria-describedby="id_venue_name_helptext" id="id_venue_name">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Start Date <span class="text-red-500">*</span></label>
+                    <input type="date" name="start_date" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" required id="id_start_date">
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">End Date <span class="text-red-500">*</span></label>
+                    <input type="date" name="end_date" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" required id="id_end_date">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Entry Deadline <span class="text-red-500">*</span></label>
+                    <input type="date" name="entry_deadline" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" required id="id_entry_deadline">
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Expected Teams / Athletes <span class="text-red-500">*</span></label>
+                    <input type="number" name="expected_teams" value="8" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" placeholder="16" min="0" required id="id_expected_teams">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Organizer / Club / Board Name <span class="text-red-500">*</span></label>
+                    <input type="text" name="organizer_name" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" placeholder="Club or Organizing Body" maxlength="120" required id="id_organizer_name">
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Organizer Phone Number <span class="text-red-500">*</span></label>
+                    <input type="text" name="organizer_contact" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" placeholder="+91 98765 43210" maxlength="15" required id="id_organizer_contact">
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Official Contact Email <span class="text-red-500">*</span></label>
+                    <input type="email" name="organizer_email" class="w-full px-3 py-2 border rounded-lg text-xs outline-none focus:ring-emerald-500 focus:border-emerald-500" placeholder="contact@organizer.com" maxlength="254" required id="id_organizer_email">
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-extrabold text-gray-700 mb-1">Rulebook / Match Schedule PDF Document</label>
+                    <input type="file" name="rulebook_doc" class="w-full text-xs text-gray-500" id="id_rulebook_doc">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-4 border-t mt-4">
+                <button type="button" onclick="toggleModal(false)" class="px-4 py-2 border rounded-xl text-xs font-extrabold text-gray-600 hover:bg-gray-50 cursor-pointer">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-extrabold hover:bg-emerald-700 shadow-md transition cursor-pointer">Submit to DSO for Sanction</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+        </main>
+
+        <!-- Master Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon-emblem"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="logo-text-group">
+                            <span class="logo-title">Tamil Nadu</span>
+                            <span class="logo-subtitle">Sports Development Platform</span>
+                        </div>
+                    </a>
+                    <p>A unified platform to discover talent, build careers, and promote sports across Tamil Nadu.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="sports.html">Sports Disciplines</a></li>
+                        <li><a href="players.html">Player Roster</a></li>
+                        <li><a href="clubs.html">Clubs & Franchises</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Portals & Governance</h4>
+                    <ul>
+                        <li><a href="districts.html">Districts Portal</a></li>
+                        <li><a href="minister_dashboard.html"><i class="fa-solid fa-crown text-amber-500"></i> Sports Minister Portal</a></li>
+                        <li><a href="collector_dashboard.html"><i class="fa-solid fa-landmark-flag text-emerald-400"></i> Collector & DSO Portal</a></li>
+                        <li><a href="athlete_register.html">Player Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tamil Nadu Sports Development Platform. All rights reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Global Toast Notification UI -->
+    <div class="toast" id="globalToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="globalToastMessage">Notification update!</span>
+    </div>
+
+    
+
+    <!-- Core Global JavaScript & Idle Detection -->
+    <script>
+        function triggerGlobalNotification(message, type = 'info') {
+            let container = document.getElementById('djangoMessagesContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'djangoMessagesContainer';
+                container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const borderClass = type === 'error' ? 'bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40' : (type === 'success' ? 'bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40' : 'bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40');
+            const iconClass = type === 'error' ? 'fa-circle-xmark text-rose-400' : (type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-amber-400');
+
+            toast.className = `p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md ${borderClass}`;
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${iconClass} text-base"></i>
+                    <span class="leading-tight text-white font-semibold">${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('#djangoMessagesContainer .toast-popup');
+            alerts.forEach((alert, idx) => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000 + (idx * 500));
+            });
+        });
+
+        
+    </script>
+
+    
+<script>
+    function toggleModal(show) {
+        document.getElementById('sanction-modal').classList.toggle('hidden', !show);
+    }
+</script>
+
+</body>
+</html>

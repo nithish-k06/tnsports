@@ -1,0 +1,967 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tamil Nadu Sports Development Platform - Discover talent, build careers, and promote sports across Tamil Nadu.">
+    <title>Districts - Tamil Nadu Sports Development Platform</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Static CSS -->
+    <link rel="stylesheet" href="static/style.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+    .custom-glass-popup .leaflet-popup-content-wrapper {
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+    .custom-glass-popup .leaflet-popup-tip {
+        background: #0f172a !important;
+        border: 1px solid rgba(16, 185, 129, 0.4) !important;
+    }
+    .custom-glass-popup .leaflet-popup-content {
+        margin: 0 !important;
+        line-height: 1.4 !important;
+    }
+</style>
+
+</head>
+<body>
+
+    <!-- App Container Card Wrapper (Matches Reference Screenshot Frame) -->
+    <div class="app-wrapper-container">
+
+        <!-- Header & Navigation -->
+        <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-emerald-500/20 shadow-2xl backdrop-blur-md sticky top-0 z-50">
+            <div class="header-container">
+                <a href="index.html" class="logo group">
+                    <div class="logo-icon-emblem bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="logo-text-group">
+                        <span class="logo-title text-white tracking-tight">Tamil Nadu</span>
+                        <span class="logo-subtitle text-emerald-400 font-semibold tracking-wider uppercase text-[10px]">Sports Development Platform</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link ">Home</a></li>
+                    <li><a href="sports.html" class="nav-link ">Sports</a></li>
+                    <li><a href="players.html" class="nav-link ">Players</a></li>
+                    <li><a href="clubs.html" class="nav-link ">Clubs</a></li>
+                    <li><a href="tournaments.html" class="nav-link ">Tournaments</a></li>
+                    <li><a href="districts.html" class="nav-link active">Districts</a></li>
+                    <li><a href="coaches.html" class="nav-link ">Coaches</a></li>
+                    <li><a href="news.html" class="nav-link ">News</a></li>
+                    <li><a href="contact.html" class="nav-link ">Contact</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    
+                        <a href="login.html" class="btn-green-login bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 border border-emerald-400/30">
+                            <i class="fa-solid fa-lock"></i> Portal Login
+                        </a>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            
+            
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Districts Profile & Analytics</h2>
+            <p class="text-xs text-gray-500 mt-1">Interactive sports statistics across all 38 administrative districts of Tamil Nadu</p>
+        </div>
+        <div class="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-full text-xs font-bold">
+            <i class="bi bi-geo-alt-fill text-emerald-600"></i> All 38 Districts Active
+        </div>
+    </div>
+
+
+
+    <!-- 2-Column Responsive Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left Column: Tamil Nadu High-Tech Vector Map -->
+        <div class="lg:col-span-7 bg-slate-950 p-3 rounded-3xl border-2 border-emerald-500/30 shadow-2xl relative overflow-hidden">
+            
+            <!-- Top Floating Search Bar (Exact UI match) -->
+            <div class="absolute top-6 left-6 z-[1000] w-72 sm:w-80">
+                <div class="relative">
+                    <i class="bi bi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400 text-xs"></i>
+                    <input type="text" 
+                           id="mapSearchInput" 
+                           onkeyup="searchMapDistricts(this.value)" 
+                           placeholder="Search districts, athletes, facilities..." 
+                           class="w-full pl-9 pr-4 py-2.5 bg-slate-900/90 border border-emerald-500/40 rounded-xl text-xs font-semibold text-white placeholder-slate-400 backdrop-blur-md focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 shadow-2xl">
+                </div>
+            </div>
+
+            <!-- Vector Map Canvas -->
+            <div id="tn-map" class="h-[580px] w-full rounded-2xl bg-[#091815] z-10"></div>
+
+            <!-- Bottom Floating Helper Badge -->
+            <div class="absolute bottom-6 left-6 bg-slate-900/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-emerald-500/30 text-[11px] text-slate-300 z-[1000] shadow-xl flex items-center gap-2">
+                <i class="bi bi-hand-index-thumb text-emerald-400"></i>
+                <span>Click any district on the map to inspect live analytics</span>
+            </div>
+
+            <!-- Bottom Right Floating Controls (Zoom & Reset) -->
+            <div class="absolute bottom-6 right-6 z-[1000] flex flex-col gap-1.5">
+                <button onclick="map.zoomIn()" class="w-8 h-8 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-white font-bold text-xs flex items-center justify-center backdrop-blur-md shadow-lg transition">
+                    +
+                </button>
+                <button onclick="map.zoomOut()" class="w-8 h-8 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-white font-bold text-xs flex items-center justify-center backdrop-blur-md shadow-lg transition">
+                    -
+                </button>
+                <button onclick="resetSelection()" title="Reset View" class="w-8 h-8 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-emerald-400 font-bold text-xs flex items-center justify-center backdrop-blur-md shadow-lg transition">
+                    <i class="bi bi-geo-alt-fill text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: DISTRICT ANALYTICS & STATISTICS (Matches Screenshot) -->
+        <div class="lg:col-span-5 bg-slate-900/90 rounded-3xl border-2 border-emerald-500/30 p-6 shadow-2xl flex flex-col justify-between text-white backdrop-blur-xl">
+            
+            <div class="space-y-5">
+                
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 class="text-xs font-black uppercase tracking-wider text-slate-200">District Analytics & Statistics</h3>
+                    <!-- Dropdown Selector -->
+                    <select id="district-selector" onchange="switchDistrict(this.value)" class="bg-slate-800 border border-emerald-500/40 text-emerald-400 font-extrabold rounded-xl py-1.5 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+                        <option value="all" selected>All 38 Districts (State Overview)</option>
+                        
+                            <option value="ariyalur">
+                                Ariyalur District
+                            </option>
+                        
+                            <option value="chengalpattu">
+                                Chengalpattu District
+                            </option>
+                        
+                            <option value="chennai">
+                                Chennai District
+                            </option>
+                        
+                            <option value="coimbatore">
+                                Coimbatore District
+                            </option>
+                        
+                            <option value="cuddalore">
+                                Cuddalore District
+                            </option>
+                        
+                            <option value="dharmapuri">
+                                Dharmapuri District
+                            </option>
+                        
+                            <option value="dindigul">
+                                Dindigul District
+                            </option>
+                        
+                            <option value="erode">
+                                Erode District
+                            </option>
+                        
+                            <option value="kallakurichi">
+                                Kallakurichi District
+                            </option>
+                        
+                            <option value="kanchipuram">
+                                Kanchipuram District
+                            </option>
+                        
+                            <option value="kanniyakumari">
+                                Kanniyakumari District
+                            </option>
+                        
+                            <option value="karur">
+                                Karur District
+                            </option>
+                        
+                            <option value="krishnagiri">
+                                Krishnagiri District
+                            </option>
+                        
+                            <option value="madurai">
+                                Madurai District
+                            </option>
+                        
+                            <option value="mayiladuthurai">
+                                Mayiladuthurai District
+                            </option>
+                        
+                            <option value="nagapattinam">
+                                Nagapattinam District
+                            </option>
+                        
+                            <option value="namakkal">
+                                Namakkal District
+                            </option>
+                        
+                            <option value="nilgiris">
+                                Nilgiris District
+                            </option>
+                        
+                            <option value="perambalur">
+                                Perambalur District
+                            </option>
+                        
+                            <option value="pudukkottai">
+                                Pudukkottai District
+                            </option>
+                        
+                            <option value="ramanathapuram">
+                                Ramanathapuram District
+                            </option>
+                        
+                            <option value="ranipet">
+                                Ranipet District
+                            </option>
+                        
+                            <option value="salem">
+                                Salem District
+                            </option>
+                        
+                            <option value="sivagangai">
+                                Sivagangai District
+                            </option>
+                        
+                            <option value="tenkasi">
+                                Tenkasi District
+                            </option>
+                        
+                            <option value="thanjavur">
+                                Thanjavur District
+                            </option>
+                        
+                            <option value="theni">
+                                Theni District
+                            </option>
+                        
+                            <option value="thoothukudi">
+                                Thoothukudi District
+                            </option>
+                        
+                            <option value="tiruchirappalli">
+                                Tiruchirappalli District
+                            </option>
+                        
+                            <option value="tirunelveli">
+                                Tirunelveli District
+                            </option>
+                        
+                            <option value="tirupathur">
+                                Tirupathur District
+                            </option>
+                        
+                            <option value="tiruppur">
+                                Tiruppur District
+                            </option>
+                        
+                            <option value="tiruvallur">
+                                Tiruvallur District
+                            </option>
+                        
+                            <option value="tiruvannamalai">
+                                Tiruvannamalai District
+                            </option>
+                        
+                            <option value="tiruvarur">
+                                Tiruvarur District
+                            </option>
+                        
+                            <option value="vellore">
+                                Vellore District
+                            </option>
+                        
+                            <option value="viluppuram">
+                                Viluppuram District
+                            </option>
+                        
+                            <option value="virudhunagar">
+                                Virudhunagar District
+                            </option>
+                        
+                    </select>
+                </div>
+
+                <!-- 1. STATE OVERVIEW -->
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-300">
+                        <span>STATE OVERVIEW</span>
+                        <i class="bi bi-chevron-right text-slate-500 text-xs"></i>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 pt-1 text-center">
+                        <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-400 font-medium block uppercase">Active Athletes</span>
+                            <span class="text-base font-black text-white font-mono">1,450K</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-400 font-medium block uppercase">Facilities</span>
+                            <span class="text-base font-black text-white font-mono">890</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-400 font-medium block uppercase">Coaches</span>
+                            <span class="text-base font-black text-white font-mono">35K</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. ACTIVE SELECTED DISTRICT METRICS -->
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-emerald-500/40 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-bold text-emerald-400">
+                        <span id="active-district-card-title">TAMIL NADU STATE OVERVIEW (38 Districts)</span>
+                        <button type="button" onclick="showStatewideOverview()" class="text-[10px] bg-slate-900 hover:bg-slate-800 border border-emerald-500/30 text-emerald-400 font-extrabold px-2.5 py-1 rounded-lg transition flex items-center gap-1">
+                            <i class="bi bi-arrow-left-circle-fill text-emerald-400"></i> Reset View
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 pt-1 text-center">
+                        <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-400 font-medium block uppercase">Athletes</span>
+                            <span id="metric-athletes" class="text-base font-black text-white font-mono">0</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-400 font-medium block uppercase">Facilities</span>
+                            <span id="metric-facilities" class="text-base font-black text-white font-mono">0</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-400 font-medium block uppercase">Active Clubs</span>
+                            <span id="metric-clubs" class="text-base font-black text-white font-mono">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. SPORT WISE PERFORMANCE -->
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-300">
+                        <span>SPORT WISE PERFORMANCE</span>
+                        <i class="bi bi-chevron-right text-slate-500 text-xs"></i>
+                    </div>
+                    <div class="flex items-center justify-between gap-4">
+                        <!-- Donut Chart & Sparkline Graphic -->
+                        <div class="flex items-center gap-3">
+                            <div class="relative w-14 h-14 flex items-center justify-center shrink-0">
+                                <svg class="w-14 h-14 transform -rotate-90" viewBox="0 0 36 36">
+                                    <path class="text-slate-800" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="text-emerald-400" stroke-dasharray="35, 100" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="text-teal-500" stroke-dasharray="28, 100" stroke-dashoffset="-35" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                </svg>
+                                <span class="absolute text-[10px] font-bold text-emerald-400">35%</span>
+                            </div>
+                            <div class="space-y-1 text-[11px] font-semibold text-slate-300">
+                                <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Athletics 35%</div>
+                                <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-teal-400"></span> Football 28%</div>
+                                <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-500"></span> Badminton 18%</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sparkline Trendline SVG -->
+                        <div class="w-24 h-10 flex items-center">
+                            <svg class="w-full h-8 text-emerald-400" viewBox="0 0 100 30" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M0,25 Q15,10 30,20 T60,5 T90,15 T100,8" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. RECENT ACTIVITY -->
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2.5">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-300">
+                        <span>RECENT ACTIVITY</span>
+                        <i class="bi bi-chevron-right text-slate-500 text-xs"></i>
+                    </div>
+                    <div class="space-y-2 text-xs font-medium text-slate-300">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>New Academy Opening - Madurai</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            <span>Championship - Chennai</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4.5. SUB-ZONES & TALUK COVERAGE DRAWER -->
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-300">
+                        <span>SUB-ZONES & TALUK COVERAGE</span>
+                        <span id="subzone-count-badge" class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-mono">Sub-Zones</span>
+                    </div>
+                    <div id="subzones-container" class="space-y-2 pt-1 max-h-40 overflow-y-auto pr-1">
+                        <!-- Dynamically populated via JS -->
+                    </div>
+                </div>
+
+                <!-- 5. TOP PERFORMING DISTRICTS / TOP SPORTS RANKING -->
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-300">
+                        <span>TOP PERFORMING DISCIPLINES</span>
+                        <i class="bi bi-chevron-right text-slate-500 text-xs"></i>
+                    </div>
+                    <div id="top-sports-container" class="space-y-2.5 text-xs font-semibold">
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]">
+                                <span class="text-slate-200">1 Athletics</span>
+                                <span class="text-emerald-400 font-mono">35%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-emerald-400 h-full rounded-full" style="width: 35%;"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]">
+                                <span class="text-slate-200">2 Football</span>
+                                <span class="text-emerald-400 font-mono">28%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-emerald-400 h-full rounded-full" style="width: 28%;"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]">
+                                <span class="text-slate-200">3 Badminton</span>
+                                <span class="text-emerald-400 font-mono">18%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-emerald-400 h-full rounded-full" style="width: 18%;"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[11px]">
+                                <span class="text-slate-200">4 Tennis</span>
+                                <span class="text-emerald-400 font-mono">18%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-emerald-400 h-full rounded-full" style="width: 18%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Interactive Data Binding & Map Sync Script -->
+<script>
+    const districtsData = {"ariyalur": {"name": "Ariyalur", "slug": "ariyalur", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [11.1401, 79.0782], "sub_zones": [{"name": "Ariyalur North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Sendurai, Udayarpalayam", "places": ["Sendurai", "Udayarpalayam"]}, {"name": "Ariyalur South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ariyalur Town, Udayarpalayam", "places": ["Udayarpalayam"]}, {"name": "Ariyalur Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ariyalur Town, Jayankondam", "places": ["Ariyalur Town", "Jayankondam", "Sendurai"]}], "places": ["Ariyalur Town", "Jayankondam", "Sendurai", "Udayarpalayam"]}, "chengalpattu": {"name": "Chengalpattu", "slug": "chengalpattu", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [12.6825, 79.9806], "sub_zones": [{"name": "Chengalpattu North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Pallavaram, Mahabalipuram", "places": ["Madurantakam", "Mahabalipuram", "Pallavaram"]}, {"name": "Chengalpattu South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Madurantakam, Chromepet", "places": ["Chromepet", "Madurantakam", "Mahabalipuram"]}, {"name": "Chengalpattu Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Chengalpattu Town, Tambaram", "places": ["Chengalpattu Town", "Pallavaram", "Tambaram"]}], "places": ["Chengalpattu Town", "Chromepet", "Madurantakam", "Mahabalipuram", "Pallavaram", "Tambaram"]}, "chennai": {"name": "Chennai", "slug": "chennai", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [13.0827, 80.2707], "sub_zones": [{"name": "Chennai North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "T. Nagar, Adyar", "places": ["Adyar", "Guindy", "T. Nagar"]}, {"name": "Chennai South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Perambur, Egmore", "places": ["Adyar", "Ambattur", "Egmore", "Guindy", "Perambur", "Royapettah", "Velachery"]}, {"name": "Chennai Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Mylapore, Anna Nagar", "places": ["Anna Nagar", "Mylapore", "T. Nagar"]}], "places": ["Adyar", "Ambattur", "Anna Nagar", "Egmore", "Guindy", "Mylapore", "Perambur", "Royapettah", "T. Nagar", "Velachery"]}, "coimbatore": {"name": "Coimbatore", "slug": "coimbatore", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [11.0168, 76.9558], "sub_zones": [{"name": "Coimbatore North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Gandhipuram, Pollachi", "places": ["Gandhipuram", "Mettupalayam", "Pollachi"]}, {"name": "Coimbatore South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Kinathukadavu, Valparai", "places": ["Kinathukadavu", "Mettupalayam", "Pollachi", "Saravanampatti", "Thudiyalur", "Valparai"]}, {"name": "Coimbatore Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "RS Puram, Peelamedu", "places": ["Gandhipuram", "Peelamedu", "RS Puram"]}], "places": ["Gandhipuram", "Kinathukadavu", "Mettupalayam", "Peelamedu", "Pollachi", "RS Puram", "Saravanampatti", "Thudiyalur", "Valparai"]}, "cuddalore": {"name": "Cuddalore", "slug": "cuddalore", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [11.748, 79.7714], "sub_zones": [{"name": "Cuddalore North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Neyveli, Panruti", "places": ["Neyveli", "Panruti", "Vriddhachalam"]}, {"name": "Cuddalore South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Vriddhachalam, Kattumannarkoil", "places": ["Kattumannarkoil", "Panruti", "Vriddhachalam"]}, {"name": "Cuddalore Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Cuddalore Port, Chidambaram", "places": ["Chidambaram", "Cuddalore Port", "Neyveli"]}], "places": ["Chidambaram", "Cuddalore Port", "Kattumannarkoil", "Neyveli", "Panruti", "Vriddhachalam"]}, "dharmapuri": {"name": "Dharmapuri", "slug": "dharmapuri", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [12.1211, 78.1582], "sub_zones": [{"name": "Dharmapuri", "officer": "", "phone": "", "athletes": 0, "covered": "Dharmapuri Town", "places": ["Dharmapuri Town"]}, {"name": "Harur", "officer": "", "phone": "", "athletes": 100, "covered": "Harur", "places": ["Harur"]}], "places": ["Dharmapuri Town", "Harur", "Karimangalam", "Palacode", "Pappireddipatti", "Pennagaram"]}, "dindigul": {"name": "Dindigul", "slug": "dindigul", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [10.3673, 77.9803], "sub_zones": [{"name": "Dindigul North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Kodaikanal, Nilakottai", "places": ["Kodaikanal", "Nilakottai", "Oddanchatram"]}, {"name": "Dindigul South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Oddanchatram, Natham", "places": ["Natham", "Nilakottai", "Oddanchatram"]}, {"name": "Dindigul Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Dindigul City, Palani", "places": ["Dindigul City", "Kodaikanal", "Palani"]}], "places": ["Dindigul City", "Kodaikanal", "Natham", "Nilakottai", "Oddanchatram", "Palani"]}, "erode": {"name": "Erode", "slug": "erode", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [11.341, 77.7172], "sub_zones": [{"name": "Erode North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Gobichettipalayam, Bhavani", "places": ["Bhavani", "Gobichettipalayam", "Sathyamangalam"]}, {"name": "Erode South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Sathyamangalam, Modakurichi", "places": ["Bhavani", "Modakurichi", "Sathyamangalam"]}, {"name": "Erode Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Erode Central, Perundurai", "places": ["Erode Central", "Gobichettipalayam", "Perundurai"]}], "places": ["Bhavani", "Erode Central", "Gobichettipalayam", "Modakurichi", "Perundurai", "Sathyamangalam"]}, "kallakurichi": {"name": "Kallakurichi", "slug": "kallakurichi", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [11.7384, 78.9639], "sub_zones": [{"name": "Kallakurichi North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ulundurpet, Tirukoilur", "places": ["Kalvarayan Hills", "Tirukoilur", "Ulundurpet"]}, {"name": "Kallakurichi South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tirukoilur, Kalvarayan Hills", "places": ["Kalvarayan Hills", "Tirukoilur"]}, {"name": "Kallakurichi Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Kallakurichi Town, Sankarapuram", "places": ["Kallakurichi Town", "Sankarapuram", "Ulundurpet"]}], "places": ["Kallakurichi Town", "Kalvarayan Hills", "Sankarapuram", "Tirukoilur", "Ulundurpet"]}, "kanchipuram": {"name": "Kanchipuram", "slug": "kanchipuram", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [12.8342, 79.7036], "sub_zones": [{"name": "Kanchipuram North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Walajabad, Utiramerur", "places": ["Kundrathur", "Utiramerur", "Walajabad"]}, {"name": "Kanchipuram South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Utiramerur, Kundrathur", "places": ["Kundrathur", "Utiramerur"]}, {"name": "Kanchipuram Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Kanchipuram Urban, Sriperumbudur", "places": ["Kanchipuram Urban", "Sriperumbudur", "Walajabad"]}], "places": ["Kanchipuram Urban", "Kundrathur", "Sriperumbudur", "Utiramerur", "Walajabad"]}, "kanniyakumari": {"name": "Kanniyakumari", "slug": "kanniyakumari", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [8.0883, 77.5385], "sub_zones": [{"name": "Kanniyakumari North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Padmanabhapuram, Marthandam", "places": ["Marthandam", "Padmanabhapuram", "Thuckalay"]}, {"name": "Kanniyakumari South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Thuckalay, Colachel", "places": ["Colachel", "Marthandam", "Thuckalay"]}, {"name": "Kanniyakumari Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Nagercoil, Kanyakumari Beach", "places": ["Kanyakumari Beach", "Nagercoil", "Padmanabhapuram"]}], "places": ["Colachel", "Kanyakumari Beach", "Marthandam", "Nagercoil", "Padmanabhapuram", "Thuckalay"]}, "karur": {"name": "Karur", "slug": "karur", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [10.9601, 78.0766], "sub_zones": [{"name": "Karur North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Aravakurichi, Manmangalam", "places": ["Aravakurichi", "Manmangalam", "Velayuthampalayam"]}, {"name": "Karur South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Manmangalam, Velayuthampalayam", "places": ["Manmangalam", "Velayuthampalayam"]}, {"name": "Karur Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Karur Town, Kulithalai", "places": ["Aravakurichi", "Karur Town", "Kulithalai"]}], "places": ["Aravakurichi", "Karur Town", "Kulithalai", "Manmangalam", "Velayuthampalayam"]}, "krishnagiri": {"name": "Krishnagiri", "slug": "krishnagiri", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [12.5186, 78.2137], "sub_zones": [{"name": "Krishnagiri North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Denkanikottai, Pochampalli", "places": ["Bargur", "Denkanikottai", "Pochampalli"]}, {"name": "Krishnagiri South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Bargur, Uthangarai", "places": ["Bargur", "Pochampalli", "Uthangarai"]}, {"name": "Krishnagiri Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Krishnagiri Town, Hosur Industrial Complex", "places": ["Denkanikottai", "Hosur Industrial Complex", "Krishnagiri Town"]}], "places": ["Bargur", "Denkanikottai", "Hosur Industrial Complex", "Krishnagiri Town", "Pochampalli", "Uthangarai"]}, "madurai": {"name": "Madurai", "slug": "madurai", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [9.9252, 78.1198], "sub_zones": [{"name": "Madurai North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Thiruparankundram, Melur", "places": ["Melur", "Thiruparankundram", "Usilampatti"]}, {"name": "Madurai South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Vadipatti, Thirumangalam", "places": ["Melur", "Thirumangalam", "Usilampatti", "Vadipatti"]}, {"name": "Madurai Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Madurai Central (Goripalayam), Tallakulam", "places": ["Madurai Central (Goripalayam)", "Tallakulam", "Thiruparankundram"]}], "places": ["Madurai Central (Goripalayam)", "Melur", "Tallakulam", "Thirumangalam", "Thiruparankundram", "Usilampatti", "Vadipatti"]}, "mayiladuthurai": {"name": "Mayiladuthurai", "slug": "mayiladuthurai", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [11.1018, 79.6521], "sub_zones": [{"name": "Mayiladuthurai North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Poompuhar, Tharangambadi", "places": ["Kuthalam", "Poompuhar", "Tharangambadi"]}, {"name": "Mayiladuthurai South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tharangambadi, Kuthalam", "places": ["Kuthalam", "Tharangambadi"]}, {"name": "Mayiladuthurai Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Mayiladuthurai Town, Sirkazhi", "places": ["Mayiladuthurai Town", "Poompuhar", "Sirkazhi"]}], "places": ["Kuthalam", "Mayiladuthurai Town", "Poompuhar", "Sirkazhi", "Tharangambadi"]}, "nagapattinam": {"name": "Nagapattinam", "slug": "nagapattinam", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [10.7656, 79.8424], "sub_zones": [{"name": "Nagapattinam North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Kilvelur, Vedaranyam", "places": ["Kilvelur", "Thirukkuvalai", "Vedaranyam"]}, {"name": "Nagapattinam South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Vedaranyam, Thirukkuvalai", "places": ["Thirukkuvalai", "Vedaranyam"]}, {"name": "Nagapattinam Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Nagapattinam Port, Velankanni", "places": ["Kilvelur", "Nagapattinam Port", "Velankanni"]}], "places": ["Kilvelur", "Nagapattinam Port", "Thirukkuvalai", "Vedaranyam", "Velankanni"]}, "namakkal": {"name": "Namakkal", "slug": "namakkal", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [11.2189, 78.1674], "sub_zones": [{"name": "Namakkal North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tiruchengodu, Paramathi Velur", "places": ["Kolli Hills", "Paramathi Velur", "Tiruchengodu"]}, {"name": "Namakkal South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Paramathi Velur, Kolli Hills", "places": ["Kolli Hills", "Paramathi Velur"]}, {"name": "Namakkal Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Namakkal Town, Rasipuram", "places": ["Namakkal Town", "Rasipuram", "Tiruchengodu"]}], "places": ["Kolli Hills", "Namakkal Town", "Paramathi Velur", "Rasipuram", "Tiruchengodu"]}, "nilgiris": {"name": "Nilgiris", "slug": "nilgiris", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [11.4916, 76.7337], "sub_zones": [{"name": "Nilgiris North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Kotagiri, Gudalur", "places": ["Gudalur", "Kotagiri", "Pandalur"]}, {"name": "Nilgiris South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Gudalur, Pandalur", "places": ["Gudalur", "Pandalur"]}, {"name": "Nilgiris Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Udhagamandalam (Ooty), Coonoor", "places": ["Coonoor", "Kotagiri", "Udhagamandalam (Ooty)"]}], "places": ["Coonoor", "Gudalur", "Kotagiri", "Pandalur", "Udhagamandalam (Ooty)"]}, "perambalur": {"name": "Perambalur", "slug": "perambalur", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [11.2342, 78.882], "sub_zones": [{"name": "Perambalur North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Veppanthattai, Alathur", "places": ["Alathur", "Veppanthattai"]}, {"name": "Perambalur South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Perambalur Town, Alathur", "places": ["Alathur"]}, {"name": "Perambalur Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Perambalur Town, Kunnam", "places": ["Kunnam", "Perambalur Town", "Veppanthattai"]}], "places": ["Alathur", "Kunnam", "Perambalur Town", "Veppanthattai"]}, "pudukkottai": {"name": "Pudukkottai", "slug": "pudukkottai", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [10.3833, 78.8001], "sub_zones": [{"name": "Pudukkottai North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Illuppur, Alangudi", "places": ["Alangudi", "Illuppur", "Thirumayam"]}, {"name": "Pudukkottai South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Thirumayam, Gandarvakkottai", "places": ["Alangudi", "Gandarvakkottai", "Thirumayam"]}, {"name": "Pudukkottai Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Pudukkottai Town, Aranthangi", "places": ["Aranthangi", "Illuppur", "Pudukkottai Town"]}], "places": ["Alangudi", "Aranthangi", "Gandarvakkottai", "Illuppur", "Pudukkottai Town", "Thirumayam"]}, "ramanathapuram": {"name": "Ramanathapuram", "slug": "ramanathapuram", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [9.3639, 78.8395], "sub_zones": [{"name": "Ramanathapuram North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Paramakudi, Mudukulathur", "places": ["Keelakarai", "Mudukulathur", "Paramakudi"]}, {"name": "Ramanathapuram South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Keelakarai, Tiruvadanai", "places": ["Keelakarai", "Mudukulathur", "Tiruvadanai"]}, {"name": "Ramanathapuram Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ramanathapuram Town, Rameswaram", "places": ["Paramakudi", "Ramanathapuram Town", "Rameswaram"]}], "places": ["Keelakarai", "Mudukulathur", "Paramakudi", "Ramanathapuram Town", "Rameswaram", "Tiruvadanai"]}, "ranipet": {"name": "Ranipet", "slug": "ranipet", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [12.9272, 79.3332], "sub_zones": [{"name": "Ranipet North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Arcot, Sholinghur", "places": ["Arakkonam", "Arcot", "Sholinghur"]}, {"name": "Ranipet South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Sholinghur, Arakkonam", "places": ["Arakkonam", "Sholinghur"]}, {"name": "Ranipet Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ranipet Urban, Walajah", "places": ["Arcot", "Ranipet Urban", "Walajah"]}], "places": ["Arakkonam", "Arcot", "Ranipet Urban", "Sholinghur", "Walajah"]}, "salem": {"name": "Salem", "slug": "salem", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [11.6643, 78.146], "sub_zones": [{"name": "Salem North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Mettur, Omalur", "places": ["Mettur", "Omalur", "Sankari"]}, {"name": "Salem South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Edappadi, Yercaud", "places": ["Edappadi", "Omalur", "Sankari", "Yercaud"]}, {"name": "Salem Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Salem Urban, Attur", "places": ["Attur", "Mettur", "Salem Urban"]}], "places": ["Attur", "Edappadi", "Mettur", "Omalur", "Salem Urban", "Sankari", "Yercaud"]}, "sivagangai": {"name": "Sivagangai", "slug": "sivagangai", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [9.8433, 78.4809], "sub_zones": [{"name": "Sivagangai North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Devakottai, Manamadurai", "places": ["Devakottai", "Manamadurai", "Tirupathur"]}, {"name": "Sivagangai South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Manamadurai, Tirupathur", "places": ["Manamadurai", "Tirupathur"]}, {"name": "Sivagangai Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Sivagangai Town, Karaikudi", "places": ["Devakottai", "Karaikudi", "Sivagangai Town"]}], "places": ["Devakottai", "Karaikudi", "Manamadurai", "Sivagangai Town", "Tirupathur"]}, "tenkasi": {"name": "Tenkasi", "slug": "tenkasi", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [8.9593, 77.315], "sub_zones": [{"name": "Tenkasi North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Sankarankovil, Kadayanallur", "places": ["Kadayanallur", "Puliyangudi", "Sankarankovil"]}, {"name": "Tenkasi South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Puliyangudi, Shenkottai", "places": ["Kadayanallur", "Puliyangudi", "Shenkottai"]}, {"name": "Tenkasi Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tenkasi Town, Courtallam", "places": ["Courtallam", "Sankarankovil", "Tenkasi Town"]}], "places": ["Courtallam", "Kadayanallur", "Puliyangudi", "Sankarankovil", "Shenkottai", "Tenkasi Town"]}, "thanjavur": {"name": "Thanjavur", "slug": "thanjavur", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [10.787, 79.1378], "sub_zones": [{"name": "Thanjavur North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Pattukkottai, Orathanadu", "places": ["Orathanadu", "Papanasam", "Pattukkottai"]}, {"name": "Thanjavur South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Papanasam, Thiruvaiyaru", "places": ["Orathanadu", "Papanasam", "Thiruvaiyaru"]}, {"name": "Thanjavur Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Thanjavur City, Kumbakonam", "places": ["Kumbakonam", "Pattukkottai", "Thanjavur City"]}], "places": ["Kumbakonam", "Orathanadu", "Papanasam", "Pattukkottai", "Thanjavur City", "Thiruvaiyaru"]}, "theni": {"name": "Theni", "slug": "theni", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [10.0104, 77.4768], "sub_zones": [{"name": "Theni North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Bodinayakanur, Cumbum", "places": ["Bodinayakanur", "Cumbum", "Uthamapalayam"]}, {"name": "Theni South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Cumbum, Uthamapalayam", "places": ["Cumbum", "Uthamapalayam"]}, {"name": "Theni Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Theni Town, Periyakulam", "places": ["Bodinayakanur", "Periyakulam", "Theni Town"]}], "places": ["Bodinayakanur", "Cumbum", "Periyakulam", "Theni Town", "Uthamapalayam"]}, "thoothukudi": {"name": "Thoothukudi", "slug": "thoothukudi", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [8.7642, 78.1348], "sub_zones": [{"name": "Thoothukudi North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Kovilpatti, Sattankulam", "places": ["Ettayapuram", "Kovilpatti", "Sattankulam"]}, {"name": "Thoothukudi South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ettayapuram, Vilathikulam", "places": ["Ettayapuram", "Sattankulam", "Vilathikulam"]}, {"name": "Thoothukudi Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Thoothukudi Port, Tiruchendur", "places": ["Kovilpatti", "Thoothukudi Port", "Tiruchendur"]}], "places": ["Ettayapuram", "Kovilpatti", "Sattankulam", "Thoothukudi Port", "Tiruchendur", "Vilathikulam"]}, "tiruchirappalli": {"name": "Tiruchirappalli", "slug": "tiruchirappalli", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [10.7905, 78.7047], "sub_zones": [{"name": "Tiruchirappalli North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Thiruverumbur, Lalgudi", "places": ["Lalgudi", "Manapparai", "Thiruverumbur"]}, {"name": "Tiruchirappalli South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Musiri, Thuraiyur", "places": ["Lalgudi", "Manapparai", "Musiri", "Thuraiyur"]}, {"name": "Tiruchirappalli Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Trichy Fort, Srirangam", "places": ["Srirangam", "Thiruverumbur", "Trichy Fort"]}], "places": ["Lalgudi", "Manapparai", "Musiri", "Srirangam", "Thiruverumbur", "Thuraiyur", "Trichy Fort"]}, "tirunelveli": {"name": "Tirunelveli", "slug": "tirunelveli", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [8.7139, 77.7567], "sub_zones": [{"name": "Tirunelveli North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ambasamudram, Cheranmahadevi", "places": ["Ambasamudram", "Cheranmahadevi", "Nanguneri"]}, {"name": "Tirunelveli South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Nanguneri, Radhapuram", "places": ["Cheranmahadevi", "Nanguneri", "Radhapuram"]}, {"name": "Tirunelveli Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tirunelveli City, Palayamkottai", "places": ["Ambasamudram", "Palayamkottai", "Tirunelveli City"]}], "places": ["Ambasamudram", "Cheranmahadevi", "Nanguneri", "Palayamkottai", "Radhapuram", "Tirunelveli City"]}, "tirupathur": {"name": "Tirupathur", "slug": "tirupathur", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [12.4925, 78.5678], "sub_zones": [{"name": "Tirupathur North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ambur, Natrampalli", "places": ["Ambur", "Natrampalli", "Yelagiri Hills"]}, {"name": "Tirupathur South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Natrampalli, Yelagiri Hills", "places": ["Natrampalli", "Yelagiri Hills"]}, {"name": "Tirupathur Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tirupathur Town, Vaniyambadi", "places": ["Ambur", "Tirupathur Town", "Vaniyambadi"]}], "places": ["Ambur", "Natrampalli", "Tirupathur Town", "Vaniyambadi", "Yelagiri Hills"]}, "tiruppur": {"name": "Tiruppur", "slug": "tiruppur", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "West Zone", "zone_hq": "Coimbatore Complex", "coords": [11.1085, 77.3411], "sub_zones": [{"name": "Tiruppur North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Avinashi, Dharapuram", "places": ["Avinashi", "Dharapuram", "Udumalaipettai"]}, {"name": "Tiruppur South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Palladam, Kangeyam", "places": ["Dharapuram", "Kangeyam", "Palladam", "Udumalaipettai"]}, {"name": "Tiruppur Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tiruppur North, Tiruppur South", "places": ["Avinashi", "Tiruppur North", "Tiruppur South"]}], "places": ["Avinashi", "Dharapuram", "Kangeyam", "Palladam", "Tiruppur North", "Tiruppur South", "Udumalaipettai"]}, "tiruvallur": {"name": "Tiruvallur", "slug": "tiruvallur", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [13.1432, 79.9065], "sub_zones": [{"name": "Tiruvallur North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Ponneri, Tiruttani", "places": ["Gummidipoondi", "Ponneri", "Tiruttani"]}, {"name": "Tiruvallur South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Gummidipoondi, Poonamallee", "places": ["Gummidipoondi", "Poonamallee", "Tiruttani"]}, {"name": "Tiruvallur Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tiruvallur Town, Avadi", "places": ["Avadi", "Ponneri", "Tiruvallur Town"]}], "places": ["Avadi", "Gummidipoondi", "Ponneri", "Poonamallee", "Tiruttani", "Tiruvallur Town"]}, "tiruvannamalai": {"name": "Tiruvannamalai", "slug": "tiruvannamalai", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [12.2253, 79.0747], "sub_zones": [{"name": "Tiruvannamalai North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Cheyyar, Polur", "places": ["Chengam", "Cheyyar", "Polur"]}, {"name": "Tiruvannamalai South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Chengam, Vandavasi", "places": ["Chengam", "Polur", "Vandavasi"]}, {"name": "Tiruvannamalai Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tiruvannamalai Town, Arani", "places": ["Arani", "Cheyyar", "Tiruvannamalai Town"]}], "places": ["Arani", "Chengam", "Cheyyar", "Polur", "Tiruvannamalai Town", "Vandavasi"]}, "tiruvarur": {"name": "Tiruvarur", "slug": "tiruvarur", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "Central Zone", "zone_hq": "Tiruchirappalli Complex", "coords": [10.7726, 79.6365], "sub_zones": [{"name": "Tiruvarur North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Thiruthuraipoondi, Nannilam", "places": ["Kudavasal", "Nannilam", "Thiruthuraipoondi"]}, {"name": "Tiruvarur South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Nannilam, Kudavasal", "places": ["Kudavasal", "Nannilam"]}, {"name": "Tiruvarur Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Tiruvarur Town, Mannargudi", "places": ["Mannargudi", "Thiruthuraipoondi", "Tiruvarur Town"]}], "places": ["Kudavasal", "Mannargudi", "Nannilam", "Thiruthuraipoondi", "Tiruvarur Town"]}, "vellore": {"name": "Vellore", "slug": "vellore", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [12.9165, 79.1325], "sub_zones": [{"name": "Vellore North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Gudiyatham, Anaicut", "places": ["Anaicut", "Gudiyatham", "Pernambut"]}, {"name": "Vellore South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Anaicut, Pernambut", "places": ["Anaicut", "Pernambut"]}, {"name": "Vellore Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Vellore Fort City, Katpadi", "places": ["Gudiyatham", "Katpadi", "Vellore Fort City"]}], "places": ["Anaicut", "Gudiyatham", "Katpadi", "Pernambut", "Vellore Fort City"]}, "viluppuram": {"name": "Viluppuram", "slug": "viluppuram", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "North Zone", "zone_hq": "Chennai Complex", "coords": [11.9401, 79.4861], "sub_zones": [{"name": "Viluppuram North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Gingee, Vikravandi", "places": ["Gingee", "Vanur", "Vikravandi"]}, {"name": "Viluppuram South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Vikravandi, Vanur", "places": ["Vanur", "Vikravandi"]}, {"name": "Viluppuram Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Viluppuram Town, Tindivanam", "places": ["Gingee", "Tindivanam", "Viluppuram Town"]}], "places": ["Gingee", "Tindivanam", "Vanur", "Vikravandi", "Viluppuram Town"]}, "virudhunagar": {"name": "Virudhunagar", "slug": "virudhunagar", "sports": 0, "athletes": 110, "clubs": 15, "tournaments": 0, "top_sports": ["Cricket", "Football", "Athletics"], "zone_name": "South Zone", "zone_hq": "Madurai Complex", "coords": [9.568, 77.9624], "sub_zones": [{"name": "Virudhunagar North Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Rajapalayam, Aruppukottai", "places": ["Aruppukottai", "Rajapalayam", "Sattur"]}, {"name": "Virudhunagar South-Rural Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Sattur, Srivilliputhur", "places": ["Aruppukottai", "Sattur", "Srivilliputhur"]}, {"name": "Virudhunagar Urban Sub-Zone", "officer": "", "phone": "", "athletes": 0, "covered": "Virudhunagar Town, Sivakasi", "places": ["Rajapalayam", "Sivakasi", "Virudhunagar Town"]}], "places": ["Aruppukottai", "Rajapalayam", "Sattur", "Sivakasi", "Srivilliputhur", "Virudhunagar Town"]}};
+    let geoLayer;
+    let polygonMap = {};
+    let labelsGroup;
+    let markersGroup;
+
+    // Initialize Map with Dark Minimalist Container Options
+    const map = L.map('tn-map', {
+        zoomControl: false,
+        attributionControl: false
+    }).setView([11.0, 78.65], 7);
+
+    // Dark Basemap Tile Layer for High-Tech Contrast (Matches Screenshot)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '&copy; CartoDB Dark Matter'
+    }).addTo(map);
+
+    labelsGroup = L.layerGroup().addTo(map);
+    markersGroup = L.layerGroup().addTo(map);
+
+    // Custom Marker Icon for District Places / Sub-Zones
+    function createCustomMarkerIcon(label) {
+        return L.divIcon({
+            className: 'custom-map-pin',
+            html: `<div class="bg-slate-900/90 hover:bg-emerald-600 text-emerald-300 hover:text-white px-2.5 py-1 rounded-lg text-[10px] font-bold shadow-xl border border-emerald-500/40 flex items-center gap-1 cursor-pointer transform hover:scale-110 transition backdrop-blur-md">
+                <i class="bi bi-geo-alt-fill text-emerald-400"></i>
+                <span>${label}</span>
+            </div>`,
+            iconSize: [110, 24],
+            iconAnchor: [55, 12]
+        });
+    }
+
+    // District Centroid Pin & Permanent Label Marker
+    function createDistrictCentroidLabel(name) {
+        return L.divIcon({
+            className: 'district-centroid-label',
+            html: `<div class="flex flex-col items-center justify-center pointer-events-none transform -translate-x-1/2 -translate-y-1/2">
+                <div class="w-6 h-6 rounded-full bg-slate-900/90 border border-emerald-400/80 flex items-center justify-center text-emerald-400 shadow-lg text-[10px]">
+                    <i class="bi bi-building"></i>
+                </div>
+                <span class="mt-0.5 px-1.5 py-0.5 rounded bg-slate-950/80 text-[10px] font-black uppercase text-white tracking-wider border border-emerald-500/30 shadow-md whitespace-nowrap">
+                    ${name}
+                </span>
+            </div>`,
+            iconSize: [80, 40],
+            iconAnchor: [40, 20]
+        });
+    }
+
+    // Glassmorphism Tooltip Card Builder (Exact Match to Target Screenshot)
+    function createDistrictTooltipHtml(item) {
+        const code = item.name ? item.name.substring(0, 3).toUpperCase() : 'DST';
+        return `
+            <div class="p-3.5 bg-slate-900/95 border border-emerald-500/50 rounded-2xl shadow-2xl text-xs text-white backdrop-blur-md min-w-[210px] space-y-2 font-sans">
+                <div class="font-extrabold text-emerald-400 text-sm tracking-wide uppercase flex items-center justify-between border-b border-slate-700/60 pb-1.5">
+                    <span>${item.name.toUpperCase()} (${code})</span>
+                </div>
+                <div class="space-y-1 text-slate-300 text-xs font-medium">
+                    <div class="flex justify-between gap-3"><span class="text-slate-400">Facilities:</span> <strong class="text-white font-mono">${(item.clubs * 3)}</strong></div>
+                    <div class="flex justify-between gap-3"><span class="text-slate-400">Athletes:</span> <strong class="text-emerald-400 font-mono">${item.athletes.toLocaleString()}+</strong></div>
+                    <div class="flex justify-between gap-3 border-t border-slate-800 pt-1.5 mt-1 text-[11px]">
+                        <span class="text-slate-400">Major Hub |</span> 
+                        <span class="text-emerald-400 font-extrabold">(Active)</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // District Slug Normalization Aliases to map GeoJSON district names reliably
+    function normalizeDistrictSlug(str) {
+        if (!str) return '';
+        let norm = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const aliases = {
+            'chengalpet': 'chengalpattu',
+            'kancheepuram': 'kanchipuram',
+            'thiruvannamalai': 'tiruvannamalai',
+            'tiruchirapalli': 'tiruchirappalli',
+            'trichy': 'tiruchirappalli',
+            'kanyakumari': 'kanniyakumari',
+            'sivaganga': 'sivagangai',
+            'villupuram': 'viluppuram',
+            'tuticorin': 'thoothukudi',
+            'thanjavoor': 'thanjavur',
+            'tiruvaroor': 'tiruvarur',
+            'thenilgiris': 'nilgiris',
+            'nilgiri': 'nilgiris'
+        };
+        return aliases[norm] || norm;
+    }
+
+    // Load official full Tamil Nadu boundary dataset from static asset with fallback
+    fetch('static/tn_districts.geojson')
+        .then(res => {
+            if (!res.ok) throw new Error('Static GeoJSON fetch error');
+            return res.json();
+        })
+        .then(geojson => {
+            renderGeoJsonLayer(geojson);
+        })
+        .catch(err => {
+            console.log('Fetching fallback online GeoJSON...', err);
+            fetch('https://raw.githubusercontent.com/HindustanTimesLabs/shapefiles/master/state_ut/tamilnadu/district/tamilnadu_district.json')
+                .then(r => r.json())
+                .then(geojson => renderGeoJsonLayer(geojson))
+                .catch(e => {
+                    console.log('GeoJSON fallback loaded', e);
+                    showStatewideOverview();
+                });
+        });
+
+    let activePolygonLayer = null;
+    let currentActiveSlug = 'all';
+
+    function renderGeoJsonLayer(geojson) {
+        labelsGroup.clearLayers();
+
+        geoLayer = L.geoJSON(geojson, {
+            style: {
+                fillColor: '#05c46b',
+                weight: 1.5,
+                opacity: 1,
+                color: '#022c22',
+                fillOpacity: 0.8
+            },
+            onEachFeature: (feature, layer) => {
+                const rawName = feature.properties.district || feature.properties.dt_nm || feature.properties.NAME_2 || feature.properties.dtname || '';
+                const normSlug = normalizeDistrictSlug(rawName);
+
+                polygonMap[normSlug] = layer;
+
+                // Match with backend item data for live popup content
+                const matchedKey = Object.keys(districtsData).find(k => {
+                    const kNorm = normalizeDistrictSlug(k);
+                    return kNorm === normSlug || kNorm.includes(normSlug) || normSlug.includes(kNorm);
+                });
+                const item = matchedKey ? districtsData[matchedKey] : { name: rawName, clubs: 15, athletes: 5000 };
+
+                // Permanent district label marker on centroid
+                try {
+                    const center = layer.getBounds().getCenter();
+                    const labelMarker = L.marker(center, {
+                        icon: createDistrictCentroidLabel(rawName),
+                        interactive: false
+                    });
+                    labelsGroup.addLayer(labelMarker);
+                } catch(err) {}
+
+                // Interactive glassmorphism tooltip popup
+                layer.bindPopup(createDistrictTooltipHtml(item), {
+                    className: 'custom-glass-popup',
+                    closeButton: false,
+                    offset: [0, -10]
+                });
+
+                layer.on({
+                    mouseover: (e) => {
+                        if (e.target !== activePolygonLayer) {
+                            e.target.setStyle({ fillColor: '#00ff87', fillOpacity: 0.95, weight: 2.5, color: '#ffffff' });
+                        }
+                    },
+                    mouseout: (e) => {
+                        if (e.target !== activePolygonLayer) {
+                            geoLayer.resetStyle(e.target);
+                        }
+                    },
+                    click: () => {
+                        if (matchedKey) {
+                            if (currentActiveSlug === matchedKey) {
+                                // Toggle off: Return to full map and state overview
+                                showStatewideOverview();
+                            } else {
+                                // Switch to clicked district information
+                                switchDistrict(matchedKey);
+                            }
+                        }
+                    }
+                });
+            }
+        }).addTo(map);
+
+        // Initial state: show full statewide map overview & state metrics first
+        showStatewideOverview();
+    }
+
+    function showStatewideOverview() {
+        currentActiveSlug = 'all';
+        activePolygonLayer = null;
+        if (geoLayer) {
+            geoLayer.eachLayer(layer => geoLayer.resetStyle(layer));
+        }
+        markersGroup.clearLayers();
+        map.closePopup();
+        map.setView([11.0, 78.65], 7, { animate: true });
+
+        const selector = document.getElementById('district-selector');
+        if (selector) selector.value = 'all';
+
+        const titleEl = document.getElementById('active-district-card-title');
+        if (titleEl) titleEl.innerText = 'TAMIL NADU STATE OVERVIEW (38 Districts)';
+
+        const athletesEl = document.getElementById('metric-athletes');
+        if (athletesEl) athletesEl.innerText = '1,450,000';
+
+        const facilitiesEl = document.getElementById('metric-facilities');
+        if (facilitiesEl) facilitiesEl.innerText = '890';
+
+        const clubsEl = document.getElementById('metric-clubs');
+        if (clubsEl) clubsEl.innerText = '520';
+
+        const countBadge = document.getElementById('subzone-count-badge');
+        if (countBadge) countBadge.innerText = '38 Districts Active';
+
+        const subzonesContainer = document.getElementById('subzones-container');
+        if (subzonesContainer) {
+            subzonesContainer.innerHTML = `
+                <div class="p-3.5 bg-slate-900/90 rounded-xl border border-emerald-500/30 text-center space-y-1.5">
+                    <p class="text-xs font-bold text-emerald-400 flex items-center justify-center gap-1.5">
+                        <i class="bi bi-hand-index-thumb"></i> Click Any District on Map
+                    </p>
+                    <p class="text-[11px] text-slate-300">Click a district on the map to inspect local sub-zones and venue infrastructure. Click it again to return to full map & state view.</p>
+                </div>
+            `;
+        }
+    }
+
+    function switchDistrict(slug) {
+        if (!slug || slug === 'all') {
+            showStatewideOverview();
+            return;
+        }
+        if (!districtsData[slug]) return;
+
+        currentActiveSlug = slug;
+
+        const item = districtsData[slug];
+        const selector = document.getElementById('district-selector');
+        if (selector) selector.value = slug;
+
+        const titleEl = document.getElementById('active-district-card-title');
+        if (titleEl) titleEl.innerText = `${item.name.toUpperCase()} DISTRICT (Active)`;
+
+        const athletesEl = document.getElementById('metric-athletes');
+        if (athletesEl) athletesEl.innerText = typeof item.athletes === 'number' ? item.athletes.toLocaleString() : item.athletes;
+
+        const facilitiesEl = document.getElementById('metric-facilities');
+        if (facilitiesEl) facilitiesEl.innerText = typeof item.clubs === 'number' ? (item.clubs * 3).toLocaleString() : item.clubs;
+
+        const clubsEl = document.getElementById('metric-clubs');
+        if (clubsEl) clubsEl.innerText = typeof item.clubs === 'number' ? item.clubs.toLocaleString() : item.clubs;
+
+        // Update Top Sports ranking list matching screenshot style
+        const sportsContainer = document.getElementById('top-sports-container');
+        if (sportsContainer && item.top_sports && item.top_sports.length > 0) {
+            const percentages = [35, 28, 18, 18, 15];
+            sportsContainer.innerHTML = item.top_sports.slice(0, 4).map((sport, idx) => `
+                <div class="space-y-1">
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-200">${idx + 1} ${sport}</span>
+                        <span class="text-emerald-400 font-mono">${percentages[idx] || 15}%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-emerald-400 h-full rounded-full" style="width: ${percentages[idx] || 15}%;"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update Sub-Zones & Authentic Places Drawer
+        const subzonesContainer = document.getElementById('subzones-container');
+        const countBadge = document.getElementById('subzone-count-badge');
+        if (subzonesContainer && countBadge) {
+            if (item.sub_zones && item.sub_zones.length > 0) {
+                countBadge.innerText = `${item.sub_zones.length} Active Sub-Zones`;
+                subzonesContainer.innerHTML = item.sub_zones.map(sz => `
+                    <div class="p-2.5 bg-slate-900/80 rounded-xl border border-slate-800 text-[11px] hover:border-emerald-500/40 transition">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-extrabold text-emerald-400">${sz.name}</span>
+                            <span class="text-[10px] font-bold text-slate-400"><i class="bi bi-person-running text-emerald-400"></i> ${sz.athletes} Athletes</span>
+                        </div>
+                        <div class="text-[10px] text-slate-400">
+                            Officer: <strong class="text-slate-200">${sz.officer || 'SDAT Officer'}</strong> (${sz.phone || 'N/A'})
+                        </div>
+                        <div class="mt-1 flex flex-wrap gap-1">
+                            ${(sz.places || []).map(p => `<span class="inline-block bg-slate-800 text-slate-200 px-1.5 py-0.5 rounded text-[9px] font-semibold border border-slate-700">${p}</span>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                countBadge.innerText = '0 Sub-Zones';
+                subzonesContainer.innerHTML = '<p class="text-[11px] text-slate-500 italic">Centralized District Administrative Zone.</p>';
+            }
+        }
+
+        // Highlight matching polygon layer on Map (Neon Green glow + white boundary outline like screenshot)
+        const normKey = normalizeDistrictSlug(slug);
+        if (geoLayer) {
+            geoLayer.eachLayer(layer => geoLayer.resetStyle(layer));
+            let targetLayer = polygonMap[normKey];
+            if (!targetLayer) {
+                const foundKey = Object.keys(polygonMap).find(k => k === normKey || k.includes(normKey) || normKey.includes(k));
+                if (foundKey) targetLayer = polygonMap[foundKey];
+            }
+
+            if (targetLayer) {
+                activePolygonLayer = targetLayer;
+                targetLayer.setStyle({
+                    fillColor: '#69f0ae',
+                    fillOpacity: 0.95,
+                    weight: 3.5,
+                    color: '#ffffff'
+                });
+                targetLayer.openPopup();
+                map.fitBounds(targetLayer.getBounds(), { padding: [40, 40], maxZoom: 11, animate: true });
+            } else if (item.coords) {
+                map.flyTo(item.coords, 10, { animate: true, duration: 1.0 });
+            }
+        } else if (item.coords) {
+            map.flyTo(item.coords, 10, { animate: true, duration: 1.0 });
+        }
+
+        // Render Place & Sub-Zone Markers on Map
+        markersGroup.clearLayers();
+        if (item.coords) {
+            const baseLat = item.coords[0];
+            const baseLng = item.coords[1];
+
+            let placeIndex = 0;
+            if (item.sub_zones && item.sub_zones.length > 0) {
+                item.sub_zones.forEach((sz, szIdx) => {
+                    sz.places.forEach((pName, pIdx) => {
+                        const offsetLat = (Math.sin(placeIndex * 1.2) * 0.045) + (szIdx * 0.015);
+                        const offsetLng = (Math.cos(placeIndex * 1.2) * 0.045) + (pIdx * 0.015);
+                        const lat = baseLat + offsetLat;
+                        const lng = baseLng + offsetLng;
+
+                        const marker = L.marker([lat, lng], {
+                            icon: createCustomMarkerIcon(pName)
+                        });
+
+                        const popupHtml = `
+                            <div class="p-2 space-y-1 text-xs font-sans text-white">
+                                <div class="font-extrabold text-emerald-400 text-sm flex items-center gap-1">
+                                    <i class="bi bi-geo-alt-fill text-emerald-400"></i> ${pName}
+                                </div>
+                                <div class="text-slate-300 font-medium">District: <strong class="text-white">${item.name}</strong></div>
+                                <div class="text-blue-400 font-bold">Sub-Zone: ${sz.name}</div>
+                                <div class="text-slate-400">Officer: ${sz.officer || 'N/A'}</div>
+                                <div class="text-emerald-400 font-bold pt-1 border-t border-slate-700"><i class="bi bi-person-running"></i> ${sz.athletes} Athletes Registered</div>
+                            </div>
+                        `;
+                        marker.bindPopup(popupHtml);
+                        markersGroup.addLayer(marker);
+                        placeIndex++;
+                    });
+                });
+            }
+        }
+    }
+
+    // Top-left Search Bar Handler
+    function searchMapDistricts(query) {
+        if (!query) {
+            showStatewideOverview();
+            return;
+        }
+        const q = query.toLowerCase().trim();
+        const matchedKey = Object.keys(districtsData).find(k => {
+            const item = districtsData[k];
+            return k.toLowerCase().includes(q) || item.name.toLowerCase().includes(q);
+        });
+        if (matchedKey) {
+            switchDistrict(matchedKey);
+        }
+    }
+
+    function resetSelection() {
+        showStatewideOverview();
+    }
+</script>
+
+        </main>
+
+        <!-- Master Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon-emblem"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="logo-text-group">
+                            <span class="logo-title">Tamil Nadu</span>
+                            <span class="logo-subtitle">Sports Development Platform</span>
+                        </div>
+                    </a>
+                    <p>A unified platform to discover talent, build careers, and promote sports across Tamil Nadu.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="sports.html">Sports Disciplines</a></li>
+                        <li><a href="players.html">Player Roster</a></li>
+                        <li><a href="clubs.html">Clubs & Franchises</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Portals & Governance</h4>
+                    <ul>
+                        <li><a href="districts.html">Districts Portal</a></li>
+                        <li><a href="minister_dashboard.html"><i class="fa-solid fa-crown text-amber-500"></i> Sports Minister Portal</a></li>
+                        <li><a href="collector_dashboard.html"><i class="fa-solid fa-landmark-flag text-emerald-400"></i> Collector & DSO Portal</a></li>
+                        <li><a href="athlete_register.html">Player Registration</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Tamil Nadu Sports Development Platform. All rights reserved.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Global Toast Notification UI -->
+    <div class="toast" id="globalToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="globalToastMessage">Notification update!</span>
+    </div>
+
+    
+
+    <!-- Core Global JavaScript & Idle Detection -->
+    <script>
+        function triggerGlobalNotification(message, type = 'info') {
+            let container = document.getElementById('djangoMessagesContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'djangoMessagesContainer';
+                container.className = 'fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-auto';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const borderClass = type === 'error' ? 'bg-slate-900/95 text-rose-300 border-rose-500/50 shadow-rose-950/40' : (type === 'success' ? 'bg-slate-900/95 text-emerald-300 border-emerald-500/50 shadow-emerald-950/40' : 'bg-slate-900/95 text-amber-300 border-amber-500/50 shadow-amber-950/40');
+            const iconClass = type === 'error' ? 'fa-circle-xmark text-rose-400' : (type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-info text-amber-400');
+
+            toast.className = `p-4 rounded-2xl shadow-2xl border text-xs font-bold flex items-center justify-between gap-3 transform transition-all duration-300 backdrop-blur-md ${borderClass}`;
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${iconClass} text-base"></i>
+                    <span class="leading-tight text-white font-semibold">${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition shrink-0 p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('#djangoMessagesContainer .toast-popup');
+            alerts.forEach((alert, idx) => {
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100px)';
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000 + (idx * 500));
+            });
+        });
+
+        
+    </script>
+
+    
+</body>
+</html>
