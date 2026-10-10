@@ -23,6 +23,7 @@ db.sqlite3-stem
 db.sqlite3-wal
 db.sqlite3-shm
 media/
+staticfiles/
 
 # IDEs
 .vscode/
