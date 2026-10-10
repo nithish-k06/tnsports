@@ -98,71 +98,34 @@ WSGI_APPLICATION = 'soprts.wsgi.application'
 # Connection pooling & persistent connections
 # Production default: 600s (re-uses connections across requests, reducing handshake latency)
 # Development default: 0s (closes connections immediately)
-DB_CONN_MAX_AGE = int(os.getenv('DB_CONN_MAX_AGE', '600' if not DEBUG else '0'))
-DB_CONN_HEALTH_CHECKS = os.getenv('DB_CONN_HEALTH_CHECKS', 'True').lower() in ('true', '1', 'yes')
-DB_SSLMODE = os.getenv('DB_SSLMODE', '').strip()
-DB_CONNECT_TIMEOUT = os.getenv('DB_CONNECT_TIMEOUT', '').strip()
-DB_DISABLE_SERVER_SIDE_CURSORS = os.getenv('DB_DISABLE_SERVER_SIDE_CURSORS', 'False').lower() in ('true', '1', 'yes')
 
-DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
 
-# Check if discrete database parameters are explicitly defined in environment
-HAS_EXPLICIT_DB = bool(
-    os.getenv('DB_NAME') or os.getenv('POSTGRES_DB') or
-    os.getenv('DB_HOST') or os.getenv('POSTGRES_HOST') or
-    os.getenv('DB_ENGINE')
-)
+DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
 
-if DATABASE_URL and dj_database_url:
-    # 1. DYNAMIC SWITCHING: When DATABASE_URL is provided in environment (PostgreSQL, SQLite, MySQL, etc.)
+if DATABASE_URL:
+    if not dj_database_url:
+        raise RuntimeError(
+            "Install dj-database-url in requirements.txt"
+        )
+
     DATABASES = {
-        'default': dj_database_url.parse(
+        "default": dj_database_url.parse(
             DATABASE_URL,
-            conn_max_age=DB_CONN_MAX_AGE,
-            conn_health_checks=DB_CONN_HEALTH_CHECKS,
+            conn_max_age=600,
+            conn_health_checks=True,
         )
     }
-elif HAS_EXPLICIT_DB:
-    # 2. DISCRETE CONFIGURATION: When discrete database variables are set
+elif DEBUG:
     DATABASES = {
-        'default': {
-            'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
-            'NAME': os.getenv('DB_NAME', os.getenv('POSTGRES_DB', 'sports_db')),
-            'USER': os.getenv('DB_USER', os.getenv('POSTGRES_USER', 'postgres')),
-            'PASSWORD': os.getenv('DB_PASSWORD', os.getenv('POSTGRES_PASSWORD', 'root')),
-            'HOST': os.getenv('DB_HOST', os.getenv('POSTGRES_HOST', '127.0.0.1')),
-            'PORT': os.getenv('DB_PORT', os.getenv('POSTGRES_PORT', '5432')),
-            'CONN_MAX_AGE': DB_CONN_MAX_AGE,
-            'CONN_HEALTH_CHECKS': DB_CONN_HEALTH_CHECKS,
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 else:
-    # 3. ZERO-CONFIG LOCAL FALLBACK: When no DB URL is provided, dynamically switch to SQLite
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-
-# Apply PostgreSQL-specific tuning ONLY if the active backend is PostgreSQL
-active_engine = DATABASES['default'].get('ENGINE', '')
-if 'postgresql' in active_engine:
-    db_options = DATABASES['default'].setdefault('OPTIONS', {})
-
-    if DB_SSLMODE:
-        db_options['sslmode'] = DB_SSLMODE
-    elif not DEBUG:
-        host = DATABASES['default'].get('HOST', '')
-        if host and host not in ('localhost', '127.0.0.1'):
-            db_options.setdefault('sslmode', 'require')
-
-    if DB_CONNECT_TIMEOUT:
-        db_options['connect_timeout'] = int(DB_CONNECT_TIMEOUT)
-
-    if DB_DISABLE_SERVER_SIDE_CURSORS:
-        DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
-
+    raise RuntimeError(
+        "DATABASE_URL is missing. Configure PostgreSQL on Render."
+    )
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
