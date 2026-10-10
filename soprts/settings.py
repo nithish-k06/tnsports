@@ -126,7 +126,10 @@ else:
     raise RuntimeError(
         "DATABASE_URL is missing. Configure PostgreSQL on Render."
     )
-
+print("DEBUG:", DEBUG)
+print("DATABASE_URL present:", bool(DATABASE_URL))
+print("DATABASE ENGINE:", DATABASES["default"]["ENGINE"])
+print("DATABASE HOST:", DATABASES["default"].get("HOST"))
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
 
