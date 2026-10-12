@@ -48,6 +48,22 @@ CSRF_TRUSTED_ORIGINS = [
     if origin.strip()
 ]
 
+# Automatically support Render's external hostname if deployed on Render
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME', '').strip()
+if RENDER_EXTERNAL_HOSTNAME:
+    if RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    render_origin = f"https://{RENDER_EXTERNAL_HOSTNAME}"
+    if render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_origin)
+
+if not DEBUG:
+    # Production security headers and proxy configuration for Render
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 'yes')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 
 # Application definition
 
@@ -165,7 +181,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
